@@ -1,122 +1,185 @@
-## **2.4. Big Picture EventStorming**
+## 2.4. Big Picture EventStorming
 
-El Big Picture EventStorming de Nexa modela el flujo principal del pedido B2B de productos refrigerados, desde la intención de compra hasta el cierre de la entrega. Su propósito en esta etapa no es diseñar todavía la arquitectura técnica del sistema, sino hacer visible el recorrido del negocio, los actores que intervienen, los eventos más relevantes del dominio y los puntos de fricción que explican por qué el problema persiste.
+El Big Picture EventStorming de Nexa representa el recorrido general del dominio desde el contacto comercial y el registro de una organización hasta la entrega, la asociación de documentos comerciales referenciales y el registro del estado de pago referencial. Su propósito es hacer visibles los hechos relevantes, los actores y las tensiones del negocio antes de profundizar en decisiones de diseño.
 
-El modelado mantiene la misma taxonomía canónica definida en el proyecto. En ese marco, el **S1** se expresa principalmente en la captura asistida y validación comercial; el **S2** en la coordinación logística, preparación, despacho, gestión de incidencias y cierre de entrega; y el **S3** en la consulta, envío y seguimiento del pedido por parte del comprador comercial. Las restricciones operativas del dominio permanecen visibles a lo largo del flujo, pero no redefinen la segmentación del informe.
+El modelado mantiene los tres segmentos del proyecto: Segmento 1 — Commercial Coordination, Segmento 2 — Operations / Account Owner y Segmento 3 — B2B Buyer Portal. Account Owner / administración del tenant/workspace forma parte del alcance administrativo del Segmento 2. La lectura se concentra en el dominio y no adelanta comandos, políticas, read models, aggregates ni bounded contexts del Design-Level EventStorming.
 
-El EventStorming se construyó como un ejercicio de síntesis del dominio a partir de la evidencia reunida en entrevistas, needfinding y análisis competitivo. En lugar de partir de pantallas o módulos, el equipo ordenó primero los hechos que modifican el estado del pedido y luego examinó qué actores, restricciones y tensiones aparecen en esas transiciones. Este enfoque resulta útil porque evita diseñar el sistema desde una lista de funcionalidades dispersas y obliga a pensar el producto como una secuencia coherente de eventos del negocio.
+La evidencia final se organiza en tres pasos propios de Big Picture: exploración no estructurada de eventos, ordenamiento temporal e identificación de pain points. Estos pasos sintetizan la revisión colaborativa del dominio realizada por el equipo.
 
-### ***2.4.1. Proceso de construcción del modelado***
+### 2.4.1. Proceso de construcción del modelado
 
-*Big Picture EventStorming — Step 1: Exploration*
-![Big Picture Step 1](../assets/images/chapter-2/event-storming/ddd-step-1-event-storming.png)
+El Step 1 reúne eventos sin imponer todavía una secuencia. Esta exploración permite registrar hechos relevantes del negocio y ampliar el vocabulario compartido antes de organizar el flujo.
 
-*Big Picture EventStorming — Step 2: Timeline*
-![Big Picture Step 2](../assets/images/chapter-2/event-storming/ddd-step-2-event-storming.png)
+*Big Picture EventStorming — Step 1: exploración no estructurada del dominio, parte 1.*
 
-*Big Picture EventStorming — Step 3: Pain Points*
-![Big Picture Step 3](../assets/images/chapter-2/event-storming/ddd-step-3-event-storming.png)
+![Big Picture EventStorming — Step 1: exploración no estructurada del dominio, parte 1](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-1-exploration-part-1.png)
 
-*Proceso de construcción del modelado*
+> *Nota*: La captura muestra la primera parte de la exploración no estructurada de eventos del dominio, utilizada para identificar hechos relevantes antes de ordenarlos temporalmente. Elaboración propia.
 
-| Etapa | Propósito | Resultado obtenido |
-| :--- | :--- | :--- |
-| **1. Delimitación del flujo** | Definir qué tramo del negocio debía representarse en el MVP | Se acotó el modelado desde la intención de compra hasta el cierre de entrega |
-| **2. Identificación de eventos** | Reconocer qué hechos cambian realmente el estado del pedido | Se consolidó la secuencia borrador → envío → validación → confirmación → preparación → despacho → entrega |
-| **3. Asociación de actores e intervención** | Vincular cada cambio de estado con los responsables y momentos críticos del flujo | Se clarificó la participación de cliente comercial, coordinación comercial, operación y reparto |
-| **4. Identificación de restricciones** | Hacer visibles las fricciones y condiciones operativas que impiden un flujo continuo | Se incorporaron validación comercial tardía, stock incierto, FEFO manual, visibilidad fragmentada y cierre débil de entrega |
+*Big Picture EventStorming — Step 1: exploración no estructurada del dominio, parte 2.*
 
-> *Nota:* La tabla resume el proceso seguido para convertir evidencia cualitativa en un modelo de dominio entendible y útil para el MVP. Elaboración propia.
+![Big Picture EventStorming — Step 1: exploración no estructurada del dominio, parte 2](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-1-exploration-part-2.png)
 
-### ***2.4.2. Actores del dominio***
+> *Nota*: La captura complementa la exploración inicial con eventos comerciales, operativos, documentales y de seguimiento. Elaboración propia.
 
-*Actores del dominio*
+El Step 2 ordena temporalmente los eventos y permite reconocer la continuidad entre registro organizacional, catálogo, inventario, solicitud de compra, logística y cierre documental.
 
-| Actor / rol operativo | Segmento asociado | Responsabilidad principal |
+*Big Picture EventStorming — Step 2: registro organizacional y habilitación del workspace.*
+
+![Big Picture EventStorming — Step 2: registro organizacional y habilitación del workspace](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-organization.png)
+
+> *Nota*: La captura organiza los eventos vinculados con contacto comercial, evaluación de la organización, responsabilidades y habilitación del tenant/workspace. Elaboración propia.
+
+*Big Picture EventStorming — Step 2: catálogo y clientes.*
+
+![Big Picture EventStorming — Step 2: catálogo y clientes](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-catalog.png)
+
+> *Nota*: La captura presenta la secuencia relacionada con clientes, publicación del catálogo, productos y promociones. Elaboración propia.
+
+*Big Picture EventStorming — Step 2: inventario y asignación de lotes.*
+
+![Big Picture EventStorming — Step 2: inventario y asignación de lotes](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-inventory.png)
+
+> *Nota*: La captura muestra los eventos de sincronización de inventario, reserva de disponibilidad y asignación de lotes. Elaboración propia.
+
+*Big Picture EventStorming — Step 2: solicitud de compra y validación comercial.*
+
+![Big Picture EventStorming — Step 2: solicitud de compra y validación comercial](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-purchase-request.png)
+
+> *Nota*: La captura ordena los eventos de solicitud, aprobación, rechazo, cancelación, contacto con el cliente y registro manual. Elaboración propia.
+
+*Big Picture EventStorming — Step 2: logística y entrega.*
+
+![Big Picture EventStorming — Step 2: logística y entrega](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-logistics.png)
+
+> *Nota*: La captura presenta la secuencia de inicio de despacho, registro de condiciones, reprogramación y entrega. Elaboración propia.
+
+*Big Picture EventStorming — Step 2: documentos comerciales y pagos referenciales.*
+
+![Big Picture EventStorming — Step 2: documentos comerciales y pagos referenciales](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-2-timeline-business-documents.png)
+
+> *Nota*: La captura muestra la asociación de documentos comerciales referenciales y el registro de estados de pago referenciales dentro del cierre del flujo. Elaboración propia.
+
+El Step 3 incorpora los pain points sobre la línea temporal. Su función es señalar dónde el flujo depende de información fragmentada o coordinación manual y dónde pueden producirse demoras o retrabajo.
+
+*Big Picture EventStorming — Step 3: registro organizacional fragmentado.*
+
+![Big Picture EventStorming — Step 3: registro organizacional fragmentado](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-3-pain-point-organization-registration.png)
+
+> *Nota*: La captura identifica Fragmented Organization Registration como tensión del proceso de incorporación de organizaciones. Elaboración propia.
+
+*Big Picture EventStorming — Step 3: cuello de botella por validación manual.*
+
+![Big Picture EventStorming — Step 3: cuello de botella por validación manual](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-3-pain-point-manual-validation.png)
+
+> *Nota*: La captura identifica Manual Validation Bottleneck dentro de la revisión y continuidad de solicitudes comerciales. Elaboración propia.
+
+*Big Picture EventStorming — Step 3: conciliación manual de pagos.*
+
+![Big Picture EventStorming — Step 3: conciliación manual de pagos](../assets/images/chapter-2/event-storming/big-picture-final/big-picture-step-3-pain-point-payment-reconciliation.png)
+
+> *Nota*: La captura identifica Manual Payment Reconciliation como tensión vinculada con el seguimiento de pagos referenciales. Elaboración propia.
+
+*Proceso de construcción del Big Picture EventStorming.*
+
+| Step | Propósito | Resultado para la revisión del dominio |
 |---|---|---|
-| Comprador comercial B2B | S3 | Consulta catálogo, arma solicitudes, revisa el estado del pedido, accede a documentos visibles y da seguimiento a la entrega. |
-| Coordinación comercial | S1 | Recibe pedidos por portal, WhatsApp, llamada o Excel; identifica al cliente, valida condiciones comerciales y convierte solicitudes en pedidos confirmados. |
-| Responsable comercial autorizado | S1 / S2 | Revisa bloqueos comerciales, observaciones, crédito, documentos requeridos y coordinación con operación antes de confirmar el pedido. |
-| Operación / almacén | S2 | Controla disponibilidad real, reservas, lotes, vencimientos, criterios FEFO, preparación del pedido y prioridad de despacho. |
-| Responsable de despacho | S2 | Prepara la salida, asigna ruta o responsable de entrega, actualiza estados operativos y registra incidencias de despacho. |
-| Operations / Account Owner | S2 | Administra empresa, usuarios, accesos, configuración base, reglas internas, parámetros operativos y visibilidad general del tenant. |
-| Reparto / transportista | S2 | Ejecuta la entrega, reporta incidencias y registra evidencia mínima de conformidad o proof of delivery. |
+| Step 1 — Exploration | Identificar eventos sin imponer una estructura previa. | Inventario compartido de hechos comerciales, organizacionales, operativos y documentales. |
+| Step 2 — Timeline | Ordenar los eventos según su secuencia en el negocio. | Lectura continua desde el registro organizacional hasta entrega, documentos y pagos referenciales. |
+| Step 3 — Pain Points | Ubicar tensiones sobre la línea temporal. | Visibilidad de registro fragmentado, validación manual y conciliación manual. |
 
-> *Nota:* La tabla de planteamiento de las responsabilidades en relación a un segmento asociado. Elaboración propia.
+> *Nota*: La tabla resume los tres pasos de Big Picture utilizados para construir la evidencia final de la sección. Elaboración propia.
 
-### ***2.4.3. Eventos del dominio y puntos de tensión principales***
+### 2.4.2. Actores del dominio
 
-*Eventos del dominio y puntos de tensión principales*
+*Actores observados en el Big Picture EventStorming.*
 
-| Evento del dominio | Actores implicados | Tensión o implicancia observada |
+| Actor / rol operativo | Segmento asociado | Responsabilidad principal en el flujo |
 |---|---|---|
-| Solicitud de compra iniciada | S3, S1 | El pedido puede nacer desde el portal del comprador o desde canales informales atendidos por coordinación comercial. |
-| Purchase Request registrada | S3, S1 | La información inicial puede llegar incompleta, duplicada o con observaciones no estructuradas. |
-| Solicitud enviada para validación comercial | S1 | Empieza la revisión de cliente, crédito, stock preliminar, dirección, condiciones y documentos requeridos. |
-| Solicitud validada o bloqueada | S1, S2 | Si crédito, stock o condiciones no son consistentes, la solicitud no debe convertirse todavía en pedido confirmado. |
-| Purchase Order generada | S1, S2, S3 | La solicitud validada se convierte en pedido confirmado y deja trazabilidad del origen. |
-| Inventario reservado o ajustado | S2 | La operación revisa disponibilidad real, lotes, vencimientos, temperatura y prioridad FEFO. |
-| Pedido preparado para despacho | S2 | Aparecen tensiones de picking, lotes, faltantes, sustituciones y preparación física del producto. |
-| Dispatch Order creada | S2 | Se organiza ruta, responsable, estado operativo, evidencias requeridas y condiciones de entrega. |
-| Business Documents asociados | S1, S2 | Factura referencial, guía, XML, CDR, POD u otros documentos deben quedar vinculados al pedido. |
-| Pedido despachado | S2, S3 | La visibilidad del estado se vuelve crítica para reducir llamadas, reclamos e incertidumbre del comprador. |
-| Incidencia de ruta registrada | S2, S1, S3 | Una demora, rechazo, faltante o cambio debe comunicarse oportunamente para evitar pérdida de trazabilidad. |
-| Entrega cerrada con evidencia | S2, S3 | El cierre con evidencia permite reducir reclamos abiertos y sostener confianza en el cumplimiento. |
-| Pedido cancelado antes de despacho | S1, S2, S3 | La cancelación exige liberar reservas, ajustar continuidad operativa y comunicar el cambio al comprador. |
+| Comprador comercial B2B | Segmento 3 — B2B Buyer Portal | Consulta el catálogo, envía solicitudes y revisa el avance de órdenes, entrega y documentos visibles. |
+| Coordinación comercial | Segmento 1 — Commercial Coordination | Ordena la información comercial, revisa solicitudes y mantiene la coordinación con el comprador. |
+| Responsable comercial autorizado | Segmento 1 — Commercial Coordination | Aprueba, observa o rechaza solicitudes según las condiciones comerciales disponibles. |
+| Operación / almacén | Segmento 2 — Operations / Account Owner | Sincroniza inventario, reserva disponibilidad, asigna lotes y prepara la continuidad operativa. |
+| Responsable de despacho | Segmento 2 — Operations / Account Owner | Inicia el despacho, registra condiciones relevantes, incidencias y entrega. |
+| Account Owner / administración del tenant/workspace | Segmento 2 — Operations / Account Owner | Administra el alcance organizacional, las responsabilidades, reglas y habilitación del workspace. |
+| Reparto / transportista | Segmento 2 — Operations / Account Owner | Ejecuta el traslado, comunica incidencias y participa en el cierre de la entrega. |
 
-> *Nota:* Tabla de eventos relacionados a un actor implicado y una tensión o implicancia. Elaboración propia.
+> *Nota*: La tabla vincula los actores del dominio con los tres segmentos formales de Nexa; Account Owner se mantiene dentro del alcance administrativo del Segmento 2. Elaboración propia.
 
-### ***2.4.4. Pain points y restricciones operativas identificadas***
+### 2.4.3. Eventos del dominio y puntos de tensión principales
 
-*Pain points y restricciones operativas identificadas*
+*Eventos principales observados en el Big Picture EventStorming.*
 
-| Pain point o restricción | Dónde aparece | Efecto sobre el flujo |
-|----------|------------|------------------|
-| Validación comercial tardía | Entre envío y confirmación del pedido | Se prometen pedidos que luego deben corregirse o bloquearse |
-| Stock poco confiable o poco visible | Antes de la confirmación y durante preparación | La disponibilidad percibida no coincide con la realidad operativa |
-| Visibilidad fragmentada del estado | Entre confirmación, despacho e incidencia | Cada actor pierde contexto y aumenta la dependencia de llamadas o mensajes |
-| Control FEFO manual o disperso | Durante preparación y despacho | El manejo de vencimientos depende de memoria operativa y revisiones paralelas |
-| Cierre de entrega con evidencia insuficiente | Al final del flujo | Quedan reclamos, dudas sobre cumplimiento y poca trazabilidad del servicio |
-| Dependencia de coordinación humana para destrabar el proceso | En todo el ciclo del pedido | El flujo no escala bien y se vuelve sensible a interrupciones y retrabajo |
+| Bloque del dominio | Eventos observados | Interpretación del flujo |
+|---|---|---|
+| Contacto y registro | `CommercialContactRequested`, `OrganizationRegistrationSubmitted` | Una organización expresa interés y remite información para iniciar su evaluación. |
+| Evaluación organizacional | `OrganizationEligibilityReviewed`, `OrganizationApproved`, `OrganizationRejected`, `AdditionalOrganizationInformationRequested` | La organización es revisada y puede ser aprobada, rechazada o requerida para ampliar información. |
+| Responsabilidades y workspace | `OperationalAccountOwnerIdentified`, `BusinessResponsibilitiesAssigned`, `OperationalRulesDefined`, `CompanyWorkspaceEnabled` | Se identifica la responsabilidad administrativa y se habilita el espacio organizacional con reglas operativas. |
+| Cliente | `ClientRegistered`, `CustomerOnboarded` | El cliente queda registrado e incorporado al flujo comercial B2B. |
+| Catálogo | `CatalogPublished`, `ProductAddedToCatalog`, `CatalogProductDeactivated`, `PromotionActivated` | La oferta visible cambia mediante publicación, incorporación, desactivación y promociones. |
+| Inventario | `InventorySynced`, `InventoryReserved`, `LotsAssigned` | La disponibilidad se actualiza, se reserva y se vincula con lotes para sostener la preparación. |
+| Solicitud de compra | `PurchaseRequestSubmitted`, `PurchaseRequestApproved`, `OrderRejected`, `OrderCancelled` | La solicitud puede aprobarse o terminar en rechazo o cancelación según la revisión comercial. |
+| Coordinación alternativa | `ClientContacted`, `ManualOrderRegistered` | La coordinación humana interviene cuando se requiere aclaración o registro asistido. |
+| Despacho | `ShipmentStarted`, `TemperatureRecorded`, `DeliveryRescheduled`, `OrderDelivered` | La operación inicia el traslado, registra condiciones relevantes, reprograma si corresponde y cierra la entrega. |
+| Documentos comerciales | `BusinessDocumentAssociated`, `InvoiceIssued` | Se vinculan documentos comerciales referenciales como evidencia de seguimiento del pedido. |
+| Estado de pago | `PaymentReceived`, `PaymentDeclined` | Se registra el resultado referencial del pago para mantener visibilidad del cierre administrativo. |
 
-### ***2.4.5. Comandos, políticas y read models del dominio***
+> *Nota*: La tabla conserva los nombres de eventos usados por el equipo y ofrece una interpretación en español sin adelantar artefactos de diseño técnico. Elaboración propia.
 
-A partir de los eventos y los pain points identificados, el Big Picture permite explicitar los **comandos** (intenciones que disparan cambios de estado), las **políticas** (reacciones automáticas del dominio ante ciertos eventos) y los **read models** (vistas de solo lectura que los actores necesitan para decidir). Esta explicitación refuerza la lectura del flujo sin introducir artefactos técnicos nuevos: se derivan únicamente de los eventos ya modelados.
+Los eventos documentales y de pago expresan estados observados en el dominio. En esta sección no se presentan como procesamiento fiscal externo ni como procesamiento externo de pagos, sino como documentos comerciales referenciales y pagos referenciales vinculados con el seguimiento del pedido.
 
-| Comando (intención del actor) | Evento(s) que dispara | Política reactiva del dominio | Read Model que habilita la decisión |
-|---|---|---|---|
-| `CrearPurchaseRequest` (S3 / S1) | `PurchaseRequestRegistrada` | Si la solicitud proviene de canal informal, se registra el origen para mantener trazabilidad. | `CatálogoDisponibleParaCliente`, `FichaComercialDelCliente` |
-| `EnviarSolicitudParaValidación` (S1) | `SolicitudEnviadaParaValidaciónComercial` | La solicitud queda pendiente hasta revisar cliente, crédito, stock preliminar, dirección y documentos requeridos. | `ResumenDeSolicitudPendiente` |
-| `ValidarSolicitudComercial` (S1) | `SolicitudValidada` o `SolicitudBloqueada` | Si existen restricciones comerciales, la solicitud se bloquea y se comunica la observación. | `VistaDeCréditoYCondiciones`, `StockPreliminarPorCodigoInterno` |
-| `ConvertirEnPurchaseOrder` (S1) | `PurchaseOrderGenerada` | La solicitud validada se convierte en pedido confirmado y se notifica al comprador. | `EstadoDelPedidoParaCliente`, `DetalleDePurchaseOrder` |
-| `ReservarInventario` (S2) | `InventarioReservado` o `ReservaAjustada` | Se contrasta disponibilidad real con stock preliminar y se corrigen diferencias antes de preparar. | `StockRealPorCodigoInterno`, `ReservasPorPedido` |
-| `AsignarLotesFEFO` (S2) | `LoteAsignado` | Se prioriza el lote con vencimiento más próximo apto para despacho. | `ListaDePickingFEFO` |
-| `CrearDispatchOrder` (S2) | `DispatchOrderCreada` | Se define ruta, responsable, estado operativo y evidencias requeridas para la entrega. | `HojaDeRuta`, `PanelDeDespachos` |
-| `AsociarBusinessDocuments` (S1 / S2) | `BusinessDocumentsAsociados` | Los documentos quedan vinculados al pedido para consulta interna y visibilidad del comprador cuando corresponda. | `RepositorioDocumentalDelPedido` |
-| `ActualizarEstadoDeEntrega` (S2) | `PedidoDespachado` o `IncidenciaDeRutaRegistrada` | El estado se actualiza y se notifica a coordinación comercial y comprador cuando sea relevante. | `EstadoDeEntregaParaCliente`, `BitácoraDeIncidenciasPorPedido` |
-| `CerrarEntregaConPOD` (S2) | `EntregaCerradaConEvidencia` | El pedido queda cerrado con evidencia mínima de conformidad o proof of delivery. | `EvidenciaDeEntrega`, `HistorialDelPedido` |
-| `CancelarPedido` (S1 / S3) | `PedidoCancelado` | Se liberan reservas y se comunica la cancelación a los actores involucrados. | `EstadoDelPedidoParaCliente` |
+### 2.4.4. Pain points y restricciones operativas identificadas
 
-Los comandos expresan la intención del actor; los eventos confirman que el estado efectivamente cambió; las políticas capturan las reacciones automáticas que el dominio debe sostener (reservas, validaciones, notificaciones, FEFO, liberación de stock); y los read models son las vistas consolidadas que permiten al S1, al S2 y al S3 decidir con información consistente. Juntos, cierran la secuencia del Big Picture como una cadena de *intención → hecho → reacción → visibilidad*, no como pantallas aisladas.
+*Pain points y restricciones observados sobre la línea temporal.*
 
-### ***2.4.6. Evidencia de colaboración del modelado***
+| Pain point o tensión | Dónde aparece | Efecto sobre el flujo |
+|---|---|---|
+| Fragmented Organization Registration | Registro y evaluación de la organización | La información distribuida dificulta revisar elegibilidad y solicitar aclaraciones de forma consistente. |
+| Manual Validation Bottleneck | Revisión comercial de la solicitud | La dependencia de validación humana puede retrasar la aprobación y aumentar el retrabajo. |
+| Manual Payment Reconciliation | Cierre administrativo del pedido | La conciliación manual reduce la visibilidad compartida sobre el estado de pago referencial. |
+| Visibilidad fragmentada | Entre comercial, operación y comprador | Los actores pueden perder contexto sobre decisiones, cambios y estados del pedido. |
+| Dependencia de coordinación humana | Solicitud, incidencias y reprogramación | Las aclaraciones y excepciones dependen de comunicación oportuna entre responsables. |
+| Riesgo de retraso en la comunicación | Validación, despacho y entrega | Una actualización tardía afecta la coordinación entre comercial, operación y comprador. |
 
-  ![Reunión de modelado EventStorming del equipo KING](../assets/images/front-matter/collaboration/team-collaboration-meeting.jpg)
-  
-> *Nota:* *Figura: Sesión colaborativa del equipo KING durante la construcción del Big Picture EventStorming. Elaboración propia.*
+> *Nota*: La tabla reúne los pain points visibles en Step 3 y tensiones operativas justificadas por la secuencia del Big Picture. Elaboración propia.
 
-### ***2.4.7. Flujo resumido del dominio***
+### 2.4.5. Lectura del flujo para el diseño posterior
 
-1. El comprador B2B consulta el catálogo y crea una solicitud desde el portal, o el S1 registra una solicitud recibida por WhatsApp, llamada o Excel.
-2. El S1 identifica al cliente y revisa condiciones comerciales, crédito, observaciones, dirección, stock preliminar y documentos requeridos.
-3. La solicitud pasa a validación comercial antes de convertirse en un pedido confirmado.
-4. Si la validación es satisfactoria, el S1 convierte la solicitud en una Purchase Order con trazabilidad del origen.
-5. El S2 revisa inventario real, reservas, lotes, vencimientos, criterios FEFO, temperatura y prioridad de despacho.
-6. El S2 prepara el pedido y genera la Dispatch Order con ruta, responsable, estado operativo y evidencias requeridas.
-7. El S1 y el S2 asocian los Business Documents necesarios para el seguimiento y cierre del pedido.
-8. Durante el despacho, el S2 actualiza estados, registra incidencias y permite que el S3 consulte el avance.
-9. La entrega se cierra con evidencia o POD, y el pedido queda concluido con historial trazable.
+*Lectura del flujo para el diseño posterior.*
 
-Este modelado refuerza dos ideas centrales del proyecto: el problema principal no está en un único “módulo” aislado, sino en la transición entre captura, validación, disponibilidad, despacho y cierre; y las restricciones operativas del dominio siguen siendo decisivas para definir reglas y criterios de funcionamiento a lo largo del flujo.
+| Bloque del flujo | Eventos observados | Implicancia para el diseño posterior |
+|---|---|---|
+| Registro organizacional y tenant/workspace | `OrganizationRegistrationSubmitted`, `OrganizationEligibilityReviewed`, `OrganizationApproved`, `CompanyWorkspaceEnabled` | El producto requiere separar información y operación por tenant/workspace, manteniendo Account Owner dentro del Segmento 2. |
+| Catálogo y cliente | `CatalogPublished`, `ProductAddedToCatalog`, `ClientRegistered`, `CustomerOnboarded` | El comprador necesita visibilidad de catálogo y condiciones comerciales antes de solicitar productos. |
+| Solicitud y validación comercial | `PurchaseRequestSubmitted`, `PurchaseRequestApproved`, `OrderRejected`, `ClientContacted`, `ManualOrderRegistered` | La validación manual aparece como punto crítico y debe quedar trazable para reducir retrabajo. |
+| Inventario y lotes | `InventorySynced`, `InventoryReserved`, `LotsAssigned` | La disponibilidad y asignación de lotes condicionan la confirmación y preparación del pedido. |
+| Despacho y entrega | `ShipmentStarted`, `TemperatureRecorded`, `DeliveryRescheduled`, `OrderDelivered` | La operación necesita visibilidad del despacho y registro de incidencias o condiciones de entrega. |
+| Documentos y pagos referenciales | `BusinessDocumentAssociated`, `InvoiceIssued`, `PaymentReceived`, `PaymentDeclined` | El cierre requiere documentos comerciales y pagos referenciales vinculados al pedido, sin atribuirles alcance tributario. |
 
-La principal contribución del EventStorming al capítulo no es solo ordenar nombres de eventos, sino mostrar que el valor del sistema depende de sostener continuidad entre estados. Si el pedido cambia de mano entre actores, pero el sistema no conserva reglas, evidencia y visibilidad comunes, el problema persiste aunque existan interfaces nuevas. En ese sentido, el modelado confirma que la unidad real de diseño no es una pantalla aislada, sino el tránsito completo del pedido entre S1, S2, S3 y las restricciones definidas por la operación.
+> *Nota*: La tabla resume cómo los eventos del Big Picture orientan el diseño posterior sin adelantar los artefactos de Design-Level EventStorming. Elaboración propia.
+
+Los comandos, políticas, read models, aggregates y bounded contexts se desarrollan en la sección 4.6.1, donde corresponde profundizar el Design-Level EventStorming. En 2.4 se conserva únicamente la lectura general del dominio.
+
+### 2.4.6. Evidencia de colaboración del modelado
+
+*Sesión colaborativa de modelado de EventStorming.*
+
+![Reunión de modelado EventStorming del equipo KING](../assets/images/front-matter/collaboration/team-collaboration-meeting.jpg)
+
+> *Nota*: La captura documenta una sesión colaborativa del equipo KING durante la construcción del modelado. La evidencia visual final del Big Picture corresponde a Step 1, Step 2 y Step 3 incorporados en esta sección. Elaboración propia.
+
+### 2.4.7. Flujo resumido del dominio
+
+1. Se solicita contacto comercial o registro organizacional.
+2. Se revisa la elegibilidad de la organización y se solicita información adicional si corresponde.
+3. Se aprueba o rechaza la organización.
+4. Se identifica el Account Owner operativo y se habilita el workspace de la empresa.
+5. Se registran clientes y se publica el catálogo.
+6. El comprador o coordinación comercial registra la solicitud de compra.
+7. La solicitud se aprueba, rechaza, cancela o deriva a contacto con el cliente o registro manual.
+8. Operación sincroniza inventario, reserva disponibilidad y asigna lotes.
+9. Se inicia el despacho, se registran condiciones relevantes como temperatura y se reprograma si corresponde.
+10. Se entrega el pedido y se asocian documentos comerciales referenciales.
+11. Se registra el estado de pago referencial cuando corresponde.
+
+El flujo resumido evidencia que el valor de Nexa depende de conservar continuidad entre registro organizacional, coordinación comercial, disponibilidad, despacho y cierre. Los pain points identificados orientan el diseño posterior, mientras que las decisiones detalladas se reservan para el Design-Level EventStorming.
