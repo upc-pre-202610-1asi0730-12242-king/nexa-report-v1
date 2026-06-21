@@ -8,3 +8,4 @@
 * [2026-06-20T16:34:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch1)] add 1-2-solution-profile.md to ch1 structure
 * [2026-06-21T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] add 2-1-competitors.md to ch2 structure
 * [2026-06-21T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch2)] add 2-4-big-picture-event-storming.md to ch2 structure
+* [2026-06-21T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-5-ubiquitous-language.md to ch2 structure
