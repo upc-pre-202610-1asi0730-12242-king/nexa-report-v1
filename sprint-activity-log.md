@@ -13,3 +13,4 @@
 * [2026-06-22T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 0
 * [2026-06-22T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [style(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 1
 * [2026-06-22T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [chore(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 2
+* [2026-06-22T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 3
