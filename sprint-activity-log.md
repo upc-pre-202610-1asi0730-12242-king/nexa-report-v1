@@ -14,3 +14,4 @@
 * [2026-06-22T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [style(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 1
 * [2026-06-22T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [chore(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 2
 * [2026-06-22T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 3
+* [2026-06-23T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] add 2-2-interviews.md to ch2 structure
