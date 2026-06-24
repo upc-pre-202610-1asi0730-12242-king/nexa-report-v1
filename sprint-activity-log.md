@@ -19,3 +19,4 @@
 * [2026-06-23T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-2-interviews.md to ch2 structure
 * [2026-06-23T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-3-needfinding.md to ch2 structure
 * [2026-06-24T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] update user stories description, impact mapping, and product backlog - phase 0
+* [2026-06-24T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [style(ch3)] update user stories description, impact mapping, and product backlog - phase 1
