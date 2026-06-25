@@ -24,3 +24,4 @@
 * [2026-06-24T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [docs(ch3)] update user stories description, impact mapping, and product backlog - phase 3
 * [2026-06-25T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch3)] add 3-2-impact-mapping.md to ch3 structure
 * [2026-06-25T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-3-product-backlog.md to ch3 structure
+* [2026-06-25T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-2-impact-mapping.md to ch3 structure
