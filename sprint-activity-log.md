@@ -27,3 +27,4 @@
 * [2026-06-25T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-2-impact-mapping.md to ch3 structure
 * [2026-06-25T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-3-product-backlog.md to ch3 structure
 * [2026-06-26T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
+* [2026-06-26T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
