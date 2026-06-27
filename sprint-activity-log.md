@@ -32,3 +32,4 @@
 * [2026-06-26T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
 * [2026-06-27T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
 * [2026-06-27T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-27T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
