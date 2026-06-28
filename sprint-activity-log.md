@@ -38,3 +38,4 @@
 * [2026-06-28T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch4)] add 4-1-style-guidelines.md to ch4 structure
 * [2026-06-28T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-3-landing-page-ui-design.md to ch4 structure
 * [2026-06-28T16:34:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-1-style-guidelines.md to ch4 structure
+* [2026-06-28T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-3-landing-page-ui-design.md to ch4 structure
