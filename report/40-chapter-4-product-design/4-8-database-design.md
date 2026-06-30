@@ -1,249 +1,393 @@
-# 4.8. Database Design
+## 4.8. Database Design
 
-Esta sección presenta el diseño de base de datos de Nexa. El modelo de base de datos está alineado con la arquitectura de software dirigida por el dominio documentada en la sección 4.6 y con el diseño orientado a objetos documentado en la sección 4.7.
+Esta sección presenta el diseño de base de datos de Nexa, actualizado de acuerdo con los bounded contexts definidos en la arquitectura de dominio y con la estructura relacional implementada en el backend `King.Nexa.Platform`. El modelo de persistencia se organiza bajo un enfoque multi-tenant orientado a SaaS, donde la información operativa de cada organización se separa lógicamente mediante el identificador `tenant_id` en las tablas transaccionales y de configuración que pertenecen a cada tenant.
 
-El modelo de persistencia se organiza alrededor de los cinco bounded contexts principales de la plataforma: **Catalog Management**, **Sales**, **Warehouse**, **Logistics** e **Invoicing**. Además, el modelo incluye tablas de soporte transversal para identity, access y gestión de tenants. Los read models se incluyen como estructuras derivadas utilizadas para dashboards y vistas de reportes.
-
-El diseño sigue un enfoque de base de datos relacional utilizando PostgreSQL para el backend AV2 y el despliegue académico AV2. Cada diagrama presenta tablas, columnas, primary keys, foreign keys y relaciones requeridas para persistir la información gestionada por el modelo de dominio.
+El modelo se organiza alrededor de cinco bounded contexts principales de la plataforma: **Catalog Management**, **Sales**, **Warehouse**, **Logistics** e **Invoicing**. Además, incluye contextos y estructuras de soporte transversal para **Tenant Management**, **Identity & Access Management** y catálogos compartidos de referencia. Los read models se mantienen como estructuras derivadas de consulta para dashboards y reportes, sin tratarse como un bounded context independiente del negocio.
 
 Desde la perspectiva DDD, las relaciones entre tablas de distintos bounded contexts se interpretan como referencias persistentes por identificador dentro de un modelo relacional integrado. Estas relaciones no implican que los aggregates de un contexto accedan directamente al comportamiento interno de otro contexto. La coordinación entre contextos debe realizarse mediante application services, domain events, integration events o consultas controladas según el caso de uso.
 
-## 4.8.1. Database Diagrams
+### 4.8.1. Database Diagrams
 
-Los diagramas de base de datos se agrupan por contexto para preservar los límites del dominio y mejorar la mantenibilidad. Esta estructura también ayuda a evitar que los datos comerciales, de inventario, logística e invoicing se mezclen en un mismo modelo conceptual.
+Los diagramas de base de datos se agrupan por contexto para preservar los límites del dominio y mejorar la mantenibilidad. Esta estructura evita que los datos comerciales, de catálogo, inventario, logística, facturación y soporte multi-tenant se mezclen en un mismo modelo conceptual sin criterio táctico.
+
+
+*Grupos de persistencia definidos para el diseño de base de datos.*
 
 | Grupo | Propósito |
 |---|---|
-| Identity and Access Support | Soporta la gestión de usuarios, roles, permisos, tenants y sesiones. |
-| Catalog Management | Persiste productos, categorías, promociones y datos de visibilidad del catálogo. |
-| Sales | Persiste clientes B2B, solicitudes de compra, órdenes de venta, ítems de orden y datos de validación comercial. |
-| Warehouse | Persiste almacenes, lotes de inventario, reservas y movimientos de stock. |
-| Logistics | Persiste órdenes de despacho, eventos de trazabilidad, incidencias, controles de temperatura y evidencia de entrega. |
-| Invoicing | Persiste documentos comerciales, registros de pago, estados de pago y resúmenes de cobro. |
-| Read Models | Persiste estructuras derivadas de consulta para reportes y dashboards. |
+| Tenant Management and Identity & Access Support | Soporta la gestión de organizaciones, workspaces, usuarios, membresías, reglas, personalización, suscripciones y sesiones de acceso. |
+| Catalog Management | Persiste el catálogo maestro de productos, categorías, marcas, precios, stock visible y condiciones de conservación. |
+| Sales | Persiste cuentas B2B, solicitudes de compra, líneas de solicitud, órdenes, ítems de orden, promociones, mensajes comerciales y solicitudes de crédito. |
+| Warehouse | Persiste almacenes, ítems de inventario, lotes, movimientos de stock y reservas de inventario. |
+| Logistics | Persiste envíos, órdenes de despacho, eventos de despacho, evidencias de entrega, mediciones de temperatura y tareas de portal de cliente. |
+| Invoicing | Persiste facturas, pagos, documentos comerciales, métodos de pago, procesos de pago y notificaciones. |
+| Read Models | Persiste o representa estructuras derivadas de consulta para dashboards y vistas de reporte. |
 
-### Identity and Access Support Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+#### Tenant Management and Identity & Access Support Database Diagram
+
+*Diagrama de base de datos de Tenant Management e Identity and Access.*
 
 ![Identity and Access Database Diagram](../assets/images/chapter-4/database/identity-and-access.png)
 
- > *Nota:* Identity and Access se representa como un modelo de soporte transversal, no como un bounded context principal del negocio. Elaboración propia.
+> *Nota*: Tenant Management e Identity & Access Management se representan como capacidades de soporte transversal. No forman parte de los bounded contexts core del negocio, pero habilitan el funcionamiento SaaS multi-tenant de la plataforma. Elaboración propia.
 
-El modelo de soporte de Identity and Access almacena la información requerida para autenticación, autorización y operación basada en tenants.
+El modelo de soporte administra organizaciones, espacios de trabajo, membresías, reglas de configuración, campos personalizados, suscripciones y usuarios. La tabla `tenants` representa a cada organización B2B que opera en Nexa. La relación entre usuarios y tenants no se modela de forma directa, sino mediante `user_workspace_memberships`, que conecta `users`, `workspaces` y `tenants`.
 
-| Tabla | Columnas principales | Descripción |
-|---|---|---|
-| TENANTS | tenant_id, legal_name, trade_name, status, created_at | Almacena las empresas u organizaciones que utilizan Nexa. |
-| USERS | user_id, tenant_id, first_name, last_name, email, password_hash, status, created_at | Almacena los usuarios de la plataforma. |
-| ROLES | role_id, tenant_id, name, description | Almacena los roles asignados a los usuarios. |
-| PERMISSIONS | permission_id, code, description | Almacena los permisos de acceso disponibles. |
-| USER_ROLES | user_id, role_id | Asocia usuarios con roles. |
-| ROLE_PERMISSIONS | role_id, permission_id | Asocia roles con permisos. |
-| USER_SESSIONS | session_id, user_id, started_at, expires_at, status | Almacena sesiones autenticadas de usuarios. |
 
-Restricciones principales:
 
-| Restricción | Descripción |
-|---|---|
-| USERS.tenant_id FK | Referencia a TENANTS.tenant_id. |
-| USER_ROLES.user_id FK | Referencia a USERS.user_id. |
-| USER_ROLES.role_id FK | Referencia a ROLES.role_id. |
-| ROLE_PERMISSIONS.role_id FK | Referencia a ROLES.role_id. |
-| ROLE_PERMISSIONS.permission_id FK | Referencia a PERMISSIONS.permission_id. |
-| USER_SESSIONS.user_id FK | Referencia a USERS.user_id. |
-| USERS.email UK | Evita correos electrónicos duplicados dentro de la plataforma o dentro del alcance de tenant. |
 
-### Catalog Management Database Diagram
 
-![Catalog Management Database Diagram](../assets/images/chapter-4/database/catalog.png)
 
- > *Nota:* Catalog Management almacena el catálogo de productos, categorías, códigos internos de producto e información de visibilidad comercial. Elaboración propia.
 
-Catalog Management debe utilizar `internal_code` como identificador canónico para la búsqueda y reconocimiento de productos dentro del dominio de negocio. El término `sku` no debe utilizarse como término principal del dominio porque el lenguaje ubicuo de Nexa se refiere al código interno de producto.
+*Tablas principales de Tenant Management e Identity and Access.*
 
 | Tabla | Columnas principales | Descripción |
 |---|---|---|
-| CATEGORIES | category_id, name, description, status | Almacena categorías de productos. |
-| PRODUCTS | product_id, category_id, internal_code, commercial_name, description, conservation_temperature_min, conservation_temperature_max, unit_price, status, created_at, updated_at | Almacena productos gourmet refrigerados. |
-| PROMOTIONS | promotion_id, name, description, start_date, end_date, discount_percentage, status | Almacena promociones comerciales. |
-| PRODUCT_PROMOTIONS | product_id, promotion_id | Asocia productos con promociones cuando corresponde. |
+| `tenants` | `id`, `name`, `legal_name`, `slug`, `ruc`, `workspace_url`, `email_domain`, `plan`, `status`, `country`, `created_at`, `updated_at` | Almacena las organizaciones B2B que utilizan Nexa como plataforma SaaS. |
+| `users` | `id`, `username`, `email`, `password_hash`, `role`, `full_name`, `phone`, `preferred_language`, `critical_notifications_enabled`, `created_at`, `updated_at` | Almacena usuarios globales de acceso a la plataforma. |
+| `tenant_members` | `id`, `tenant_id`, `full_name`, `email`, `role`, `department`, `status`, `portal_access`, `created_at`, `updated_at` | Registra miembros administrativos asociados a un tenant. |
+| `tenant_rules` | `id`, `tenant_id`, `code`, `name`, `description`, `category`, `enabled`, `created_at`, `updated_at` | Almacena reglas configurables por organización. |
+| `tenant_custom_fields` | `id`, `tenant_id`, `code`, `label`, `target_resource`, `field_type`, `required`, `enabled`, `created_at`, `updated_at` | Permite definir campos personalizados por tenant para recursos específicos. |
+| `tenant_subscriptions` | `id`, `tenant_id`, `plan`, `seats`, `warehouses`, `payment_status`, `next_billing_date`, `billing_contact`, `created_at`, `updated_at` | Registra la suscripción comercial asociada a cada tenant. |
+| `workspaces` | `id`, `tenant_id`, `name`, `slug`, `url`, `email_domain`, `status`, `is_primary`, `created_at`, `updated_at` | Representa los espacios de trabajo configurados para cada organización. |
+| `workspace_features` | `id`, `tenant_id`, `code`, `name`, `segment`, `enabled`, `plan_required`, `created_at`, `updated_at` | Registra funcionalidades habilitadas para cada tenant. |
+| `user_workspace_memberships` | `id`, `tenant_id`, `workspace_id`, `user_id`, `client_account_id`, `email`, `full_name`, `role`, `department`, `status`, `portal_access`, `created_at`, `updated_at` | Vincula usuarios con workspaces y, cuando corresponde, con una cuenta B2B del contexto Sales. |
+| `workspace_preferences` | `id`, `tenant_id`, `workspace_id`, `key`, `value`, `value_type`, `created_at`, `updated_at` | Almacena preferencias y configuraciones por workspace. |
+| `organization_registration_requests` | `id`, `external_id`, `status`, `company_name`, `workspace_name`, `workspace_slug`, `admin_email`, `payload_json`, `submitted_at`, `created_at`, `updated_at` | Registra solicitudes de registro de organizaciones antes de crear formalmente el tenant. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
 Restricciones principales:
 
+
+
+
+
+
+
+*Restricciones principales de Tenant Management e Identity and Access.*
+
 | Restricción | Descripción |
 |---|---|
-| PRODUCTS.category_id FK | Referencia a CATEGORIES.category_id. |
-| PRODUCTS.internal_code UK | Asegura que cada producto tenga un código interno único. |
-| PRODUCT_PROMOTIONS.product_id FK | Referencia a PRODUCTS.product_id. |
-| PRODUCT_PROMOTIONS.promotion_id FK | Referencia a PROMOTIONS.promotion_id. |
-| PRODUCTS.status CHECK | Restringe el estado del producto a valores permitidos como active, inactive o unavailable. |
+| `tenants.slug` UK | Evita duplicidad de identificadores públicos de organización. |
+| `tenant_members.tenant_id` FK | Referencia a `tenants.id`. |
+| `tenant_rules.tenant_id` FK | Referencia a `tenants.id`. |
+| `tenant_custom_fields.tenant_id` FK | Referencia a `tenants.id`. |
+| `tenant_subscriptions.tenant_id` FK + UK | Cada tenant mantiene una suscripción principal. |
+| `workspaces.tenant_id` FK | Referencia a `tenants.id`. |
+| `workspace_features.tenant_id` FK | Referencia a `tenants.id`. |
+| `user_workspace_memberships.tenant_id` FK | Referencia a `tenants.id`. |
+| `user_workspace_memberships.workspace_id` FK | Referencia a `workspaces.id` dentro del mismo tenant. |
+| `user_workspace_memberships.user_id` FK | Referencia a `users.id`. |
+| `workspace_preferences.workspace_id` FK | Referencia a `workspaces.id` dentro del mismo tenant. |
+| `organization_registration_requests.external_id` UK | Evita duplicidad de solicitudes externas de registro. |
 
-### Sales Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+#### Catalog Management Database Diagram
+
+*Diagrama de base de datos de Catalog Management.*
+
+![Catalog Management Database Diagram](../assets/images/chapter-4/database/catalog.png) 
+
+> *Nota*: Catalog Management almacena el catálogo maestro de productos, sus categorías, marcas, precios, stock visible y condiciones de cadena de frío. Elaboración propia.
+
+Catalog Management utiliza `catalog_item_id` y `product_id` como identificadores persistentes de producto dentro del alcance de cada tenant. La unicidad de estos identificadores debe evaluarse junto con `tenant_id`, debido a que cada organización opera su propio catálogo.
+
+*Tablas principales de Catalog Management.*
+
+| Tabla | Columnas principales | Descripción |
+|---|---|---|
+| `catalog_items` | `id`, `tenant_id`, `catalog_item_id`, `product_id`, `item_name`, `brand_name`, `category_name`, `description`, `image_url`, `unit_price_amount`, `unit_price_currency`, `available_stock`, `cold_chain_requirement`, `is_active`, `created_at`, `updated_at` | Almacena productos del catálogo comercial de cada tenant. |
+| `categories` | `id`, `name`, `description`, `is_active`, `created_at`, `updated_at` | Almacena categorías de productos utilizadas para clasificación comercial. |
+| `brands` | `id`, `name`, `description`, `is_active`, `created_at`, `updated_at` | Almacena marcas de productos utilizadas en el catálogo. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+Restricciones principales:
+
+*Restricciones principales de Catalog Management.*
+
+| Restricción | Descripción |
+|---|---|
+| `catalog_items.tenant_id` FK | Referencia a `tenants.id`. |
+| `catalog_items.tenant_id + catalog_item_id` UK | Asegura que cada ítem de catálogo sea único dentro del tenant. |
+| `catalog_items.tenant_id + product_id` UK | Asegura que cada identificador de producto sea único dentro del tenant. |
+| `categories.name` UK | Evita duplicidad de categorías maestras. |
+| `brands.name` UK | Evita duplicidad de marcas maestras. |
+| `catalog_items.cold_chain_requirement` CHECK | Restringe el requisito de conservación a valores controlados del dominio. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+#### Sales Database Diagram
+
+*Diagrama de base de datos de Sales.*
 
 ![Sales Database Diagram](../assets/images/chapter-4/database/orders-and-commercial-management.png)
 
- > *Nota:* Sales almacena clientes B2B, solicitudes de compra, validaciones comerciales, órdenes de venta confirmadas e ítems de orden. Elaboración propia.
+> *Nota*: Sales almacena cuentas B2B, solicitudes de compra, órdenes comerciales, ítems de orden, promociones, mensajes comerciales y solicitudes de crédito. Elaboración propia.
 
-El modelo de Sales separa las solicitudes de compra de las órdenes de venta confirmadas. Esta separación es necesaria porque el proceso de negocio requiere validación comercial antes de confirmar una orden.
+El modelo de Sales separa las solicitudes de compra (`purchase_requests`) de las órdenes confirmadas (`orders`). Esta separación permite registrar demanda comercial, validación de crédito, coordinación con inventario y posterior confirmación de pedidos.
+
+*Tablas principales de Sales.*
 
 | Tabla | Columnas principales | Descripción |
 |---|---|---|
-| B2B_CLIENTS | client_id, tenant_id, business_name, tax_identifier, contact_name, contact_email, phone, status | Almacena información de clientes B2B. |
-| COMMERCIAL_CONDITIONS | condition_id, client_id, payment_terms, credit_limit, current_credit_balance, status | Almacena condiciones comerciales y de crédito de cada cliente. |
-| PURCHASE_REQUESTS | request_id, client_id, requested_by_user_id, request_date, external_channel, request_status, observations | Almacena solicitudes de compra enviadas por compradores o registradas manualmente. |
-| PURCHASE_REQUEST_ITEMS | request_item_id, request_id, product_id, requested_quantity, requested_unit_price | Almacena productos solicitados en cada solicitud de compra. |
-| SALES_ORDERS | order_id, request_id, client_id, order_date, order_status, total_amount, confirmed_by_user_id | Almacena órdenes de venta confirmadas. |
-| ORDER_ITEMS | order_item_id, order_id, product_id, quantity, unit_price, subtotal | Almacena productos incluidos en cada orden de venta confirmada. |
-| CREDIT_WARNINGS | warning_id, client_id, request_id, warning_type, description, status, created_at | Almacena alertas de crédito o pago generadas durante la validación comercial. |
-| ORDER_OBSERVATIONS | observation_id, order_id, user_id, description, created_at | Almacena observaciones comerciales u operativas relacionadas con una orden. |
+| `client_accounts` | `id`, `tenant_id`, `code`, `business_name`, `commercial_name`, `ruc`, `segment`, `contact`, `contact_email`, `phone`, `address`, `district`, `province`, `delivery_reference`, `document_profile`, `payment_condition`, `monthly_credit_limit`, `monthly_credit_used`, `monthly_credit_status`, `delivery_preference`, `portal_access`, `seller_workspace_email`, `status`, `created_at`, `updated_at` | Almacena cuentas de clientes B2B asociadas a cada tenant. |
+| `purchase_requests` | `id`, `tenant_id`, `client_account_id`, `code`, `origin`, `status`, `priority`, `delivery_address`, `delivery_district`, `delivery_city`, `delivery_province`, `delivery_reference`, `requested_delivery_date`, `payment_option`, `shipping_estimate`, `comments`, `commercial_owner`, `created_at`, `updated_at` | Registra solicitudes de compra previas a la confirmación de una orden. |
+| `purchase_request_lines` | `id`, `tenant_id`, `purchase_request_id`, `catalog_item_id`, `quantity`, `unit`, `estimated_weight_kg`, `notes`, `created_at`, `updated_at` | Registra los productos solicitados en cada solicitud de compra. |
+| `orders` | `id`, `tenant_id`, `client_account_id`, `order_number`, `customer_id`, `status`, `priority`, `notes`, `delivery_address_type`, `delivery_address`, `delivery_district`, `delivery_city`, `delivery_province`, `delivery_reference`, `requested_delivery_date`, `dispatch_note`, `total_amount`, `total_currency`, `payment_confirmation`, `inventory_reservation`, `rejection_reason`, `confirmed_at`, `created_at`, `updated_at` | Almacena órdenes comerciales confirmadas o gestionadas por el tenant. |
+| `order_items` | `id`, `tenant_id`, `order_id`, `product_id`, `catalog_item_id`, `item_name`, `quantity`, `unit_price_amount`, `unit_price_currency`, `subtotal_amount`, `subtotal_currency` | Registra los productos incluidos en cada orden. |
+| `promotions` | `id`, `tenant_id`, `code`, `name`, `campaign`, `description`, `discount_label`, `visibility`, `commercial_rule`, `adjustment_type`, `target_segment`, `notes`, `catalog_scope`, `starts_on`, `ends_on`, `status`, `created_at`, `updated_at` | Almacena promociones comerciales por tenant. |
+| `promotion_catalog_items` | `id`, `tenant_id`, `promotion_id`, `catalog_item_id`, `created_at`, `updated_at` | Relaciona promociones con ítems de catálogo. |
+| `conversation_messages` | `id`, `tenant_id`, `client_account_id`, `purchase_request_id`, `order_id`, `sender_role`, `sender_name`, `body`, `visible_to_buyer`, `created_at`, `updated_at` | Registra mensajes comerciales asociados a cuentas, solicitudes u órdenes. |
+| `credit_requests` | `id`, `tenant_id`, `client_account_id`, `code`, `requested_amount`, `reason`, `status`, `created_by_user_id`, `reviewed_by`, `resolution_note`, `created_at`, `updated_at` | Registra solicitudes de crédito o ampliación comercial para clientes B2B. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
 Restricciones principales:
 
+*Restricciones principales de Sales.*
+
 | Restricción | Descripción |
 |---|---|
-| B2B_CLIENTS.tenant_id FK | Referencia a TENANTS.tenant_id. |
-| COMMERCIAL_CONDITIONS.client_id FK | Referencia a B2B_CLIENTS.client_id. |
-| PURCHASE_REQUESTS.client_id FK | Referencia a B2B_CLIENTS.client_id. |
-| PURCHASE_REQUEST_ITEMS.request_id FK | Referencia a PURCHASE_REQUESTS.request_id. |
-| PURCHASE_REQUEST_ITEMS.product_id FK | Referencia a PRODUCTS.product_id. |
-| SALES_ORDERS.request_id FK | Referencia a PURCHASE_REQUESTS.request_id. |
-| SALES_ORDERS.client_id FK | Referencia a B2B_CLIENTS.client_id. |
-| ORDER_ITEMS.order_id FK | Referencia a SALES_ORDERS.order_id. |
-| ORDER_ITEMS.product_id FK | Referencia a PRODUCTS.product_id. |
-| CREDIT_WARNINGS.client_id FK | Referencia a B2B_CLIENTS.client_id. |
-| CREDIT_WARNINGS.request_id FK | Referencia a PURCHASE_REQUESTS.request_id. |
-| ORDER_OBSERVATIONS.order_id FK | Referencia a SALES_ORDERS.order_id. |
+| `client_accounts.tenant_id` FK | Referencia a `tenants.id`. |
+| `client_accounts.tenant_id + code` UK | Evita duplicidad de código de cliente dentro del tenant. |
+| `purchase_requests.tenant_id + code` UK | Evita duplicidad de solicitudes dentro del tenant. |
+| `purchase_requests.client_account_id` FK | Referencia a `client_accounts.id` dentro del mismo tenant. |
+| `purchase_request_lines.purchase_request_id` FK | Referencia a `purchase_requests.id` dentro del mismo tenant. |
+| `purchase_request_lines.catalog_item_id` FK | Referencia a `catalog_items.id` dentro del mismo tenant. |
+| `orders.tenant_id + order_number` UK | Evita duplicidad de número de orden dentro del tenant. |
+| `orders.client_account_id` FK | Referencia a `client_accounts.id` dentro del mismo tenant. |
+| `order_items.order_id` FK | Referencia a `orders.id` dentro del mismo tenant. |
+| `promotions.tenant_id + code` UK | Evita duplicidad de campañas promocionales dentro del tenant. |
+| `promotion_catalog_items.tenant_id + promotion_id + catalog_item_id` UK | Evita asignar dos veces el mismo producto a una promoción. |
+| `credit_requests.tenant_id + code` UK | Evita duplicidad de solicitudes de crédito dentro del tenant. |
 
-### Warehouse Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+#### Warehouse Database Diagram
+
+*Diagrama de base de datos de Warehouse.*
 
 ![Warehouse Database Diagram](../assets/images/chapter-4/database/inventory.png)
 
- > *Nota:* Warehouse almacena almacenes, lotes de inventario, reservas de stock y movimientos de stock. Elaboración propia.
+> *Nota*: Warehouse almacena almacenes, ítems de inventario, lotes físicos, reservas de stock y movimientos de inventario. Elaboración propia.
 
-El modelo de Warehouse se basa en lotes de inventario porque los productos gourmet refrigerados requieren control de fecha de vencimiento y trazabilidad. Las reservas se representan explícitamente para conectar la disponibilidad de stock con la demanda comercial validada.
+El modelo de Warehouse se basa en ítems de inventario y lotes porque los productos gourmet refrigerados requieren control de disponibilidad, reserva, vencimiento, temperatura y trazabilidad. Las reservas se representan de forma explícita mediante `inventory_reservation_records`, permitiendo conectar la disponibilidad de stock con órdenes o solicitudes de compra.
+
+*Tablas principales de Warehouse.*
 
 | Tabla | Columnas principales | Descripción |
 |---|---|---|
-| WAREHOUSES | warehouse_id, tenant_id, name, address, status | Almacena ubicaciones de almacén. |
-| INVENTORY_LOTS | lot_id, warehouse_id, product_id, lot_code, expiration_date, total_quantity, available_quantity, reserved_quantity, lot_status | Almacena inventario por producto, almacén y lote. |
-| RESERVATIONS | reservation_id, lot_id, request_id, order_id, reserved_quantity, reservation_status, reserved_at, released_at | Almacena stock reservado para solicitudes de compra u órdenes de venta. |
-| STOCK_MOVEMENTS | movement_id, lot_id, movement_type, quantity, reason, created_by_user_id, created_at | Almacena ingresos, salidas, ajustes y liberaciones de reserva de stock. |
+| `warehouses` | `id`, `tenant_id`, `name`, `location`, `minimum_temperature`, `maximum_temperature`, `is_active`, `created_at`, `updated_at` | Almacena almacenes físicos operados por cada tenant. |
+| `inventory_items` | `id`, `tenant_id`, `product_id`, `catalog_item_id`, `available_quantity`, `reserved_quantity`, `warehouse_location`, `minimum_temperature`, `maximum_temperature`, `created_at`, `updated_at` | Almacena disponibilidad agregada de inventario por producto del catálogo. |
+| `inventory_lots` | `id`, `tenant_id`, `inventory_item_id`, `warehouse_id`, `lot_code`, `quantity`, `reserved_quantity`, `entry_date`, `expiration_date`, `zone`, `status`, `minimum_temperature`, `maximum_temperature`, `created_at`, `updated_at` | Registra lotes físicos de inventario con control de almacén, zona, vencimiento y temperatura. |
+| `inventory_movements` | `id`, `tenant_id`, `inventory_item_id`, `inventory_lot_id`, `warehouse_id`, `order_id`, `code`, `movement_type`, `quantity`, `reason`, `performed_by`, `temperature_reading`, `occurred_at`, `created_at`, `updated_at` | Registra entradas, salidas, ajustes y movimientos operativos de stock. |
+| `inventory_reservation_records` | `id`, `tenant_id`, `inventory_item_id`, `inventory_lot_id`, `order_id`, `purchase_request_id`, `code`, `units`, `status`, `created_at`, `updated_at` | Registra reservas de inventario asociadas a órdenes o solicitudes de compra. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
 Restricciones principales:
 
+*Restricciones principales de Warehouse.*
+
 | Restricción | Descripción |
 |---|---|
-| WAREHOUSES.tenant_id FK | Referencia a TENANTS.tenant_id. |
-| INVENTORY_LOTS.warehouse_id FK | Referencia a WAREHOUSES.warehouse_id. |
-| INVENTORY_LOTS.product_id FK | Referencia a PRODUCTS.product_id. |
-| RESERVATIONS.lot_id FK | Referencia a INVENTORY_LOTS.lot_id. |
-| RESERVATIONS.request_id FK | Referencia a PURCHASE_REQUESTS.request_id cuando la reserva está vinculada a una solicitud. |
-| RESERVATIONS.order_id FK | Referencia a SALES_ORDERS.order_id cuando la reserva está vinculada a una orden confirmada. |
-| STOCK_MOVEMENTS.lot_id FK | Referencia a INVENTORY_LOTS.lot_id. |
-| INVENTORY_LOTS.available_quantity CHECK | Evita disponibilidad negativa de stock. |
-| RESERVATIONS.reservation_status CHECK | Restringe el estado de la reserva a active, released, consumed o cancelled. |
+| `warehouses.tenant_id` FK | Referencia a `tenants.id`. |
+| `warehouses.tenant_id + location` UK | Evita duplicidad de ubicación de almacén dentro del tenant. |
+| `inventory_items.tenant_id + catalog_item_id` UK | Evita duplicidad de stock agregado para el mismo ítem de catálogo dentro del tenant. |
+| `inventory_lots.inventory_item_id` FK | Referencia a `inventory_items.id` dentro del mismo tenant. |
+| `inventory_lots.warehouse_id` FK | Referencia a `warehouses.id` dentro del mismo tenant. |
+| `inventory_lots.tenant_id + lot_code` UK | Evita duplicidad de lotes dentro del tenant. |
+| `inventory_movements.inventory_item_id` FK | Referencia a `inventory_items.id` dentro del mismo tenant. |
+| `inventory_movements.inventory_lot_id` FK | Referencia opcional a `inventory_lots.id` dentro del mismo tenant. |
+| `inventory_movements.order_id` FK | Referencia opcional a `orders.id` dentro del mismo tenant. |
+| `inventory_movements.tenant_id + code` UK | Evita duplicidad de códigos de movimiento dentro del tenant. |
+| `inventory_reservation_records.inventory_item_id` FK | Referencia a `inventory_items.id` dentro del mismo tenant. |
+| `inventory_reservation_records.inventory_lot_id` FK | Referencia opcional a `inventory_lots.id` dentro del mismo tenant. |
+| `inventory_reservation_records.order_id` FK | Referencia opcional a `orders.id` dentro del mismo tenant. |
+| `inventory_reservation_records.purchase_request_id` FK | Referencia opcional a `purchase_requests.id` dentro del mismo tenant. |
+| `inventory_reservation_records.tenant_id + code` UK | Evita duplicidad de reservas dentro del tenant. |
 
-### Logistics Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+#### Logistics Database Diagram
+
+*Diagrama de base de datos de Logistics.*
 
 ![Logistics Database Diagram](../assets/images/chapter-4/database/dispatch-and-traceability.png)
 
- > *Nota:* Logistics almacena órdenes de despacho, eventos de trazabilidad, incidencias de entrega, controles de temperatura y evidencia de entrega. Elaboración propia.
+> *Nota*: Logistics almacena envíos, órdenes de despacho, eventos de trazabilidad, controles de temperatura, tareas de portal de cliente y evidencia de entrega. Elaboración propia.
 
-El modelo de Logistics parte de una orden de venta confirmada y registra el ciclo de vida del despacho hasta la entrega. También soporta el registro de incidencias y evidencia de entrega.
+El modelo de Logistics parte de la orden comercial y registra la coordinación de entrega. `shipments` representa el envío general, mientras que `dispatch_orders` representa órdenes específicas de despacho vinculadas a pedidos y clientes. Los eventos, controles de temperatura y evidencias de entrega permiten mantener trazabilidad operativa.
+
+*Tablas principales de Logistics.*
 
 | Tabla | Columnas principales | Descripción |
 |---|---|---|
-| DISPATCH_ORDERS | dispatch_id, order_id, assigned_user_id, delivery_address, scheduled_date, dispatch_status, created_at | Almacena despachos generados para órdenes de venta confirmadas. |
-| TRACEABILITY_EVENTS | event_id, dispatch_id, event_type, description, event_date, registered_by_user_id | Almacena eventos de seguimiento durante la entrega. |
-| DISPATCH_INCIDENTS | incident_id, dispatch_id, incident_type, severity, description, incident_date, status | Almacena incidencias de entrega. |
-| TEMPERATURE_CHECKS | temperature_check_id, dispatch_id, measured_temperature, measurement_unit, checked_at, status | Almacena controles referenciales de temperatura durante el despacho. |
-| DELIVERY_EVIDENCE | evidence_id, dispatch_id, received_by, evidence_url, delivered_at, observations | Almacena información de evidencia de entrega. |
+| `shipments` | `id`, `tenant_id`, `order_id`, `shipment_code`, `scheduled_at`, `delivered_at`, `status`, `last_temperature_celsius`, `last_temperature_recorded_at`, `created_at`, `updated_at` | Registra envíos asociados a órdenes y su estado general. |
+| `dispatch_orders` | `id`, `tenant_id`, `order_id`, `client_account_id`, `code`, `status`, `route_name`, `responsible`, `eta`, `delivery_window`, `created_at`, `updated_at` | Registra órdenes de despacho por pedido, cliente y ruta. |
+| `dispatch_events` | `id`, `tenant_id`, `dispatch_order_id`, `status`, `description`, `visible_to_buyer`, `created_at`, `updated_at` | Registra eventos de seguimiento durante el despacho. |
+| `proof_of_delivery_records` | `id`, `tenant_id`, `dispatch_order_id`, `received_by`, `completed_at`, `photo_reference`, `signature_reference`, `notes`, `status`, `created_at`, `updated_at` | Almacena la evidencia final de entrega. |
+| `temperature_logs` | `id`, `tenant_id`, `dispatch_order_id`, `order_id`, `celsius`, `zone`, `status`, `recorded_at`, `created_at`, `updated_at` | Registra mediciones de temperatura durante la operación logística. |
+| `customer_portal_tasks` | `id`, `tenant_id`, `client_account_id`, `portal_name`, `contact_person`, `upload_channel`, `required_documents`, `status`, `owner`, `created_at`, `updated_at` | Registra tareas de carga documental o coordinación con clientes B2B. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
 Restricciones principales:
 
+*Restricciones principales de Logistics.*
+
 | Restricción | Descripción |
 |---|---|
-| DISPATCH_ORDERS.order_id FK | Referencia a SALES_ORDERS.order_id. |
-| DISPATCH_ORDERS.assigned_user_id FK | Referencia a USERS.user_id. |
-| TRACEABILITY_EVENTS.dispatch_id FK | Referencia a DISPATCH_ORDERS.dispatch_id. |
-| DISPATCH_INCIDENTS.dispatch_id FK | Referencia a DISPATCH_ORDERS.dispatch_id. |
-| TEMPERATURE_CHECKS.dispatch_id FK | Referencia a DISPATCH_ORDERS.dispatch_id. |
-| DELIVERY_EVIDENCE.dispatch_id FK | Referencia a DISPATCH_ORDERS.dispatch_id. |
-| DISPATCH_ORDERS.dispatch_status CHECK | Restringe el estado del despacho a scheduled, in_transit, incident, delivered o cancelled. |
-| DISPATCH_INCIDENTS.severity CHECK | Restringe la severidad de incidencias a valores predefinidos. |
+| `shipments.tenant_id + shipment_code` UK | Evita duplicidad de códigos de envío dentro del tenant. |
+| `dispatch_orders.order_id` FK | Referencia a `orders.id` dentro del mismo tenant. |
+| `dispatch_orders.client_account_id` FK | Referencia a `client_accounts.id` dentro del mismo tenant. |
+| `dispatch_orders.tenant_id + code` UK | Evita duplicidad de órdenes de despacho dentro del tenant. |
+| `dispatch_events.dispatch_order_id` FK | Referencia a `dispatch_orders.id` dentro del mismo tenant. |
+| `proof_of_delivery_records.dispatch_order_id` FK + UK | Cada orden de despacho tiene una evidencia principal de entrega. |
+| `temperature_logs.dispatch_order_id` FK | Referencia opcional a `dispatch_orders.id` dentro del mismo tenant. |
+| `temperature_logs.order_id` FK | Referencia opcional a `orders.id` dentro del mismo tenant. |
+| `customer_portal_tasks.client_account_id` FK | Referencia a `client_accounts.id` dentro del mismo tenant. |
 
-### Invoicing Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
-*Figura. Diagrama de base de datos asociado a Invoicing*
+#### Invoicing Database Diagram
+
+*Diagrama de base de datos de Invoicing.*
 
 ![Invoicing](../assets/images/chapter-4/database/invoicing.png)
 
-> Nota. Invoicing almacena documentos comerciales, registros de pago simulado, estados de pago y resúmenes de cobro asociados a órdenes comerciales. Elaboración propia.
-El modelo de Invoicing proporciona visibilidad de pagos y documentos para el comprador. En el alcance actual, el pago se trata como un flujo simulado, pero el diseño de base de datos representa registros de pago y estado de pago para mantener el modelo extensible.
+> *Nota*: Invoicing almacena facturas, pagos, documentos comerciales, métodos de pago, registros del proceso de pago y notificaciones asociadas al flujo financiero. Elaboración propia.
+
+El modelo de Invoicing proporciona visibilidad de pagos, documentos y estado financiero para clientes y operadores del tenant. En el alcance actual, el proceso de pago puede operar con registros internos o simulados, pero el diseño de base de datos mantiene una estructura extensible para facturación, métodos de pago, procesos de pago y notificaciones.
+
+*Tablas principales de Invoicing.*
 
 | Tabla | Columnas principales | Descripción |
 |---|---|---|
-| COMMERCIAL_DOCUMENTS | document_id, order_id, document_type, document_number, document_url, issue_date, visibility_status | Almacena documentos comerciales asociados a órdenes de venta. |
-| PAYMENT_RECORDS | payment_id, order_id, client_id, payment_method, amount, payment_date, payment_status_id, transaction_reference | Almacena registros de pago simulado. |
-| PAYMENT_STATUSES | payment_status_id, code, name, description | Almacena los estados de pago permitidos. |
-| INVOICE_SUMMARIES | invoice_summary_id, order_id, subtotal, discount_total, tax_total, delivery_fee, total_amount, generated_at | Almacena resúmenes de cobro para órdenes de venta. |
+| `invoices` | `id`, `tenant_id`, `order_id`, `invoice_number`, `amount`, `currency`, `payment_status`, `paid_at`, `created_at`, `updated_at` | Almacena facturas emitidas por tenant y vinculadas a órdenes. |
+| `payments` | `id`, `tenant_id`, `invoice_id`, `order_id`, `client_account_id`, `payment_option_id`, `payment_method_record_id`, `amount`, `currency`, `reference_code`, `status`, `confirmed_at`, `rejected_at`, `created_at`, `updated_at` | Registra pagos asociados a facturas, órdenes, clientes o métodos de pago. |
+| `business_documents` | `id`, `tenant_id`, `order_id`, `client_account_id`, `document_type_id`, `type`, `label`, `status`, `file_name`, `visible_to_buyer`, `required`, `created_at`, `updated_at` | Almacena documentos comerciales vinculados a órdenes o clientes. |
+| `payment_method_records` | `id`, `tenant_id`, `client_account_id`, `type`, `label`, `status`, `is_default`, `created_at`, `updated_at` | Almacena métodos de pago autorizados para cuentas cliente. |
+| `payment_process_records` | `id`, `tenant_id`, `order_id`, `client_account_id`, `payment_id`, `payment_method_record_id`, `subtotal`, `discount`, `shipping`, `igv`, `total`, `status`, `created_at`, `updated_at` | Registra cálculos financieros y estado del proceso de pago. |
+| `notification_records` | `id`, `tenant_id`, `client_account_id`, `recipient_role`, `type`, `title`, `body`, `read`, `created_at`, `updated_at` | Registra notificaciones financieras o documentales para usuarios y clientes. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
 Restricciones principales:
 
+*Restricciones principales de Invoicing.*
+
 | Restricción | Descripción |
 |---|---|
-| COMMERCIAL_DOCUMENTS.order_id FK | Referencia a SALES_ORDERS.order_id. |
-| PAYMENT_RECORDS.order_id FK | Referencia a SALES_ORDERS.order_id. |
-| PAYMENT_RECORDS.client_id FK | Referencia a B2B_CLIENTS.client_id. |
-| PAYMENT_RECORDS.payment_status_id FK | Referencia a PAYMENT_STATUSES.payment_status_id. |
-| INVOICE_SUMMARIES.order_id FK | Referencia a SALES_ORDERS.order_id. |
-| COMMERCIAL_DOCUMENTS.visibility_status CHECK | Restringe la visibilidad del documento a visible, hidden o pending. |
-| PAYMENT_RECORDS.amount CHECK | Asegura que el monto de pago sea mayor o igual a cero. |
+| `invoices.tenant_id` FK | Referencia a `tenants.id`. |
+| `invoices.tenant_id + invoice_number` UK | Evita duplicidad de facturas dentro del tenant. |
+| `payments.invoice_id` FK | Referencia opcional a `invoices.id` dentro del mismo tenant. |
+| `payments.order_id` FK | Referencia opcional a `orders.id` dentro del mismo tenant. |
+| `payments.client_account_id` FK | Referencia opcional a `client_accounts.id` dentro del mismo tenant. |
+| `payments.payment_option_id` FK | Referencia a `payment_options.id`. |
+| `payments.payment_method_record_id` FK | Referencia opcional a `payment_method_records.id` dentro del mismo tenant. |
+| `payments.tenant_id + reference_code` UK | Evita duplicidad de códigos de referencia de pago dentro del tenant. |
+| `business_documents.order_id` FK | Referencia opcional a `orders.id` dentro del mismo tenant. |
+| `business_documents.client_account_id` FK | Referencia opcional a `client_accounts.id` dentro del mismo tenant. |
+| `business_documents.document_type_id` FK | Referencia a `document_types.id`. |
+| `payment_method_records.client_account_id` FK | Referencia a `client_accounts.id` dentro del mismo tenant. |
+| `payment_process_records.payment_id` FK | Referencia opcional a `payments.id` dentro del mismo tenant. |
+| `notification_records.client_account_id` FK | Referencia opcional a `client_accounts.id` dentro del mismo tenant. |
 
-### Read Models Database Diagram
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
-![Read Models Database Diagram](../assets/images/chapter-4/database/read-models.png)
+#### Full Database Diagram
 
- > *Nota:* Los read models son estructuras derivadas utilizadas para dashboards, monitoreo operativo y reportes. No se consideran un bounded context separado. Elaboración propia.
-
-Los read models consolidan información de los contextos principales para mejorar los casos de uso de consulta y reporting.
-
-| Tabla | Contextos fuente | Descripción |
-|---|---|---|
-| SALES_REPORT_READ_MODEL | Sales, Catalog Management, Invoicing | Consolida información de órdenes de venta, datos del cliente, referencias de producto y estado de pago. |
-| INVENTORY_REPORT_READ_MODEL | Warehouse, Catalog Management | Consolida stock de productos, vencimiento de lotes, almacén e información de reservas. |
-| DISPATCH_REPORT_READ_MODEL | Logistics, Sales | Consolida estado de despacho, tiempos de entrega, incidencias y evidencia de entrega. |
-| PAYMENT_STATUS_READ_MODEL | Invoicing, Sales | Consolida estado de pago de órdenes, registros de pago y visibilidad documental. |
-
-### Full Database Diagram
+*Diagrama completo de base de datos de Nexa.*
 
 ![Full Database Diagram](../assets/images/chapter-4/database/full-database-diagram.png)
 
- > *Nota:* El diagrama completo de base de datos consolida las principales estructuras relacionales requeridas por los cinco bounded contexts y las capacidades de soporte transversal. Elaboración propia.
+> *Nota*: El diagrama completo de base de datos consolida las principales estructuras relacionales requeridas por los cinco bounded contexts y las capacidades de soporte transversal. Elaboración propia.
+
+El diagrama completo debe representar a `tenants` como entidad transversal del modelo SaaS. Esta tabla se conecta mediante `tenant_id` con las tablas operativas de los bounded contexts, pero no debe conectarse directamente con `users`. La relación correcta entre organización, workspace y usuario se resuelve mediante `workspaces` y `user_workspace_memberships`.
+
+
+*Conexiones multi-tenant desde tenants.id.*
+
+| Conexión desde `tenants.id` | Tabla destino | Finalidad de la conexión |
+|---|---|---|
+| `tenants.id` → `workspaces.tenant_id` | `workspaces` | Define los espacios de trabajo de la organización. |
+| `tenants.id` → `user_workspace_memberships.tenant_id` | `user_workspace_memberships` | Delimita membresías y permisos dentro de un tenant. |
+| `tenants.id` → `catalog_items.tenant_id` | `catalog_items` | Separa el catálogo comercial por organización. |
+| `tenants.id` → `client_accounts.tenant_id` | `client_accounts` | Separa las cuentas B2B por organización. |
+| `tenants.id` → `purchase_requests.tenant_id` | `purchase_requests` | Separa solicitudes de compra por organización. |
+| `tenants.id` → `orders.tenant_id` | `orders` | Separa órdenes comerciales por organización. |
+| `tenants.id` → `warehouses.tenant_id` | `warehouses` | Separa almacenes por organización. |
+| `tenants.id` → `inventory_items.tenant_id` | `inventory_items` | Separa inventario agregado por organización. |
+| `tenants.id` → `inventory_lots.tenant_id` | `inventory_lots` | Separa lotes físicos por organización. |
+| `tenants.id` → `inventory_movements.tenant_id` | `inventory_movements` | Separa movimientos de stock por organización. |
+| `tenants.id` → `inventory_reservation_records.tenant_id` | `inventory_reservation_records` | Separa reservas de inventario por organización. |
+| `tenants.id` → `shipments.tenant_id` | `shipments` | Separa envíos por organización. |
+| `tenants.id` → `dispatch_orders.tenant_id` | `dispatch_orders` | Separa órdenes de despacho por organización. |
+| `tenants.id` → `temperature_logs.tenant_id` | `temperature_logs` | Separa mediciones de temperatura por organización. |
+| `tenants.id` → `invoices.tenant_id` | `invoices` | Separa facturas por organización. |
+| `tenants.id` → `payments.tenant_id` | `payments` | Separa pagos por organización. |
+| `tenants.id` → `business_documents.tenant_id` | `business_documents` | Separa documentos comerciales por organización. |
+| `tenants.id` → `notification_records.tenant_id` | `notification_records` | Separa notificaciones por organización. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+Relaciones principales entre contextos:
+
+
+*Relaciones principales entre contextos de base de datos.*
+
+| Relación | Descripción |
+|---|---|
+| `workspaces` → `user_workspace_memberships` ← `users` | Vincula usuarios globales con espacios de trabajo de un tenant. |
+| `client_accounts` → `purchase_requests` | Una cuenta B2B puede generar múltiples solicitudes de compra. |
+| `purchase_requests` → `purchase_request_lines` | Una solicitud contiene líneas de productos solicitados. |
+| `purchase_requests` → `inventory_reservation_records` | Una solicitud puede originar reservas de inventario. |
+| `client_accounts` → `orders` | Una cuenta B2B puede generar múltiples órdenes. |
+| `orders` → `order_items` | Una orden contiene ítems de productos. |
+| `orders` → `inventory_movements` | Una orden puede originar movimientos de inventario. |
+| `orders` → `inventory_reservation_records` | Una orden puede consumir o mantener reservas de stock. |
+| `orders` → `shipments` | Una orden puede generar envíos. |
+| `orders` → `dispatch_orders` | Una orden puede generar órdenes de despacho. |
+| `orders` → `invoices` | Una orden puede generar facturas. |
+| `invoices` → `payments` | Una factura puede ser liquidada por uno o más pagos. |
+| `dispatch_orders` → `dispatch_events` | Una orden de despacho registra eventos de seguimiento. |
+| `dispatch_orders` → `proof_of_delivery_records` | Una orden de despacho se cierra con evidencia de entrega. |
+| `dispatch_orders` → `temperature_logs` | Una orden de despacho puede registrar mediciones de temperatura. |
+| `catalog_items` → `purchase_request_lines` | Los ítems solicitados referencian productos del catálogo. |
+| `catalog_items` → `promotion_catalog_items` | Las promociones pueden aplicarse a ítems del catálogo. |
+| `catalog_items` → `inventory_items` | El inventario referencia productos del catálogo mediante identificadores persistidos. |
+| `inventory_items` → `inventory_lots` | Un ítem de inventario puede tener múltiples lotes físicos. |
+| `inventory_items` → `inventory_movements` | Un ítem de inventario puede registrar múltiples movimientos. |
+| `inventory_items` → `inventory_reservation_records` | Un ítem de inventario puede tener múltiples reservas. |
+
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
+
+Los diagramas de base de datos utilizados en esta sección fueron elaborados en Lucidchart. El enlace completo para consultar los database diagrams es el siguiente:
+
+https://lucid.app/lucidchart/59a20e35-1812-46de-ab32-b732d6c47650/edit?viewport_loc=-9787%2C-2175%2C20388%2C10438%2C0_0&invitationId=inv_d09f7dfb-47e4-4621-a80e-a33b66489322
 
 La siguiente tabla resume la agrupación completa de base de datos:
 
+
+*Agrupación completa del diseño de base de datos.*
+
 | Contexto / área de soporte | Tablas principales | Relaciones principales | Propósito |
 |---|---|---|---|
-| Identity and Access Support | TENANTS, USERS, ROLES, PERMISSIONS, USER_ROLES, ROLE_PERMISSIONS, USER_SESSIONS | Los usuarios pertenecen a tenants; los usuarios tienen roles; los roles tienen permisos. | Permite acceso seguro y operación basada en tenants dentro de la plataforma. |
-| Catalog Management | CATEGORIES, PRODUCTS, PROMOTIONS, PRODUCT_PROMOTIONS | Las categorías agrupan productos; los productos pueden relacionarse con promociones. | Persiste el catálogo comercial de productos. |
-| Sales | B2B_CLIENTS, COMMERCIAL_CONDITIONS, PURCHASE_REQUESTS, PURCHASE_REQUEST_ITEMS, SALES_ORDERS, ORDER_ITEMS, CREDIT_WARNINGS, ORDER_OBSERVATIONS | Los clientes envían solicitudes; las solicitudes validadas se convierten en órdenes; las órdenes contienen ítems. | Persiste el flujo comercial de pedidos. |
-| Warehouse | WAREHOUSES, INVENTORY_LOTS, RESERVATIONS, STOCK_MOVEMENTS | Los almacenes contienen lotes; los lotes tienen reservas y movimientos. | Persiste disponibilidad de stock, reservas y trazabilidad de inventario. |
-| Logistics | DISPATCH_ORDERS, TRACEABILITY_EVENTS, DISPATCH_INCIDENTS, TEMPERATURE_CHECKS, DELIVERY_EVIDENCE | Las órdenes generan despachos; los despachos tienen eventos, incidencias, controles de temperatura y evidencia. | Persiste monitoreo de despacho y trazabilidad de entrega. |
-| Invoicing | COMMERCIAL_DOCUMENTS, PAYMENT_RECORDS, PAYMENT_STATUSES, INVOICE_SUMMARIES | Las órdenes generan documentos, registros de pago y resúmenes de cobro. | Persiste documentos comerciales, estado de pago y resúmenes de cobro. |
-| Read Models | SALES_REPORT_READ_MODEL, INVENTORY_REPORT_READ_MODEL, DISPATCH_REPORT_READ_MODEL, PAYMENT_STATUS_READ_MODEL | Los read models se derivan de tablas operativas. | Soporta dashboards y vistas de reporting. |
+| Tenant Management and Identity & Access Support | `tenants`, `users`, `tenant_members`, `tenant_rules`, `tenant_custom_fields`, `tenant_subscriptions`, `workspaces`, `workspace_features`, `user_workspace_memberships`, `workspace_preferences`, `organization_registration_requests` | Los tenants tienen workspaces; los usuarios se vinculan a workspaces mediante membresías; cada tenant define reglas, campos, suscripción y preferencias. | Permite acceso seguro, separación multi-tenant, administración de organizaciones y configuración SaaS. |
+| Catalog Management | `catalog_items`, `categories`, `brands` | Los tenants registran ítems de catálogo; categorías y marcas clasifican información comercial. | Persiste el catálogo comercial de productos. |
+| Sales | `client_accounts`, `purchase_requests`, `purchase_request_lines`, `orders`, `order_items`, `promotions`, `promotion_catalog_items`, `conversation_messages`, `credit_requests` | Los clientes generan solicitudes y órdenes; las órdenes contienen ítems; las promociones se asocian a ítems de catálogo; los mensajes apoyan la coordinación comercial. | Persiste el flujo comercial B2B. |
+| Warehouse | `warehouses`, `inventory_items`, `inventory_lots`, `inventory_movements`, `inventory_reservation_records` | Los almacenes contienen lotes; los ítems de inventario agrupan disponibilidad; los lotes tienen movimientos y reservas. | Persiste stock, lotes, reservas y trazabilidad de inventario. |
+| Logistics | `shipments`, `dispatch_orders`, `dispatch_events`, `proof_of_delivery_records`, `temperature_logs`, `customer_portal_tasks` | Las órdenes generan envíos y despachos; los despachos tienen eventos, evidencia y mediciones de temperatura. | Persiste monitoreo de despacho y trazabilidad de entrega. |
+| Invoicing | `invoices`, `payments`, `business_documents`, `payment_method_records`, `payment_process_records`, `notification_records` | Las órdenes generan facturas y documentos; las facturas se liquidan con pagos; los procesos de pago calculan subtotal, descuentos, envío, IGV y total. | Persiste documentos comerciales, pagos, facturas y notificaciones financieras. |
+| Shared / Lookups | `audit_logs`, `payment_options`, `document_types`, `unit_of_measures`, `countries`, `departments`, `provinces`, `districts` | Las tablas compartidas normalizan opciones, tipos de documento, unidades, ubicaciones y auditoría. | Soporta codificaciones transversales y trazabilidad técnica. |
+| Read models derivados | `sales_report_read_model`, `inventory_report_read_model`, `dispatch_report_read_model`, `payment_status_read_model` | Los read models se derivan de tablas operativas de Sales, Warehouse, Logistics e Invoicing. | Soporta dashboards y vistas de reporting. |
 
-Este diseño de base de datos mantiene consistencia con el modelo de dominio. Los datos de producto pertenecen a Catalog Management, la demanda comercial pertenece a Sales, el control de stock pertenece a Warehouse, la trazabilidad de entrega pertenece a Logistics y la visibilidad documental/de pagos pertenece a Invoicing.
+> *Nota*: La tabla resume las tablas principales, restricciones o relaciones del bloque de persistencia correspondiente. Elaboración propia.
 
-**Tabla. Agrupación de estructuras de base de datos por contexto táctico**
-
-| Contexto / soporte táctico | Tablas principales | PK / FK principales | Relaciones relevantes | Propósito de diseño |
-|---|---|---|---|---|
-| Soporte transversal de acceso | `USERS`, `USER_SESSIONS` | `user_id`, `session_id`; FK de `USER_SESSIONS.user_id` a `USERS.user_id` | Un usuario puede tener varias sesiones; roles y permisos definen alcance operativo cuando el modelo los incluye | Acceso, sesión y alcance de operación para S1, S2 y S3 |
-| Catalog Management | `CATEGORIES`, `PRODUCTS`, `PROMOTIONS`, `PRODUCT_PROMOTIONS` | `category_id`, `product_id`, `promotion_id`; FK de `PRODUCTS.category_id` a `CATEGORIES.category_id`; FK de `PRODUCT_PROMOTIONS.product_id` a `PRODUCTS.product_id`; FK de `PRODUCT_PROMOTIONS.promotion_id` a `PROMOTIONS.promotion_id` | Una categoría agrupa productos; cada producto se identifica mediante `internal_code`; los productos pueden asociarse a promociones cuando corresponde | Catálogo, código interno, condiciones de conservación, promociones y disponibilidad comercial visible |
-| Sales | `B2B_CLIENTS`, `COMMERCIAL_CONDITIONS`, `CREDIT_WARNINGS`, `ORDERS`, `ORDER_ITEMS`, `ORDER_OBSERVATIONS` | `client_id`, `order_id`, `order_item_id`; FK de `ORDERS.client_id` a `B2B_CLIENTS.client_id`; FK de `ORDER_ITEMS.order_id` a `ORDERS.order_id`; FK de `ORDER_ITEMS.product_id` a `PRODUCTS.product_id` | Un cliente tiene condiciones comerciales; un cliente genera órdenes; una orden contiene ítems y observaciones | Solicitudes, pedidos, validación comercial, crédito y relación con cliente B2B |
-| Warehouse | `WAREHOUSES`, `INVENTORY_LOTS`, `STOCK_MOVEMENTS`, `RESERVATIONS` | `warehouse_id`, `lot_id`, `movement_id`, `reservation_id`; FK de `INVENTORY_LOTS.product_id` a `PRODUCTS.product_id`; FK de `INVENTORY_LOTS.warehouse_id` a `WAREHOUSES.warehouse_id`; FK de `STOCK_MOVEMENTS.lot_id` a `INVENTORY_LOTS.lot_id`; FK de `RESERVATIONS.lot_id` a `INVENTORY_LOTS.lot_id` | Un almacén contiene lotes; un lote registra movimientos; una reserva separa stock para una solicitud u orden validada | Stock, lote, movimiento, reserva y FEFO |
-| Logistics | `DISPATCHES`, `DISPATCH_INCIDENTS`, `TRACEABILITY_EVENTS`, `POD_EVIDENCE`, `TEMPERATURE_CHECKS` | `dispatch_id`, `incident_id`, `event_id`, `pod_evidence_id`, `temperature_check_id`; FK de `DISPATCHES.order_id` a `ORDERS.order_id`; FK de eventos, incidencias, evidencia y controles de temperatura a `DISPATCHES.dispatch_id` | Un despacho pertenece a una orden; un despacho contiene eventos trazables, incidencias, evidencia de entrega y controles referenciales de temperatura | Despacho, tracking, incidencias, control referencial de temperatura y evidencia de entrega |
-| Invoicing | `COMMERCIAL_DOCUMENTS`, `PAYMENT_RECORDS`, `PAYMENT_STATUSES`, `INVOICE_SUMMARIES` | `document_id`, `payment_id`, `payment_status_id`, `invoice_summary_id`; FK de `COMMERCIAL_DOCUMENTS.order_id` a `ORDERS.order_id`; FK de `PAYMENT_RECORDS.order_id` a `ORDERS.order_id`; FK de `PAYMENT_RECORDS.client_id` a `B2B_CLIENTS.client_id`; FK de `PAYMENT_RECORDS.payment_status_id` a `PAYMENT_STATUSES.payment_status_id`; FK de `INVOICE_SUMMARIES.order_id` a `ORDERS.order_id` | Una orden genera documentos comerciales; los registros de pago simulado se clasifican por estado; el resumen consolida cobro, impuestos, descuentos, cargos y total de la orden | Documentos comerciales, comprobantes, estado de pago, resumen de cobro y proceso de pago simulado |
-| Read models derivados | `SALES_REPORT_READ_MODEL`, `INVENTORY_REPORT_READ_MODEL`, `DISPATCH_REPORT_READ_MODEL`, `PAYMENT_STATUS_READ_MODEL` | Identificadores de lectura derivados de órdenes, lotes, despachos, documentos, pagos y estados de pago | Consolidaciones de consulta construidas desde Sales, Warehouse, Logistics e Invoicing; `PAYMENT_STATUS_READ_MODEL` resume estado de pago, monto pagado y visibilidad documental | Reportes y vistas de consulta sin crear un bounded context separado |
-
-> *Nota:* La agrupación mantiene la relación entre modelo relacional objetivo, bounded contexts y diagramas de clases sin declarar persistencia productiva para TB1. Elaboración propia.
+Este diseño de base de datos mantiene consistencia con el modelo de dominio. Los datos de producto pertenecen a Catalog Management, la demanda comercial pertenece a Sales, el control de stock pertenece a Warehouse, la trazabilidad de entrega pertenece a Logistics, y la visibilidad documental y de pagos pertenece a Invoicing. El soporte multi-tenant se mantiene como una capa transversal que delimita la información de cada organización dentro de la plataforma.
