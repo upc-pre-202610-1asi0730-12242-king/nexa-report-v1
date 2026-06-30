@@ -1,286 +1,250 @@
 ## 4.2. Information Architecture
 
-La arquitectura de información de Nexa organiza el contenido y los flujos de interacción alrededor de tres superficies complementarias: el sitio público o Landing Page, la Web Application interna y el Buyer Portal. Esta organización responde al modelo SaaS B2B del producto: una empresa importadora o distribuidora de cadena de frío contrata Nexa y habilita usuarios internos y externos dentro de un mismo ecosistema operacional.
+La arquitectura de información de Nexa organiza el contenido y los flujos de interacción alrededor de tres superficies complementarias: la **Landing Page pública**, la **Web Application interna u Ops Portal** y el **Buyer Portal**. Esta organización responde al modelo SaaS B2B del producto y mantiene una continuidad clara entre descubrimiento, registro, operación interna y autoservicio del comprador.
 
-Para mantener consistencia con los segmentos definitivos del proyecto, la información no se organiza únicamente por pantallas, sino por responsabilidades de negocio. **S1 — Commercial Coordination** utiliza la consola interna para recibir solicitudes, validar clientes, revisar condiciones comerciales, convertir solicitudes en órdenes de compra y gestionar documentos comerciales. **S2 — Operations / Account Owner** utiliza la consola interna para controlar inventario, lotes, reservas, despacho, evidencias, promociones, portales externos y administración de la empresa contratante. **S3 — B2B Buyer Portal** utiliza el portal para consultar catálogo, construir solicitudes, revisar pedidos, acceder a documentos y seguir el estado de entrega.
+La WebApp incluye además un flujo público de Tenant Management para registrar una organización y comunicar el estado de su solicitud mediante `/tenant-management/register-organization` y `/tenant-management/registration-pending/:id`. Una vez autenticados, los usuarios acceden a la superficie correspondiente a su rol y tenant/workspace.
+
+La taxonomía mantiene tres segmentos formales: **Segmento 1 — Commercial Coordination**, **Segmento 2 — Operations / Account Owner** y **Segmento 3 — B2B Buyer Portal**. Company Owner representa el subalcance administrativo y de account ownership de S2; no constituye un cuarto segmento.
+
+*Flujo conceptual entre segmentos de Nexa*
 
 ```mermaid
 flowchart LR
-    S3["S3 — B2B Buyer Portal<br/>Catálogo, solicitud, pedidos, documentos y seguimiento"]
-    S1["S1 — Commercial Coordination<br/>Validación, clientes, solicitudes de compra, órdenes de compra y documentos comerciales"]
-    S2["S2 — Operations / Account Owner<br/>Inventario, órdenes de despacho, POD, analítica, promociones y administración de empresa"]
-
-    S3 -->|"envía solicitud o consulta estado"| S1
-    S1 -->|"valida y convierte en orden de compra"| S2
-    S2 -->|"prepara despacho, evidencia y trazabilidad"| S3
-    S2 -->|"actualiza disponibilidad y documentos"| S1
+    Visitor["Interested Organization / Visitor"] -->|"solicita registro desde Landing Page"| Tenant["Tenant Management"]
+    Tenant -->|"revisa solicitud y habilita workspace"| Owner["S2 — Company Owner"]
+    Owner -->|"configura workspace, usuarios, reglas y preferencias"| Sales["S1 — Sales"]
+    Owner -->|"habilita operación interna"| Logistics["S2 — Logistics"]
+    Buyer["S3 — B2B Buyer"] -->|"envía solicitud de compra"| Sales
+    Sales -->|"valida y convierte solicitud en orden"| Logistics
+    Logistics -->|"prepara inventario, despacho, POD y documentos visibles"| Buyer
+    Buyer -->|"consulta estado, tracking y documentos visibles desde el portal"| BuyerPortal["Buyer Portal"]
 ```
 
-No se crea un segmento administrativo separado. Las tareas de configuración, accesos, tenant, empresa y suscripción forman parte de **S2 — Operations / Account Owner**.
+> *Nota:* El diagrama representa la relación conceptual entre captación, configuración y operación de los segmentos de Nexa. Elaboración propia.
+
+La administración del tenant/workspace pertenece al account ownership de S2 y se distingue de las tareas logísticas de inventario, despacho y evidencia. Ambas responsabilidades comparten la misma consola interna con navegación filtrada por rol.
 
 ### 4.2.1. Organization Systems
 
-La arquitectura de información de Nexa combina distintos sistemas de organización para responder a la naturaleza del producto. La Landing Page necesita una estructura clara para comunicar valor; la Web Application interna requiere vistas densas y filtrables para S1 y S2; y el Buyer Portal necesita un flujo secuencial que permita al comprador B2B avanzar desde el catálogo hasta el seguimiento de su orden.
+La arquitectura de información combina sistemas jerárquicos, secuenciales, matriciales, cronológicos y por audiencia. La Landing Page comunica valor mediante una jerarquía pública; el Ops Portal presenta información densa y filtrable; y el Buyer Portal sigue el flujo catálogo → solicitud → orden → seguimiento.
+
+*Sistemas de organización aplicados en Nexa*
 
 | Sistema de organización | Uso en Nexa | Superficie |
 |---|---|---|
-| Jerárquico | Landing Page: Home > Solutions > página específica | Landing Page |
-| Secuencial | Catálogo > detalle > request builder > solicitud > orden > tracking | Buyer Portal |
-| Matricial | Filtros por estado, cliente, fecha, lote, documento o responsable | Web Application interna |
+| Jerárquico | Home, páginas troncales, Solutions y páginas legales | Landing Page |
+| Secuencial | Catálogo, detalle, Request Builder, solicitud, orden y seguimiento | Buyer Portal |
+| Matricial | Filtros por estado, cliente, fecha, lote, documento o responsable | Ops Portal |
 | Por audiencia | S1, S2 y S3 según responsabilidad de negocio | Todas |
-| Por tópicos | Platform, Solutions, Company, FAQ | Landing Page |
-| Cronológico | Solicitudes, órdenes, despachos y documentos por fecha | Web Application / Buyer Portal |
-| Alfabético | Clientes B2B, productos y documentos cuando aplique | Web Application / Buyer Portal |
+| Por tópicos | Platform, Buyer Portal, Solutions, Company, Pricing y FAQ | Landing Page |
+| Cronológico | Solicitudes, órdenes, despachos y documentos por fecha | Ops Portal / Buyer Portal |
+| Alfabético | Clientes, productos y documentos cuando corresponde | Ops Portal / Buyer Portal |
 
-Estos sistemas no compiten entre sí. Se combinan para que cada superficie mantenga una lógica de navegación coherente con su propósito: descubrimiento comercial, operación interna o autoservicio del comprador.
+> *Nota:* La tabla resume los sistemas de organización utilizados para estructurar el ecosistema. Elaboración propia.
 
 #### Landing Page — Organización jerárquica con apoyo matricial
 
-El sitio público presenta una arquitectura jerárquica de dos niveles. El punto de entrada es la página principal, desde la cual el visitante accede a las áreas troncales **Platform**, **Solutions**, **Company** y **FAQ**. Dentro de **Solutions**, la navegación se orienta por tipo de operador de cadena de frío: **Importers & Wholesalers**, **Distributors** y **Cold Storage Operators**.
+El sitio público usa una jerarquía de dos niveles. Home conecta con **Platform**, **Buyer Portal**, **Solutions**, **Company**, **Pricing**, **FAQ**, **About the Product**, **About the Team** y las páginas legales. Solutions agrupa páginas comerciales por tipo de operador; estas páginas no sustituyen la segmentación formal S1, S2 y S3.
 
-Estas páginas de Solutions no sustituyen a los segmentos S1, S2 y S3. Funcionan como páginas comerciales para explicar la propuesta de valor a empresas potencialmente contratantes, mientras que S1, S2 y S3 representan perfiles de uso dentro del ecosistema operacional de Nexa.
+*Arquitectura jerárquica de la Landing Page*
 
 ```mermaid
 graph TD
     Home["Home / index.html"] --> Platform["Platform"]
+    Home --> BuyerPortal["Buyer Portal"]
     Home --> Solutions["Solutions Hub"]
     Home --> Company["Company"]
+    Home --> Pricing["Pricing"]
     Home --> FAQ["FAQ"]
+    Home --> Product["About the Product"]
+    Home --> Team["About the Team"]
     Home --> Legal["Legal Pages"]
-
     Solutions --> Importers["Importers & Wholesalers"]
     Solutions --> Distributors["Distributors"]
     Solutions --> Storage["Cold Storage Operators"]
-
     Legal --> Terms["Terms"]
     Legal --> Privacy["Privacy"]
     Legal --> Cookies["Cookies"]
 ```
 
-La profundidad máxima de navegación comercial es de dos niveles (`Home > Solutions > Distributors`), lo que favorece rapidez de acceso y reduce carga cognitiva. Las páginas legales se ubican como soporte desde el footer y no forman parte del flujo principal de conversión. Las llamadas a la acción conectan el descubrimiento del producto con la solicitud de demostración o el ingreso a la Web Application.
+> *Nota:* El diagrama representa el sitemap público real y su profundidad de navegación. Elaboración propia.
+
+Los CTAs principales enlazan **Register workspace / Registrar workspace** con la ruta funcional `/tenant-management/register-organization` y **Login / Ingresar** con `/auth/login`. El Website adapta estos enlaces hacia la WebApp; los hashes usados por esa adaptación no forman parte de la ruta canónica documentada.
 
 #### Web Application interna — Organización funcional por capacidades de negocio
 
-La Web Application interna se organiza mediante un sidebar persistente y rutas agrupadas por responsabilidad de negocio. Esta estructura permite que S1 y S2 trabajen sobre el mismo tenant sin mezclar sus responsabilidades principales.
+El Ops Portal utiliza un sidebar persistente filtrado por rol. Commercial, Logistics y Owner comparten el tenant/workspace, pero visualizan módulos alineados con su responsabilidad.
 
-| Segmento | Grupo funcional | Módulos principales | Propósito |
+*Organización funcional de la Web Application interna*
+
+| Segmento / subalcance | Grupo funcional | Módulos principales | Propósito |
 |---|---|---|---|
-| S1 — Commercial Coordination | Commercial | Commercial Dashboard, Product Catalog, Purchase Requests, Purchase Orders, Manual Order Entry, B2B Clients, Business Documents | Recibir, validar, convertir y documentar pedidos B2B |
-| S2 — Operations / Account Owner | Operations | Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Proof of Delivery, Operational Analytics, Business Documents, Promotions, Customer Portals, Company Administration | Controlar inventario, despacho, evidencias, operación, cuenta y configuración de empresa |
-| S1 / S2 | Shared account area | Profile | Mantener información del usuario autenticado dentro del tenant |
+| Segmento 1 — Commercial Coordination | Sales | Sales Dashboard, Product Catalog, Purchase Requests, Purchase Orders, Manual Order Entry, B2B Clients, Promotions, Business Documents, My Profile | Revisar solicitudes, formalizar órdenes y consultar campañas vinculadas con la oferta visible |
+| Segmento 2 — Operations | Operations | Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Proof of Delivery, Operational Analytics, Business Documents, My Profile | Controlar inventario, despacho, evidencia y documentos operativos |
+| Segmento 2 — Account Ownership | Company / Administration | Promotions; Company Administration: Overview, Workspaces, Teammates, Company rules, Custom fields, Billing y Preferences; My Profile | Visualizar campañas y administrar el alcance organizacional del tenant/workspace cuando el perfil dispone de permisos |
 
-La separación por grupos no implica aplicaciones distintas. Ambos segmentos internos utilizan la misma consola, pero la navegación se filtra según rol, responsabilidad y scope operativo.
+> *Nota:* Company Owner es un subalcance de S2. Las opciones administrativas visibles no implican persistencia completa cuando el flujo no ha sido validado de extremo a extremo. Elaboración propia.
+
+Promotions se documenta como capacidad comercial compartida: S1 la utiliza para revisar campañas y oferta visible, mientras que S2 Account Ownership puede visualizarla como parte del gobierno administrativo del workspace cuando el perfil tiene alcance suficiente.
+
+No se incluyen como módulos principales las capacidades que no cuentan con una ruta activa visible en el router final.
 
 #### Buyer Portal — Organización transaccional orientada al comprador
 
-El Buyer Portal se organiza alrededor del flujo de abastecimiento de S3. La estructura prioriza la autonomía del comprador para consultar productos, armar una solicitud, revisar su historial, acceder a documentos y seguir el estado de sus pedidos.
+El Buyer Portal prioriza un recorrido de autoservicio. Los documentos comerciales y el seguimiento se consultan dentro de My Orders y Order Detail, no como un módulo documental independiente.
 
-| Etapa | Módulo del portal | Propósito para S3 |
+*Organización transaccional del Buyer Portal*
+
+| Etapa | Módulos reales | Propósito para Segmento 3 |
 |---|---|---|
-| Descubrimiento | Home, Product Catalog, Premium | Revisar productos disponibles, promociones y catálogo visible |
-| Solicitud | Request Builder, My Requests | Construir y consultar solicitudes enviadas |
-| Pedido confirmado | My Orders | Revisar órdenes de compra y estado operativo |
-| Documentación | Business Documents | Consultar documentos visibles asociados al pedido |
-| Cuenta | Profile | Revisar datos de comprador y relación con la empresa contratante |
+| Inicio y descubrimiento | Home, Product Catalog, Product Detail, Premium | Consultar oferta y detalle visible |
+| Solicitud | Request Builder, My Requests | Preparar y revisar solicitudes enviadas |
+| Orden y seguimiento | My Orders, Order Detail | Consultar órdenes, estados y documentos visibles |
+| Cuenta y soporte | Payments, Profile, Legal Terms / Privacy, Support | Revisar información administrativa, legal y de cuenta |
+
+> *Nota:* Payments presenta crédito, saldos y métodos referenciales según el alcance del producto. Elaboración propia.
 
 #### Route Architecture and Navigation Storytelling
 
-La arquitectura de rutas se organiza por experiencia y capacidad de negocio, agrupando autenticación, consola interna y portal comprador. Las rutas principales se documentan como rutas canónicas porque comunican mejor las capacidades actuales del producto, no como pantallas aisladas.
+Las rutas se agrupan por autenticación, Tenant Management público, Ops Portal y Buyer Portal. La tabla documenta rutas canónicas del router final.
 
-| Superficie | Ruta principal | Segmento | Significado | Propósito |
-|---|---|---|---|---|
-| Auth | `/auth/login` | S1, S2, S3: B2B Buyer Portal | Acceso autenticado | Entrada al sistema y selección de experiencia según scope |
-| Auth | `/auth/recover` | S1, S2, S3: B2B Buyer Portal | Recuperación de acceso | Soporte para credenciales |
-| Auth | `/auth/blocked` | S1, S2, S3: B2B Buyer Portal | Acceso bloqueado | Informar bloqueo de cuenta o acceso restringido |
-| Auth | `/auth/forbidden` | S1, S2, S3: B2B Buyer Portal | Acceso no autorizado | Informar que el usuario no tiene permisos para la vista solicitada |
-| Ops | `/ops/commercial/dashboard` | S1: Commercial Coordination | Dashboard comercial | Lectura rápida de solicitudes, órdenes bloqueadas y documentos por revisar |
-| Ops | `/ops/product-catalog` | S1: Commercial Coordination | Catálogo operativo | Consulta de productos visibles para operación comercial |
-| Ops | `/ops/commercial/purchase-requests` | S1: Commercial Coordination | Solicitudes B2B | Bandeja de solicitudes recibidas desde el portal |
-| Ops | `/ops/commercial/purchase-requests/:id` | S1: Commercial Coordination | Validación de solicitud | Revisión comercial antes de conversión |
-| Ops | `/ops/commercial/purchase-orders` | S1: Commercial Coordination | Órdenes de compra | Seguimiento de pedidos confirmados |
-| Ops | `/ops/commercial/purchase-orders/:id` | S1: Commercial Coordination | Detalle de orden | Trazabilidad comercial del pedido |
-| Ops | `/ops/commercial/manual-order-entry` | S1: Commercial Coordination | Registro manual | Captura de pedidos recibidos fuera del portal |
-| Ops | `/ops/commercial/client-accounts` | S1: Commercial Coordination | Clientes B2B | Gestión de cuentas, crédito e historial |
-| Ops | `/ops/commercial/business-documents` | S1: Commercial Coordination | Documentos comerciales | Revisión de documentos requeridos para venta y despacho |
-| Ops | `/ops/operations/dashboard` | S2: Operations / Account Owner | Dashboard operativo | Lectura rápida de inventario, despacho, POD e incidentes |
-| Ops | `/ops/operations/inventory-control` | S2: Operations / Account Owner | Control de inventario | Stock, lotes, FEFO, vencimientos y disponibilidad |
-| Ops | `/ops/operations/inventory-lots` | S2: Operations / Account Owner | Lotes de inventario | Revisión de lotes, vencimientos y trazabilidad |
-| Ops | `/ops/operations/dispatch-orders` | S2: Operations / Account Owner | Órdenes de despacho | Preparación y asignación de salidas |
-| Ops | `/ops/operations/dispatch-orders/:id` | S2: Operations / Account Owner | Detalle de despacho | Seguimiento operativo de ruta, estado y evidencia |
-| Ops | `/ops/operations/proof-of-delivery` | S2: Operations / Account Owner | Evidencias de entrega | Control de POD y cierre de entrega |
-| Ops | `/ops/operations/operational-analytics` | S2: Operations / Account Owner | Analítica operativa | Indicadores de pedidos, inventario y despacho |
-| Ops | `/ops/operations/business-documents` | S2: Operations / Account Owner | Documentos operativos | Soporte documental para despacho y cumplimiento |
-| Ops | `/ops/operations/promotions` | S2: Operations / Account Owner | Promociones | Configuración de comunicación comercial visible al comprador |
-| Ops | `/ops/operations/customer-portals` | S2: Operations / Account Owner | Portales externos | Gestión de tareas vinculadas a portales de clientes |
-| Ops | `/ops/operations/company-administration` | S2: Operations / Account Owner | Administración de empresa | Configuración de empresa, cuenta, tenant y suscripción |
-| Ops | `/ops/profile` | S1, S2 | Perfil interno | Datos de usuario y cuenta autenticada |
-| Portal | `/portal/home` | S3: B2B Buyer Portal | Inicio comprador | Resumen de pedidos, solicitudes y productos destacados |
-| Portal | `/portal/product-catalog` | S3: B2B Buyer Portal | Catálogo de productos | Exploración y selección de productos disponibles |
-| Portal | `/portal/product-catalog/:id` | S3: B2B Buyer Portal | Detalle de producto | Revisión de información antes de agregar al pedido |
-| Portal | `/portal/request-builder` | S3: B2B Buyer Portal | Constructor de solicitud | Confirmación de ítems y envío de solicitud |
-| Portal | `/portal/purchase-requests` | S3: B2B Buyer Portal | Mis solicitudes | Seguimiento de solicitudes enviadas |
-| Portal | `/portal/purchase-requests/:id` | S3: B2B Buyer Portal | Detalle de solicitud | Revisión de estado, comentarios y trazabilidad inicial |
-| Portal | `/portal/purchase-orders` | S3: B2B Buyer Portal | Mis pedidos | Revisión de órdenes confirmadas |
-| Portal | `/portal/purchase-orders/success` | S3: B2B Buyer Portal | Confirmación de pedido | Confirmar resultado luego de enviar una solicitud u orden |
-| Portal | `/portal/purchase-orders/:id` | S3: B2B Buyer Portal | Detalle de pedido | Tracking, documentos y estado operativo |
-| Portal | `/portal/business-documents` | S3: B2B Buyer Portal | Documentos | Consulta de documentos visibles para el comprador |
-| Portal | `/portal/payment-methods` | S3: B2B Buyer Portal | Métodos de pago | Selección de método de pago y simulador de estado de pago |
-| Portal | `/portal/premium` | S3: B2B Buyer Portal | Premium preview | Vista de valor comercial y promociones destacadas |
-| Portal | `/portal/profile` | S3: B2B Buyer Portal | Perfil comprador | Datos de cuenta y comprador asociado |
-| Portal soporte | `/portal/legal/terms` | S3: B2B Buyer Portal | Términos legales | Soporte legal/comunicacional del portal; no forma parte del happy path de compra |
-| Portal soporte | `/portal/legal/privacy` | S3: B2B Buyer Portal | Privacidad | Soporte legal/comunicacional del portal; no forma parte del happy path de compra |
-| Portal soporte | `/portal/support` | S3: B2B Buyer Portal | Soporte | Canal de ayuda y comunicación del comprador; no forma parte del happy path de compra |
+*Arquitectura de rutas y navegación*
 
-La documentación principal utiliza únicamente rutas canónicas implementadas porque son las que comunican mejor las capacidades del producto y su organización por experiencia.
+| Superficie | Rutas canónicas | Segmento / propósito |
+|---|---|---|
+| Auth | `/auth/login`, `/auth/recover`, `/auth/blocked`, `/auth/forbidden` | Acceso, recuperación y estados de autorización para S1, S2 y S3 |
+| Tenant Management público | `/tenant-management/register-organization`, `/tenant-management/registration-pending/:id` | Registro y estado de organización interesada |
+| Ops / S1 | `/ops/commercial/dashboard`, `/ops/product-catalog` | Sales Dashboard y Product Catalog |
+| Ops / S1 | `/ops/commercial/purchase-requests`, `/ops/commercial/purchase-requests/:id` | Bandeja y validación de solicitudes |
+| Ops / S1 | `/ops/commercial/purchase-orders`, `/ops/commercial/purchase-orders/:id` | Órdenes y detalle comercial |
+| Ops / S1 | `/ops/commercial/manual-order-entry` | Registro manual de orden |
+| Ops / S1 | `/ops/commercial/client-accounts`, `/ops/commercial/client-accounts/:id` | Clientes B2B y perfil de cliente |
+| Ops / S1 | `/ops/commercial/business-documents`, `/ops/commercial/business-documents/orders/:orderId` | Centro y detalle documental comercial |
+| Ops / S1-S2 | `/ops/profile` | My Profile del usuario interno |
+| Ops / S2 Operations | `/ops/operations/dashboard` | Operations Dashboard |
+| Ops / S2 Operations | `/ops/operations/inventory-control`, `/ops/operations/inventory-lots` | Inventario y lotes |
+| Ops / S2 Operations | `/ops/operations/dispatch-orders`, `/ops/operations/dispatch-orders/:id` | Despachos y detalle |
+| Ops / S2 Operations | `/ops/operations/proof-of-delivery`, `/ops/operations/operational-analytics` | POD y analítica operativa |
+| Ops / S2 Operations | `/ops/operations/business-documents`, `/ops/operations/business-documents/orders/:orderId` | Documentos operativos |
+| Ops / S1 y S2 Account Ownership | `/ops/commercial/promotions` | Promotions como capacidad comercial compartida, sujeta al alcance del perfil |
+| Ops / S2 Account Ownership | `/ops/operations/company-administration` | Company Administration |
+| Ops / S2 Account Ownership | `/ops/operations/company-administration?section=overview`, `/ops/operations/company-administration?section=workspaces` | Overview y Workspaces |
+| Ops / S2 Account Ownership | `/ops/operations/company-administration?section=teammates`, `/ops/operations/company-administration?section=rules` | Teammates y Company rules |
+| Ops / S2 Account Ownership | `/ops/operations/company-administration?section=custom-fields`, `/ops/operations/company-administration?section=billing`, `/ops/operations/company-administration?section=preferences` | Custom fields, Billing y Preferences |
+| Buyer Portal / S3 | `/portal/home`, `/portal/product-catalog`, `/portal/product-catalog/:id` | Inicio, catálogo y producto |
+| Buyer Portal / S3 | `/portal/request-builder` | Constructor de solicitud |
+| Buyer Portal / S3 | `/portal/purchase-requests`, `/portal/purchase-requests/:id` | My Requests y detalle |
+| Buyer Portal / S3 | `/portal/purchase-orders`, `/portal/purchase-orders/success`, `/portal/purchase-orders/:id` | My Orders, confirmación y detalle/tracking |
+| Buyer Portal / S3 | `/portal/payment-methods`, `/portal/premium`, `/portal/profile` | Payments, Premium y Profile |
+| Buyer Portal / S3 | `/portal/legal/terms`, `/portal/legal/privacy`, `/portal/support` | Legal y soporte |
+
+> *Nota:* Los documentos visibles del comprador se consultan desde My Orders / Order Detail. Elaboración propia.
 
 #### Aliases y Redirecciones del Router (Legacy Redirects)
-Para mantener la compatibilidad con enlaces y menús antiguos, el router de la aplicación maneja redirecciones automáticas hacia las rutas canónicas listadas anteriormente:
-*   **Aliases de Coordinación Comercial (S1)**:
-    *   `/ops/commercial/orders` y `/ops/orders` $\rightarrow$ redireccionan a `/ops/commercial/purchase-orders`
-    *   `/ops/commercial/orders/create` y `/ops/orders/new` $\rightarrow$ redireccionan a `/ops/commercial/manual-order-entry`
-    *   `/ops/commercial/orders/:id` y `/ops/orders/:id` $\rightarrow$ redireccionan a `/ops/commercial/purchase-orders/:id`
-    *   `/ops/commercial/requests` $\rightarrow$ redirecciona a `/ops/commercial/purchase-requests`
-    *   `/ops/commercial/requests/:id` $\rightarrow$ redirecciona a `/ops/commercial/purchase-requests/:id`
-    *   `/ops/commercial/manual-order` $\rightarrow$ redirecciona a `/ops/commercial/manual-order-entry`
-    *   `/ops/clients` $\rightarrow$ redirecciona a `/ops/commercial/client-accounts`
-    *   `/ops/catalog` $\rightarrow$ redirecciona a `/ops/product-catalog`
-    *   `/ops/commercial/promotions` $\rightarrow$ redirecciona a `/ops/operations/promotions`
-    *   `/ops/commercial/documents` $\rightarrow$ redirecciona a `/ops/commercial/business-documents`
-*   **Aliases de Operaciones (S2)**:
-    *   `/ops/settings` y `/ops/company-administration` $\rightarrow$ redireccionan a `/ops/operations/company-administration`
-    *   `/ops/inventory` $\rightarrow$ redirecciona a `/ops/operations/inventory-control`
-    *   `/ops/dispatch` $\rightarrow$ redirecciona a `/ops/operations/dispatch-orders`
-    *   `/ops/dispatch/:id` $\rightarrow$ redirecciona a `/ops/operations/dispatch-orders/:id`
-    *   `/ops/evidence` $\rightarrow$ redirecciona a `/ops/operations/proof-of-delivery`
-    *   `/ops/commercial/customer-portals` y `/ops/customer-portals` $\rightarrow$ redireccionan a `/ops/operations/customer-portals`
-    *   `/ops/reports` $\rightarrow$ redirecciona a `/ops/operations/operational-analytics`
-*   **Aliases del Buyer Portal (S3)**:
-    *   `/portal/requests` $\rightarrow$ redirecciona a `/portal/purchase-requests`
-    *   `/portal/requests/:id` $\rightarrow$ redirecciona a `/portal/purchase-requests/:id`
-    *   `/portal/orders` $\rightarrow$ redirecciona a `/portal/purchase-orders`
-    *   `/portal/orders/success` $\rightarrow$ redirecciona a `/portal/purchase-orders/success`
-    *   `/portal/orders/:id` $\rightarrow$ redirecciona a `/portal/purchase-orders/:id`
-    *   `/portal/documents` $\rightarrow$ redirecciona a `/portal/business-documents`
-    *   `/portal/catalog` $\rightarrow$ redirecciona a `/portal/product-catalog`
-    *   `/portal/catalog/:id` $\rightarrow$ redirecciona a `/portal/product-catalog/:id`
+
+Solo se mantienen redirecciones presentes en los route files finales:
+
+- **Ops / S1:** `/ops/commercial/requests` y `/:id` → Purchase Requests; `/ops/commercial/manual-order` y `/ops/orders/new` → Manual Order Entry; `/ops/orders` y `/:id` → Purchase Orders; `/ops/clients` → Client Accounts; `/ops/catalog` → Product Catalog; `/ops/commercial/documents` → Business Documents.
+- **Ops / S2:** `/ops/operations/promotions` → `/ops/commercial/promotions`; `/ops/settings` y `/ops/company-administration` → Company Administration; `/ops/operations/workspace-setup` → Company Administration / Workspaces; `/ops/inventory` → Inventory Control; `/ops/dispatch` y `/ops/dispatch/:id` → Dispatch Orders; `/ops/evidence` → Proof of Delivery; `/ops/reports` → Operational Analytics.
+- **Buyer Portal / S3:** `/portal/catalog` y `/:id` → Product Catalog; `/portal/requests` y `/:id` → Purchase Requests; `/portal/orders`, `/portal/orders/success` y `/portal/orders/:id` → Purchase Orders; `/portal/business-documents` y `/portal/documents` → `/portal/purchase-orders`.
+
+Estas rutas de compatibilidad no se presentan como módulos adicionales.
 
 ### 4.2.2. Labeling Systems
 
-El sistema de etiquetado mantiene consistencia entre superficies y usa vocabulario de dominio alineado al flujo comercial-operativo de Nexa. Las etiquetas deben comunicar acciones de negocio, no nombres técnicos internos. Cuando se usan nombres canónicos en inglés, estos se reservan para rutas, módulos o capacidades reconocibles dentro de la arquitectura del producto.
+La interfaz final usa inglés por defecto y ofrece soporte en español. Por ello, la arquitectura documenta los labels visibles en inglés y explica su propósito en español.
 
-**Landing — etiquetas de navegación y conversión:**
+*Etiquetas reales por superficie*
 
-| Tipo | Ejemplos | Función |
+| Superficie | Labels principales | Función |
 |---|---|---|
-| Navegación global | Inicio, Plataforma, Soluciones, Empresa, FAQ | Orientar al visitante entre áreas troncales |
-| Segmentación comercial | Importadores y mayoristas, Distribuidores, Operadores de cámaras frías | Presentar casos de uso por tipo de empresa contratante |
-| CTA principales | Solicitar una demostración, Ingresar | Conectar descubrimiento con conversión o acceso |
-| Vocabulario de dominio | Inventario, pedidos B2B, FEFO, despacho, trazabilidad, cadena de frío | Mantener coherencia con la propuesta de valor |
+| Landing | Platform, Buyer Portal, Solutions, Company, Pricing, FAQ, Register workspace, Login | Descubrimiento, conversión y acceso |
+| S1 | Sales Dashboard, Product Catalog, Purchase Requests, Purchase Orders, Manual Order Entry, B2B Clients, Promotions, Business Documents | Coordinación, validación comercial y revisión de campañas |
+| S2 Operations | Operations Dashboard, Inventory Control, Dispatch Orders, Proof of Delivery, Operational Analytics, Business Documents | Operación de almacén y despacho |
+| S2 Account Ownership | Promotions, Company Administration, Overview, Workspaces, Teammates, Company rules, Custom fields, Billing, Preferences | Gobierno y visibilidad administrativa según permisos |
+| S3 | Product Catalog, Request Builder, My Requests, My Orders, Payments, Premium, Profile | Compra, seguimiento y cuenta del comprador |
 
-**Web Application interna — etiquetas por responsabilidad interna:**
+> *Nota:* Los labels mantienen terminología consistente entre navegación, títulos y acciones. Elaboración propia.
 
-| Segmento | Etiquetas de navegación | Acciones principales | Estados y datos clave |
-|---|---|---|---|
-| S1 | Dashboard comercial, Catálogo, Solicitudes B2B, Órdenes de compra, Registro manual, Clientes B2B, Documentos comerciales | Validar solicitud, convertir a orden, registrar pedido, revisar cliente, observar documento | Solicitud enviada, En revisión comercial, Requiere ajuste, En validación, Bloqueada, Documento por revisar |
-| S2 | Dashboard operaciones, Control de inventario, Lotes, Órdenes de despacho, Evidencias de entrega, Analítica operativa, Promociones, Portales externos, Administración de empresa | Reservar stock, revisar FEFO, preparar despacho, cerrar POD, configurar empresa | Stock bajo, Stock agotado, Lote próximo a vencer, En tránsito, Entrega cerrada, Incidencia registrada |
-| S1 / S2 | Perfil | Actualizar datos de usuario | Rol, empresa, tenant, scope |
-
-**Buyer Portal — etiquetas de compra y seguimiento:**
-
-| Tipo | Ejemplos | Función |
-|---|---|---|
-| Navegación | Home, Product Catalog, Request Builder, My Requests, My Orders, Business Documents, Premium, Profile | Guiar al comprador por su flujo de abastecimiento |
-| Acciones | Add to cart, Submit Request, View detail, Back to catalog, View my orders | Convertir exploración en solicitud y seguimiento |
-| Estados | Solicitud enviada, En revisión comercial, Orden confirmada, En preparación, En tránsito, Entrega cerrada | Comunicar avance sin exponer complejidad interna |
-| Datos visibles | Producto, código interno, categoría, temperatura, cantidad, total, documentos, tracking | Aumentar confianza y trazabilidad para S3 |
+Los estados deben describirse con texto además de color. En Buyer Portal, “Request” identifica una solicitud sujeta a validación comercial y “Order” una orden ya formalizada. “Tracking” se refiere al seguimiento de estados registrados.
 
 ### 4.2.3. SEO Tags and Meta Tags
 
-La implementación SEO y metadata de Nexa distingue entre el sitio público y la Web Application autenticada. La Landing Page busca descubrimiento, comunicación de valor y conversión pública. La Web Application y el Buyer Portal, al operar detrás de autenticación, incluyen metadata descriptiva y configuración `noindex, nofollow` para evitar indexación de rutas internas.
+La metadata distingue el Website indexable de la WebApp autenticada. Las páginas públicas usan `title`, `description`, canonical y metadata social según su contenido.
 
-**Landing Page pública:**
+*Metadata pública de la Landing Page*
 
-| Página | Title | Meta description / OG description | Keywords | Author | Observación |
-|---|---|---|---|---|---|
-| Home | Nexa — Tu operación de charcutería y lácteos, por fin visible | Presenta la propuesta de valor principal para operaciones de charcutería, quesos y lácteos | Nexa, cold chain, charcutería, lácteos, inventario, pedidos B2B, FEFO | Nexa | Entrada principal de conversión |
-| Platform | Nexa — What the Platform Does | Explica las áreas funcionales de la plataforma | Nexa, plataforma, catálogo, inventario, pedidos, despacho, FEFO | Nexa | Vista de explicación funcional |
-| Solutions Hub | Nexa Solutions — Built for the Nodes That Matter Most | Agrupa casos de uso por tipo de operador | Nexa, soluciones, importadores, distribuidores, cámaras frías, cold chain | Nexa | Hub de segmentación comercial |
-| Importers & Wholesalers | Nexa Solutions — Importers & Wholesalers | Presenta valor para importadores y mayoristas | Nexa, importadores, mayoristas, inventario, cold chain, lotes | Nexa | Página comercial de Solution |
-| Distributors | Nexa Solutions — Charcuterie & Dairy Distribution | Presenta valor para distribución, FEFO, despacho y portal B2B | Nexa, distribuidores, portal B2B, FEFO, despacho, pedidos | Nexa | Página más cercana al flujo principal de Nexa |
-| Cold Storage Operators | Nexa Solutions — Cold Storage Operators | Presenta valor para cámaras frías y monitoreo operativo | Nexa, cámaras frías, cold storage, lácteos, auditoría, monitoreo operativo | Nexa | Página comercial orientada a gestión operativa |
-| Company | Nexa — Who We Are | Presenta al equipo y contexto del proyecto | Nexa, equipo, Lima, cold chain, distribución refrigerada | Nexa | Soporte de confianza |
-| FAQ | Nexa FAQ — Everything You Need to Know Before You Decide | Responde dudas frecuentes sobre implementación, seguridad, precios e integraciones operativas | Nexa, FAQ, implementación, seguridad, precios, integraciones operativas | Nexa | Soporte para decisión antes de demo |
+| Página | Title | Meta description | Keywords | Author |
+|---|---|---|---|---|
+| Home | Nexa — Tu operacion de charcuteria y lacteos, por fin visible | Un solo lugar para gestionar pedidos, inventario, temperatura y entregas. | Nexa, cold chain, pedidos B2B | Nexa / Team King |
+| Platform | Nexa — What the Platform Does | Sistema para catálogo, inventario, órdenes, temperatura y entrega. | plataforma, inventario, órdenes | Nexa / Team King |
+| Buyer Portal | Nexa — Buyer Portal para tus clientes B2B | Portal para consultar catálogo, enviar solicitudes y seguir despachos. | Buyer Portal, catálogo, solicitudes | Nexa / Team King |
+| Solutions Hub | Nexa Solutions — Built for the Nodes That Matter Most | Soluciones para importadores, distribuidores y operadores de frío. | soluciones, distribución, cold chain | Nexa / Team King |
+| Importers & Wholesalers | Nexa Solutions — Importers & Wholesalers | Capacidades para importación, integridad térmica e inventario mayorista. | importadores, mayoristas, inventario | Nexa / Team King |
+| Distributors | Nexa Solutions — Charcuterie & Dairy Distribution | Distribución con FEFO, despacho y portal B2B. | distribuidores, FEFO, despacho | Nexa / Team King |
+| Cold Storage Operators | Nexa Solutions — Cold Storage Operators | Operación de cámaras frías y capacidades claramente identificadas. | cámaras frías, cold storage, operación | Nexa / Team King |
+| Company | Nexa — Who We Are | Equipo y contexto del proyecto Nexa. | Nexa, empresa, equipo | Nexa / Team King |
+| Pricing | Nexa - Pricing | Planes y capacidades visibles de Nexa. | pricing, planes, capacidades | Nexa / Team King |
+| FAQ | Nexa FAQ — Everything You Need to Know Before You Decide | Respuestas sobre implementación, seguridad, integraciones y precios. | FAQ, seguridad, precios | Nexa / Team King |
+| About the Product | Nexa - About the Product | Alcance y propuesta del producto para operaciones B2B refrigeradas. | producto, SaaS B2B, cold chain | Nexa / Team King |
+| About the Team | Nexa - About the Team | Equipo que desarrolla la propuesta de Nexa. | equipo, Team King, Nexa | Nexa / Team King |
+| Terms | Nexa - Terms & Conditions | Condiciones de uso y alcance académico de Nexa. | términos, condiciones, uso | Nexa / Team King |
+| Privacy | Nexa - Privacy & Policy | Política de privacidad y tratamiento de datos de la experiencia. | privacidad, datos, política | Nexa / Team King |
+| Cookies | Nexa - Cookies | Aviso sobre estado local y preferencias de interfaz. | cookies, preferencias, navegador | Nexa / Team King |
 
-**Web Application y Buyer Portal autenticados:**
+> *Nota:* La tabla refleja títulos y enfoques metadata presentes en las páginas públicas. Elaboración propia.
 
-| Superficie | Title | Meta description | Keywords | Author | Robots | Propósito |
-|---|---|---|---|---|---|---|
-| Web Application / Ops / Portal | Nexa — Operaciones refrigeradas | Plataforma de operaciones para distribuidoras refrigeradas: catálogo, inventario, pedidos y despacho en un solo lugar | operaciones refrigeradas, distribución cold chain, inventario, pedidos, despacho | Nexa | `noindex, nofollow` | Describir la aplicación sin indexar contenido privado |
-
-La metadata pública se define con `title`, `description`, `keywords`, `author` y descripciones Open Graph coherentes con cada página. Las rutas autenticadas se documentan con metadata descriptiva y política `noindex, nofollow` para proteger contenido privado y evitar indexación de vistas internas.
+La WebApp comparte metadata privada (`Nexa`) y utiliza `noindex, nofollow`; no se inventan estrategias SEO por ruta interna. Esta política cubre Ops Portal y Buyer Portal autenticados.
 
 ### 4.2.4. Searching Systems
 
-El sistema de búsqueda de Nexa se plantea como búsqueda contextual por módulo. Cada superficie presenta criterios, filtros y resultados alineados con el tipo de tarea que el usuario necesita resolver. Esta decisión reduce complejidad cognitiva y protege la visibilidad por scope: S1 consulta información comercial, S2 consulta información operativa y S3 consulta únicamente información asociada a su cuenta compradora.
+La búsqueda es contextual por módulo y respeta el scope del usuario.
 
-| Superficie / módulo | Búsqueda | Filtros | Resultado mostrado | Segmento |
-|---|---|---|---|---|
-| Landing Page | Navegación directa, dropdown de Solutions y FAQ por tema | Tópico, tipo de solución, sección de contenido | Enlaces de navegación, bloques de contenido y respuestas agrupadas | Visitante / empresa interesada |
-| Web Application S1 | Solicitudes, órdenes, catálogo, clientes B2B y documentos comerciales | Estado, cliente, fecha, categoría, disponibilidad, promoción, tipo de documento, estado de pago | Tablas operativas, badges de estado, drawers de detalle y estados vacíos con siguiente acción | S1 |
-| Web Application S2 | Inventario, lotes, reservas, órdenes de despacho, evidencias y documentos operativos | Lote, vencimiento, stock, responsable, fecha, estado de despacho, incidencia, tipo de documento | Tablas densas, cards de stock, listas compactas, badges de alerta y detalle operativo | S2 |
-| Buyer Portal S3 | Catálogo por nombre comercial o código interno, solicitudes, órdenes, documentos y tracking | Categoría, disponibilidad, promoción, fecha, estado de solicitud, estado de pago, tipo de documento | Cards de producto, listas compactas, timelines de tracking, documentos visibles y estados vacíos con mensaje claro | S3 |
+*Sistemas de búsqueda por superficie*
 
-Cuando una búsqueda no devuelve resultados, la interfaz debe comunicar el estado vacío con un mensaje específico y una acción viable. Por ejemplo, el comprador puede volver al catálogo, la coordinadora comercial puede limpiar filtros o el responsable operativo puede revisar otro rango de fechas.
+| Superficie | Búsquedas y filtros reales | Resultado esperado |
+|---|---|---|
+| Landing | Navegación directa, FAQ por temas y dropdown de Solutions | Página, sección o respuesta relacionada |
+| S1 | Solicitudes, órdenes, cliente, documentos y catálogo; filtros por estado y datos comerciales | Tablas, cards, detalles y estados vacíos |
+| S2 Operations | Producto, lote, FEFO, stock, despacho, POD, documento y estado operativo | Inventario, lotes, tablero y detalle operativo |
+| S2 Account Ownership | Usuarios/roles, workspace, reglas, campos personalizados, Billing y Preferences | Configuración visible del workspace; no implica persistencia completa |
+| S3 | Producto/SKU/categoría/marca, cold type, disponibilidad/ofertas, solicitudes, órdenes, tracking y pagos referenciales | Cards, listas, timeline y datos de cuenta |
+
+> *Nota:* Cuando no existen resultados, la interfaz debe explicar el estado vacío y ofrecer una acción viable, como limpiar filtros o volver al catálogo. Elaboración propia.
 
 ### 4.2.5. Navigation Systems
 
 #### Landing — navegación global + contextual
 
-El sitio público utiliza navegación global persistente con logo, enlaces troncales, dropdown de Solutions, selector de idioma y CTAs. Las páginas de Solutions funcionan como navegación contextual para visitantes que desean entender la propuesta según su tipo de operación. FAQ utiliza agrupación por temas para facilitar la exploración de preguntas frecuentes. En móvil, el menú colapsado mantiene acceso a las rutas principales sin alterar la jerarquía del sitio.
+La Landing Page combina navbar global, dropdown de **Solutions**, CTAs hacia registro/login y footer con páginas legales. La navegación móvil conserva la misma jerarquía mediante menú colapsado. Los CTAs se adaptan a la base configurada de la WebApp, mientras la documentación mantiene rutas canónicas sin hash.
 
-| Capa | Componente | Función |
-|---|---|---|
-| Global | Navbar principal | Acceso a Inicio, Plataforma, Soluciones, Empresa, FAQ y CTAs |
-| Contextual | Dropdown de Solutions | Acceso a páginas por tipo de operador |
-| Local | Categorías internas de FAQ | Exploración rápida de preguntas y respuestas |
-| Soporte | Footer y páginas legales | Acceso a términos, privacidad y cookies |
-| Móvil | Menú colapsado | Adaptación de la navegación principal a pantallas pequeñas |
+#### Web Application interna — navegación por segmento y responsabilidad
 
-#### Web Application interna — navegación por rol y responsabilidad
+El Ops Portal usa sidebar filtrado por rol y topbar contextual:
 
-La consola interna utiliza sidebar persistente y top bar. El sidebar organiza módulos por grupo funcional y filtra opciones según el rol autenticado. El top bar mantiene el contexto de empresa activa, idioma, notificaciones y cuenta.
+| Rol / subalcance | Navegación principal |
+|---|---|
+| `commercial` / S1 | Sales Dashboard, Product Catalog, Purchase Requests, Purchase Orders, Manual Order Entry, B2B Clients, Promotions cuando el perfil tiene alcance, Business Documents, My Profile |
+| `logistics` / S2 Operations | Operations Dashboard, Inventory Control, Dispatch Orders, Proof of Delivery, Operational Analytics, Business Documents, My Profile |
+| `owner` / S2 Account Ownership | Promotions como capacidad compartida, Company Administration y sus secciones, My Profile |
 
-| Segmento | Navegación principal | Criterio de organización |
-|---|---|---|
-| S1 — Commercial Coordination | Dashboard comercial, Catálogo, Solicitudes B2B, Órdenes de compra, Registro manual, Clientes B2B, Documentos comerciales, Perfil | Validación y conversión comercial del pedido |
-| S2 — Operations / Account Owner | Dashboard operaciones, Control de inventario, Lotes, Órdenes de despacho, Evidencias de entrega, Analítica operativa, Documentos comerciales, Promociones, Portales externos, Administración de empresa, Perfil | Ejecución operativa, control de empresa y trazabilidad |
-| S1 / S2 | Top bar de empresa y cuenta | Mantener contexto de tenant y usuario autenticado |
-
-Los módulos internos utilizan tarjetas, tablas, tabs, estados visuales y vistas de detalle para permitir movimiento lateral sin perder el contexto de negocio. Por ejemplo, una solicitud de compra (`Purchase Request`) puede revisarse desde el flujo comercial, convertirse en orden de compra (`Purchase Order`) y luego continuar en operaciones como orden de despacho (`Dispatch Order`).
+El topbar mantiene workspace, idioma, notificaciones y cuenta. El router dirige `/ops/dashboard` a la experiencia correspondiente al `roleKey` autenticado.
 
 #### Buyer Portal — navegación lineal de compra y seguimiento
 
-El portal del comprador B2B prioriza una navegación lineal y transaccional. El comprador empieza en el catálogo, revisa productos, construye una solicitud, consulta su estado y revisa pedidos o documentos asociados.
+La navegación superior sigue: **Product Catalog → Request Builder → My Requests → My Orders → Payments / Premium / Profile**. Terms, Privacy y Support permanecen como enlaces de soporte.
 
 ```mermaid
 flowchart LR
-    Home["Portal Home"] --> Catalog["Product Catalog"]
+    Home["Home"] --> Catalog["Product Catalog"]
     Catalog --> Detail["Product Detail"]
-    Detail --> RequestBuilder["Request Builder"]
-    RequestBuilder --> Requests["My Requests"]
+    Detail --> Builder["Request Builder"]
+    Builder --> Requests["My Requests"]
     Requests --> Orders["My Orders"]
-    Orders --> OrderDetail["Order Detail / Tracking"]
-    OrderDetail --> Documents["Business Documents"]
+    Orders --> OrderDetail["Order Detail / Tracking / Documents"]
+    Orders --> Payments["Payments"]
 ```
 
-| Paso | Vista | Decisión de navegación |
-|---|---|---|
-| 1 | Home | Presentar resumen y accesos frecuentes |
-| 2 | Product Catalog | Permitir búsqueda y filtrado de productos |
-| 3 | Product Detail | Revisar información del producto antes de solicitar |
-| 4 | Request Builder | Confirmar cantidades, datos de entrega y solicitud |
-| 5 | My Requests | Revisar solicitudes enviadas y su estado |
-| 6 | My Orders | Consultar órdenes confirmadas |
-| 7 | Order Detail / Business Documents | Revisar tracking, documentos visibles y cierre |
+> *Nota:* Los documentos y el seguimiento se consultan dentro de My Orders / Order Detail; los redirects documentales conducen a Purchase Orders. Elaboración propia.
 
-Esta navegación refuerza el flujo transversal de Nexa: **S3 solicita**, **S1 valida y convierte**, **S2 ejecuta despacho y evidencia**, y **S3 obtiene visibilidad del estado final**.
+Esta navegación expresa el flujo transversal: S3 solicita, S1 valida y convierte, S2 ejecuta inventario, despacho y evidencia, y S3 consulta el estado y los documentos disponibles. El account ownership de S2 sostiene el contexto del tenant/workspace.
