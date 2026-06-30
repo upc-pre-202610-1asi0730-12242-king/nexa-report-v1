@@ -1,316 +1,397 @@
 ## 4.4. Web Applications UX/UI Design
 
-Esta sección documenta el diseño UX/UI de las superficies autenticadas de Nexa: la **Web Application interna** para los segmentos **S1 — Commercial Coordination** y **S2 — Operations / Account Owner**, y el **Buyer Portal** para **S3 — B2B Buyer Portal**. Estas superficies comparten el sistema visual definido en 4.1 y la arquitectura de información descrita en 4.2, pero se diferencian por densidad, navegación, nivel de detalle y responsabilidad de negocio.
+Esta sección documenta el diseño UX/UI de las superficies autenticadas de Nexa: la **Web Application interna u Ops Portal** para **Segmento 1 — Valeria Sánchez — Commercial Coordination** y **Segmento 2 — Roberto García — Operations / Account Owner**, y el **Buyer Portal** para el **Segmento 3 — Elena Litano — B2B Buyer Portal**. Las tres experiencias comparten el sistema visual definido en 4.1 y la arquitectura de información descrita en 4.2, pero se diferencian por densidad, navegación, nivel de detalle y responsabilidad dentro del modelo multi-tenant SaaS B2B. El tenant/workspace proporciona el contexto de operación y la navegación se filtra según el rol autorizado.
 
-La Web Application interna está orientada a operación diaria. S1 necesita validar solicitudes, revisar clientes, convertir solicitudes de compra (`Purchase Requests`) en órdenes de compra (`Purchase Orders`) y gestionar documentos comerciales. S2 necesita controlar inventario, lotes, despacho, evidencias, analítica operativa, promociones, portales de cliente (`Customer Portals`) y administración de empresa/tenant. El Buyer Portal está orientado al autoservicio del comprador B2B: catálogo, constructor de solicitud (`Request Builder`), solicitudes, pedidos, documentos visibles y seguimiento.
+La Web Application interna está orientada a la operación diaria de los segmentos Segmento 1 y Segmento 2. El recorrido de **Valeria Sánchez** integra Sales Dashboard, Purchase Requests, Purchase Orders, Manual Order Entry, Product Catalog, B2B Clients y Business Documents. El recorrido de **Roberto García** mantiene dos responsabilidades dentro de un mismo segmento: la operación logística y el account ownership. La primera comprende Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Proof of Delivery, Operational Analytics y Business Documents; la segunda comprende Company Administration, Workspaces, Teammates, Company rules, Custom fields, Billing, Preferences y el alcance de acceso. Account Ownership es un subalcance administrativo de Segmento 2, no un segmento adicional.
+
+El **Buyer Portal** está orientado al autoservicio de **Elena Litano** mediante Product Catalog, Product Detail, Request Builder, My Requests, My Orders, Order Detail con tracking y documentos visibles, Payments, Premium y Profile. Payments comunica métodos, crédito, saldo o estado referencial de pago según el alcance disponible, sin presentarse como procesamiento de pagos.
 
 El diseño UX/UI se organiza por user goals y no únicamente por pantallas. Cada recorrido responde a una pregunta del dominio: qué solicitud debe validarse, qué pedido está bloqueado, qué lote requiere atención, qué despacho debe prepararse, qué evidencia falta y qué estado puede consultar el comprador. Por ello, esta sección presenta wireframes, wireflows, mockups y user flows como artefactos conectados.
 
-Para **S3 — B2B Buyer Portal**, esta sección incorpora mockups desktop y mobile de alta fidelidad, rutas canónicas, task flow, wireflow visual y user flow diagramático exportado. La cobertura mobile se documenta mediante mockups responsive incorporados en esta sección, mientras que el wireflow y el user flow S3 respaldan la continuidad del recorrido del comprador B2B.
+Para el **Segmento 3 — B2B Buyer Portal**, esta sección articula wireframes documentales, mockups desktop y mobile, rutas canónicas, task flow, wireflow visual y user flow diagramático. Esta cobertura permite relacionar la estructura de las pantallas con la continuidad del recorrido del comprador B2B.
+
+*Criterios UX/UI de Web Application y Buyer Portal*
 
 | Criterio | Aplicación en Web Application / Buyer Portal | Relación con 4.1 / 4.2 |
 |---|---|---|
 | Jerarquía visual | Dashboards, tablas, drawers, modals y estados priorizan decisiones operativas por flujo | Aplica la jerarquía, color, tipografía y espaciado definidos en 4.1 |
-| Arquitectura de información | Módulos y rutas siguen la organización por S1, S2 y S3 | Mantiene la estructura de superficies, rutas canónicas y navegación definida en 4.2 |
+| Arquitectura de información | Módulos y rutas siguen la organización por Segmento 1, Segmento 2 y Segmento 3, incluyendo account ownership dentro del Segmento 2 | Mantiene la estructura de superficies, rutas canónicas y navegación definida en 4.2 |
 | Diseño inclusivo | Labels claros, estados textuales, contraste y mensajes de validación reducen ambigüedad | Conecta con los criterios de accesibilidad, tono y lenguaje de 4.1 |
 | Design System | Cards, badges, botones, tablas, modals y espaciado se aplican de forma consistente | Usa los patrones visuales y componentes documentados en 4.1 |
 | Flujo por user goal | Wireframes, wireflows y user flows se agrupan por objetivo de usuario | Relaciona las vistas con la organización por responsabilidades de negocio de 4.2 |
-| Responsive y densidad operativa | S1/S2 priorizan desktop/tablet; S3 prioriza autoservicio y lectura clara | Conserva la diferenciación de superficies indicada en 4.1 y 4.2 |
+| Responsive y densidad operativa | Segmento 1 y Segmento 2 priorizan desktop/tablet; Segmento 3 prioriza autoservicio y lectura clara | Conserva la diferenciación de superficies indicada en 4.1 y 4.2 |
+
+> *Nota:* La tabla resume los criterios aplicados al diseño UX/UI de las superficies autenticadas de Nexa. Elaboración propia.
 
 ### 4.4.1. Web Applications Wireframes
 
-Los wireframes de la Web Application se organizan por segmento operativo y por flujo de trabajo. La evidencia visual de wireframes cubre principalmente S1 y S2; S3 cuenta con mockups desktop y mobile de alta fidelidad incorporados en esta sección como adaptación responsive del flujo.
+Los wireframes de la Web Application se organizan por segmento, responsabilidad y flujo de trabajo. Los artefactos visuales existentes cubren los recorridos comerciales y operativos internos; la representación documental del Buyer Portal consolida las pantallas esenciales del recorrido de Elena Litano. El account ownership se integra en Segmento 2 como subalcance administrativo asociado al tenant/workspace.
 
-*Tabla: Wireframes de la Web Application por segmento*
+*Wireframes de la Web Application por segmento*
 
-| Segmento | Pantallas documentadas | Recorrido cubierto | Representación en esta sección |
+| Segmento / subalcance | Pantallas documentadas | Recorrido cubierto | Representación en esta sección |
 |---|---|---|---|
-| S1 — Commercial Coordination | Login, dashboard comercial, clientes, detalle de cliente, pedidos, creación de pedido, selección de productos, resumen, detalle de pedido y reportes | Ingreso, revisión comercial, gestión de clientes, registro de pedido, selección de productos, confirmación, seguimiento y consulta de reportes | Wireframes visuales incluidos en los assets del reporte |
-| S2 — Operations / Account Owner | Login, dashboard logístico, inventario general, inventario por lote, detalle de lote, revisión operativa de pedido, despacho, registro de salida, notificación, confirmación y reportes operativos | Ingreso, control de inventario, revisión por lote, preparación de despacho, registro operativo, confirmación de salida y lectura de reportes | Wireframes visuales incluidos en los assets del reporte |
-| S3 — B2B Buyer Portal | Home, Product Catalog, Product Detail, constructor de solicitud (`Request Builder`), My Requests, My Orders, Business Documents, Premium y Profile | Consulta de catálogo, armado de solicitud, revisión de solicitudes, seguimiento de pedidos y documentos visibles | Mockups desktop y mobile de alta fidelidad, rutas canónicas, task flow, wireflow visual y user flow S3 exportado |
+| Segmento 1 — Commercial Coordination | Login, Sales Dashboard, Purchase Requests, Request Detail, Purchase Orders, Manual Order Entry, Product Catalog, B2B Clients y Business Documents | Ingreso, revisión de solicitudes, lectura de detalle, formalización y seguimiento de órdenes, registro manual, consulta de catálogo, clientes y documentos | Wireframes visuales y cobertura documental del recorrido final |
+| Segmento 2 — Operations / Account Owner | Login, Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Dispatch Detail, Proof of Delivery, Operational Analytics, Business Documents, Company Administration, Workspaces, Teammates, Company rules, Custom fields, Billing y Preferences | Operación logística y rama administrativa de gobierno del tenant/workspace dentro del mismo segmento | Wireframes visuales y cobertura documental de los subalcances operativo y administrativo |
+| Segmento 3 — B2B Buyer Portal | Login, Portal Home, Product Catalog, Product Detail, Request Builder, My Requests, Request Detail, My Orders, Order Detail con tracking y documentos visibles, Payments, Premium y Profile | Ingreso, descubrimiento de productos, preparación de solicitud, seguimiento comercial y logístico, consulta referencial de pagos y gestión de cuenta | Representación documental de wireframes, mockups responsive, wireflow y user flow |
 
-#### S1 — Commercial Coordination
+> *Nota:* La tabla detalla el alcance de los wireframes documentados en esta sección para cada segmento. Elaboración propia.
 
-El recorrido S1 cubre el trabajo de Valeria Sánchez desde el ingreso a la plataforma hasta la consulta de reportes comerciales. La secuencia prioriza captura clara de pedidos, revisión de cliente, validación comercial, selección de productos y trazabilidad del pedido creado.
+#### Segmento 1 — Commercial Coordination
 
-**Figura. Wireframe de login para S1**
+El recorrido de **Valeria Sánchez** cubre el ingreso, Sales Dashboard, revisión de Purchase Requests, lectura del Request Detail, formalización o seguimiento mediante Purchase Orders, Manual Order Entry, consulta de Product Catalog, B2B Clients y Business Documents. Purchase Requests y Purchase Orders constituyen el eje del flujo comercial; el registro manual complementa la atención cuando la solicitud no se origina directamente en el Buyer Portal.
 
-![Wireframe de login para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-login.jpg)
+*Wireframe de login para el Segmento 1 — Commercial Coordination*
+
+![Wireframe de login para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-login.jpg)
 
 > *Nota:* La pantalla de ingreso separa el acceso autenticado del recorrido público de la Landing Page. Elaboración propia.
 
-**Figura. Wireframe de dashboard comercial para S1**
+*Wireframe de dashboard comercial para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de dashboard comercial para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-dashboard.jpg)
+![Wireframe de dashboard comercial para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-dashboard.jpg)
 
 > *Nota:* El dashboard reúne estado de pedidos, alertas comerciales y accesos a tareas frecuentes. Elaboración propia.
 
-**Figura. Wireframe de lista de clientes para S1**
+*Wireframe de lista de clientes para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de lista de clientes para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-clientes-lista.jpg)
+![Wireframe de lista de clientes para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-clientes-lista.jpg)
 
 > *Nota:* La lista permite ubicar clientes y revisar información comercial antes de iniciar o validar un pedido. Elaboración propia.
 
-**Figura. Wireframe de detalle de cliente para S1**
+*Wireframe de detalle de cliente para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de detalle de cliente para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-detalle-cliente.jpg)
+![Wireframe de detalle de cliente para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-detalle-cliente.jpg)
 
 > *Nota:* El detalle concentra condiciones, datos relevantes y contexto necesario para decidir si el pedido puede avanzar. Elaboración propia.
 
-**Figura. Wireframe de lista de pedidos para S1**
+*Wireframe de lista de pedidos para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de lista de pedidos para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-pedidos-lista.jpg)
+![Wireframe de lista de pedidos para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-pedidos-lista.jpg)
 
 > *Nota:* La bandeja de pedidos ordena estados, prioridades y acceso rápido al detalle. Elaboración propia.
 
-**Figura. Wireframe de creación de pedido para S1**
+*Wireframe de creación de pedido para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de creación de pedido para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido.jpg)
+![Wireframe de creación de pedido para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido.jpg)
 
 > *Nota:* La captura inicial del pedido separa cliente, condiciones y datos base para reducir ambigüedad. Elaboración propia.
 
-**Figura. Wireframe de selección de productos para S1**
+*Wireframe de selección de productos para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de selección de productos para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido-productos.jpg)
+![Wireframe de selección de productos para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido-productos.jpg)
 
 > *Nota:* La selección de productos ayuda a revisar cantidades, disponibilidad y composición del pedido. Elaboración propia.
 
-**Figura. Wireframe de resumen de pedido para S1**
+*Wireframe de resumen de pedido para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de resumen de pedido para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido-resumen.jpg)
+![Wireframe de resumen de pedido para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-crear-pedido-resumen.jpg)
 
 > *Nota:* El resumen permite confirmar información antes de registrar o convertir el pedido. Elaboración propia.
 
-**Figura. Wireframe de detalle de pedido para S1**
+*Wireframe de detalle de pedido para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de detalle de pedido para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-detalle-pedido.jpg)
+![Wireframe de detalle de pedido para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-detalle-pedido.jpg)
 
 > *Nota:* El detalle sostiene seguimiento comercial y lectura del historial de la orden. Elaboración propia.
 
-**Figura. Wireframe de reportes para S1**
+*Wireframe de reportes para el Segmento 1 — Commercial Coordination*
 
-![Wireframe de reportes para S1](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-reportes.jpg)
+![Wireframe de reportes para el Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireframes/s1-coordinacion-comercial-ventas-internas/wireframe-reportes.jpg)
 
 > *Nota:* Los reportes comerciales consolidan información para revisar actividad, pedidos y desempeño del flujo. Elaboración propia.
 
-#### S2 — Operations / Account Owner
+#### Segmento 2 — Operations / Account Owner
 
-El recorrido S2 cubre el trabajo de Roberto García desde el ingreso a la plataforma hasta la lectura de reportes operativos. La secuencia prioriza inventario, lotes, criterio FEFO, despacho, registro de salida, confirmación, evidencias y control operativo. Además, S2 asume la administración de empresa, cuenta, accesos y tenant, sin crear un segmento Admin separado.
+El recorrido de **Roberto García** cubre Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Dispatch Detail, Proof of Delivery, Operational Analytics y Business Documents. Como soporte del mismo segmento, Account Ownership incorpora Company Administration y las opciones administrativas visibles para gobernar tenant/workspace, usuarios, reglas, custom fields, billing y preferences. Estas opciones no implican persistencia completa cuando el flujo no ha sido comprobado de extremo a extremo.
 
-**Figura. Wireframe de login para S2**
+*Wireframe de login para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de login para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-login.jpg)
+![Wireframe de login para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-login.jpg)
 
-> *Nota:* El acceso mantiene la separación por rol antes de entrar a módulos operativos. Elaboración propia.
+> *Nota:* El acceso mantiene la separación por perfil antes de entrar a módulos operativos. Elaboración propia.
 
-**Figura. Wireframe de dashboard logístico para S2**
+*Wireframe de dashboard logístico para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de dashboard logístico para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-dashboard-logistica.jpg)
+![Wireframe de dashboard logístico para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-dashboard-logistica.jpg)
 
 > *Nota:* El dashboard logístico prioriza pedidos en riesgo, inventario, preparación y despacho. Elaboración propia.
 
-**Figura. Wireframe de inventario general para S2**
+*Wireframe de inventario general para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de inventario general para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-inventario-vista-general.jpg)
+![Wireframe de inventario general para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-inventario-vista-general.jpg)
 
 > *Nota:* La vista general muestra disponibilidad, clasificación y señales operativas de inventario. Elaboración propia.
 
-**Figura. Wireframe de inventario por lote para S2**
+*Wireframe de inventario por lote para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de inventario por lote para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-inventario-por-lote.jpg)
+![Wireframe de inventario por lote para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-inventario-por-lote.jpg)
 
 > *Nota:* La lectura por lote facilita priorización FEFO y revisión de riesgo. Elaboración propia.
 
-**Figura. Wireframe de detalle de lote para S2**
+*Wireframe de detalle de lote para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de detalle de lote para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-detalle-lote.jpg)
+![Wireframe de detalle de lote para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-detalle-lote.jpg)
 
 > *Nota:* El detalle permite revisar condiciones específicas del lote antes de tomar acción operativa. Elaboración propia.
 
-**Figura. Wireframe de creación o revisión operativa de pedido para S2**
+*Wireframe de creación o revisión operativa de pedido para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de creación o revisión operativa de pedido para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-crear-pedido-v2.jpg)
+![Wireframe de creación o revisión operativa de pedido para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-crear-pedido-v2.jpg)
 
 > *Nota:* Esta pantalla conecta información de pedido con revisión operativa y disponibilidad. Elaboración propia.
 
-**Figura. Wireframe de despacho con pedidos listos para salir**
+*Wireframe de despacho con pedidos listos para salir*
 
 ![Wireframe de despacho con pedidos listos para salir](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-listos-para-salir.jpg)
 
 > *Nota:* El tablero de despacho agrupa pedidos listos y facilita priorizar salida. Elaboración propia.
 
-**Figura. Wireframe de registro de salida para S2**
+*Wireframe de registro de salida para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de registro de salida para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-modal-registro.jpg)
+![Wireframe de registro de salida para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-modal-registro.jpg)
 
 > *Nota:* El registro recoge datos necesarios para dejar constancia del despacho. Elaboración propia.
 
-**Figura. Wireframe de notificación de despacho para S2**
+*Wireframe de notificación de despacho para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de notificación de despacho para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-notificacion.jpg)
+![Wireframe de notificación de despacho para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-notificacion.jpg)
 
 > *Nota:* La notificación confirma que el cambio de estado fue comunicado dentro del flujo. Elaboración propia.
 
-**Figura. Wireframe de confirmación de despacho para S2**
+*Wireframe de confirmación de despacho para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de confirmación de despacho para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-confirmacion.jpg)
+![Wireframe de confirmación de despacho para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-despacho-confirmacion.jpg)
 
 > *Nota:* La confirmación permite cerrar el paso operativo de salida y mantener trazabilidad. Elaboración propia.
 
-**Figura. Wireframe de reportes operativos para S2**
+*Wireframe de reportes operativos para el Segmento 2 — Operations / Account Owner*
 
-![Wireframe de reportes operativos para S2](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-reportes-operativos-v2.jpg)
+![Wireframe de reportes operativos para el Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireframes/s2-jefatura-logistica-coordinacion-operativa/wireframe-reportes-operativos-v2.jpg)
 
 > *Nota:* Los reportes operativos consolidan indicadores de inventario, despacho y cierre. Elaboración propia.
 
-#### S3 — B2B Buyer Portal
+##### Subalcance administrativo de Segmento 2 — Account Ownership
 
-El recorrido S3 corresponde a Elena Litano como compradora B2B. En la Web Application, este segmento se materializa mediante el Buyer Portal, cuyo propósito es reducir dependencia de WhatsApp, llamadas o coordinación manual para consultar catálogo, enviar solicitudes y revisar pedidos.
+Account Ownership representa una responsabilidad administrativa dentro de **Segmento 2 — Operations / Account Owner** y no crea un cuarto segmento. Su experiencia se relaciona con Company Administration, Workspaces, Teammates, Company rules, Custom fields, Billing, Preferences y alcance de acceso. A nivel UX/UI, estas vistas distinguen la configuración del tenant/workspace de las tareas operativas y presentan las opciones visibles de administración de acuerdo con los permisos del perfil.
 
-| Vista del Buyer Portal | Tipo | Propósito UX | Ruta canónica |
-|---|---|---|---|
-| Home | Flujo principal | Mostrar resumen de actividad, pedidos, solicitudes y accesos frecuentes | `/portal/home` |
-| Product Catalog | Flujo principal | Permitir búsqueda y selección de productos disponibles | `/portal/product-catalog` |
-| Product Detail | Flujo principal | Revisar información del producto antes de solicitarlo | `/portal/product-catalog/:id` |
-| Constructor de solicitud (`Request Builder`) | Flujo principal | Confirmar productos, cantidades y datos de solicitud | `/portal/request-builder` |
-| My Requests | Flujo principal | Revisar solicitudes enviadas y su estado | `/portal/purchase-requests` |
-| Request Detail | Flujo principal | Consultar trazabilidad inicial, comentarios y estado de solicitud | `/portal/purchase-requests/:id` |
-| My Orders | Flujo principal | Revisar órdenes confirmadas | `/portal/purchase-orders` |
-| Order Detail | Flujo principal | Consultar tracking, documentos y estado operativo | `/portal/purchase-orders/:id` |
-| Business Documents | Flujo principal | Acceder a documentos visibles para el comprador | `/portal/business-documents` |
-| Payment Methods | Flujo principal | Gestionar método de pago y revisar estado de pago cuando corresponde | `/portal/payment-methods` |
-| Premium | Soporte | Revisar beneficios comerciales o promociones destacadas del portal | `/portal/premium` |
-| Profile | Soporte | Revisar datos de cuenta del comprador | `/portal/profile` |
-| Legal Terms | Soporte | Consultar términos legales del portal | `/portal/legal/terms` |
-| Privacy | Soporte | Consultar información de privacidad del portal | `/portal/legal/privacy` |
-| Support | Soporte | Acceder a ayuda o canal de comunicación del comprador | `/portal/support` |
+La representación visual del subalcance mantiene los patrones internos definidos en 4.1 y 4.2: formularios de configuración, tablas de usuarios, estados de plan, mensajes de restricción y navegación autenticada con contexto de empresa activa.
 
-Para S3 — B2B Buyer Portal, esta sección documenta el flujo principal separado de las rutas de soporte legal/comunicacional. S3 cuenta con mockups desktop y mobile de alta fidelidad incorporados en esta sección como evidencia visual del flujo responsive.
+#### Segmento 3 — B2B Buyer Portal
+
+El recorrido del Segmento 3 — B2B Buyer Portal corresponde a Elena Litano como compradora B2B. Dentro del ecosistema Nexa, este segmento se materializa mediante el Buyer Portal, cuyo propósito es reducir dependencia de WhatsApp, llamadas o coordinación manual para consultar catálogo, enviar solicitudes y revisar pedidos.
+
+Los wireframes del Segmento 3 se presentan como una secuencia visual directa, siguiendo el mismo criterio usado en los segmentos anteriores: subtítulo del wireframe, imagen correspondiente y nota explicativa. El orden responde al flujo principal del comprador dentro del portal: inicio, consulta de catálogo, construcción de solicitud, revisión de solicitudes, seguimiento de órdenes, consulta referencial de pagos, beneficios premium y gestión de perfil.
+
+*Wireframe de Home para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Home para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/home-s3.png)
+
+> *Nota:* La pantalla Home, ubicada en la ruta `/portal/home`, funciona como punto de orientación del comprador B2B, mostrando accesos rápidos a catálogo, solicitudes, órdenes recientes y acciones principales del portal. Elaboración propia.
+
+*Wireframe de Catalog para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Catalog para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/catalog-s3.png)
+
+> *Nota:* La pantalla Catalog, ubicada en la ruta `/portal/product-catalog`, permite explorar productos disponibles, revisar información básica y avanzar hacia la selección de productos para una solicitud. Elaboración propia.
+
+*Wireframe de Request Builder para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Request Builder para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/request-builder-s3.png)
+
+> *Nota:* La pantalla Request Builder, ubicada en la ruta `/portal/request-builder`, concentra la selección de productos, cantidades, datos de entrega y confirmación previa al envío, reduciendo la dependencia de coordinación manual. Elaboración propia.
+
+*Wireframe de My Requests para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de My Requests para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/my-requests-s3.png)
+
+> *Nota:* La pantalla My Requests, ubicada en la ruta `/portal/purchase-requests`, permite consultar solicitudes enviadas, revisar su estado y acceder al detalle cuando se requiere mayor trazabilidad comercial. Elaboración propia.
+
+*Wireframe de Orders para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Orders para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/orders-s3.png)
+
+> *Nota:* La pantalla Orders, ubicada en la ruta `/portal/purchase-orders`, presenta las órdenes confirmadas y permite al comprador seguir el avance de atención, preparación, despacho o entrega según el estado disponible. Elaboración propia.
+
+*Wireframe de Payments para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Payments para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/payments-s3.png)
+
+> *Nota:* La pantalla Payments, ubicada en la ruta `/portal/payment-methods`, comunica información referencial de métodos, crédito, saldo o estado de pago según el alcance del portal, sin representarse como procesamiento directo de pagos. Elaboración propia.
+
+*Wireframe de Premium para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Premium para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/premium-s3.png)
+
+> *Nota:* La pantalla Premium, ubicada en la ruta `/portal/premium`, expone beneficios comerciales, promociones o condiciones destacadas para reforzar la propuesta de valor del portal dentro de la experiencia del comprador. Elaboración propia.
+
+*Wireframe de Profile para el Segmento 3 — B2B Buyer Portal*
+
+![Wireframe de Profile para el Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireframes/s3-b2b-buyer-portal/profile-s3.png)
+
+> *Nota:* La pantalla Profile, ubicada en la ruta `/portal/profile`, permite revisar datos de cuenta, información del comprador y configuración básica asociada al acceso autenticado del portal. Elaboración propia.
 
 ### 4.4.2. Web Applications Wireflow Diagrams
 
 Los wireflows conectan pantallas, decisiones y estados de interfaz. En Nexa se organizan por user goal para mantener trazabilidad entre el needfinding, la arquitectura de información, los mockups y la solución diseñada.
 
-*Tabla: Wireflows por user goal*
+*Wireflows por user goal*
 
 | User goal | Segmento y persona | Task flow resumido | Tipo de artefacto documentado | Explicación |
 |---|---|---|---|---|
-| Registrar o asistir un pedido B2B validando cliente, condición comercial, disponibilidad de productos y seguimiento posterior | S1 — Commercial Coordination — Valeria Sánchez | Login → Dashboard comercial → Clientes → Detalle de cliente → Pedido asistido → Selección de productos → Resumen → Confirmación → Detalle de pedido → Reportes | Lucidchart S1 | El recorrido conecta la revisión comercial del cliente con la captura asistida del pedido y su seguimiento posterior, evitando que la coordinación dependa de mensajes dispersos |
-| Supervisar inventario, lotes, riesgos FEFO, despacho, cierre operativo y reportes | S2 — Operations / Account Owner — Roberto García | Login → Dashboard logístico → Inventario general → Inventario por lote → Detalle de lote → Revisión operativa de pedido → Despacho → Registro de salida → Notificación → Confirmación → Reportes operativos | Lucidchart S2 y wireflow S2 documentado como figura | El recorrido conecta lectura de inventario, priorización FEFO, despacho y cierre operativo con evidencia de entrega simulada para sostener trazabilidad operativa |
-| Consultar catálogo, enviar solicitud, revisar pedido y acceder a tracking/documentos visibles | S3 — B2B Buyer Portal — Elena Litano | Login → Portal Home → Product Catalog → Product Detail → constructor de solicitud (`Request Builder`) → My Requests → My Orders → Order Detail / Tracking → Business Documents → Payment Methods | Mockups desktop de alta fidelidad, rutas canónicas, task flow y wireflow S3 visual | El recorrido representa la experiencia de autoservicio del comprador B2B mediante una secuencia funcional trazable |
+| Validar solicitudes, formalizar órdenes y registrar pedidos comerciales | Segmento 1 — Valeria Sánchez | Login → Sales Dashboard → Purchase Requests → Request Detail → Purchase Orders → Order Detail → Manual Order Entry → Product Catalog → B2B Clients → Business Documents | Lucidchart del Segmento 1 | El recorrido conecta la validación comercial con la formalización, el registro manual y la consulta de información de soporte |
+| Supervisar la operación logística y el gobierno administrativo del workspace | Segmento 2 — Roberto García | Login → Operations Dashboard → Inventory Control → Inventory Lots → Dispatch Orders → Dispatch Detail → Proof of Delivery → Operational Analytics → Business Documents → Company Administration / Workspaces / Teammates / Rules / Custom fields / Billing / Preferences | Lucidchart del Segmento 2 | El recorrido integra una rama operativa y una rama administrativa dentro del mismo segmento Segmento 2 |
+| Consultar catálogo, enviar una solicitud y seguir su atención | Segmento 3 — Elena Litano | Login → Portal Home → Product Catalog → Product Detail → Request Builder → My Requests → Request Detail → My Orders → Order Detail / Tracking / visible documents → Payments → Profile | Wireflow visual del Segmento 3 | El recorrido representa la experiencia de autoservicio del comprador B2B y mantiene los documentos dentro del detalle de la orden |
 
-**Figura. Wireflow principal para S1 — Commercial Coordination**
+> *Nota:* La tabla describe los flujos secuenciales y objetivos de usuario cubiertos por cada wireflow. Elaboración propia.
 
-![Wireflow S1 principal](../assets/images/chapter-4/webapp/wireflows/wireflow-s1.jpeg)
+Los wireflows visuales se mantienen por segmento. En Segmento 2, el account ownership se entiende como una rama administrativa dentro del mismo flujo del segmento, no como un segmento adicional.
 
-> *Nota.* El wireflow muestra la continuidad visual del flujo comercial desde el inicio de sesión, dashboard comercial, gestión de clientes, selección de productos, validación de disponibilidad, confirmación del pedido y reportes comerciales. Elaboración propia.
+*Wireflow principal para el Segmento 1 — Commercial Coordination*
 
-**Figura. Wireflow principal para S2 — Operations / Account Owner**
+![Wireflow principal del Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/wireflows/wireflow-s1.jpeg)
 
-![Wireflow S2 principal](../assets/images/chapter-4/webapp/wireflows/wireflow-s2-jefatura-logistica-coordinacion-operativa.png)
+> *Nota:* El wireflow muestra la continuidad visual del flujo comercial de Valeria y se interpreta junto con la cobertura final de Purchase Requests, Purchase Orders, Manual Order Entry, catálogo, clientes y documentos. Elaboración propia.
 
-> *Nota.* El wireflow muestra la continuidad visual entre dashboard logístico, inventario, lote, despacho, confirmación y reportes operativos. Elaboración propia.
+*Wireflow principal para el Segmento 2 — Operations / Account Owner*
 
-**Figura. Wireflow principal para S3 — B2B Buyer Portal**
+![Wireflow principal del Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/wireflows/wireflow-s2-jefatura-logistica-coordinacion-operativa.png)
 
-![Wireflow S3 principal](../assets/images/chapter-4/webapp/wireflows/wireflow-s3-b2b-buyer-portal.png)
+> *Nota:* El wireflow muestra la continuidad visual de la rama operativa de Roberto; la rama administrativa de account ownership pertenece al mismo Segmento 2. Elaboración propia.
 
-> *Nota.* El wireflow muestra la continuidad visual del Buyer Portal desde el login de Elena hasta el dashboard B2B, catálogo, detalle de producto, constructor de solicitud, solicitudes, pedidos, documentos de negocio y métodos de pago. Elaboración propia.
+*Wireflow principal para el Segmento 3 — B2B Buyer Portal*
+
+![Wireflow principal del Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/wireflows/wireflow-s3-b2b-buyer-portal.png)
+
+> *Nota:* El wireflow muestra la continuidad visual del Segmento 3 desde el login de Elena hasta catálogo, detalle de producto, Request Builder, solicitudes, órdenes, tracking, documentos visibles dentro del detalle y Payments. Elaboración propia.
 
 ### 4.4.3. Web Applications Mock-ups
 
-Los mockups representan pantallas seleccionadas de alta fidelidad para la dirección visual de la Web Application. Se agrupan por segmento y user goal para mostrar evidencia visual sin convertir el capítulo en una galería extensa. S3 cuenta con mockups desktop y mobile de alta fidelidad incorporados en esta sección como evidencia visual responsive.
+Los mockups consolidan las pantallas representativas del flujo final de la Web Application interna y el Buyer Portal. Se agrupan por segmento y user goal para evidenciar jerarquía, navegación, componentes y estados sin convertir el capítulo en una galería extensa.
 
-| Grupo de mockups | Segmento | User goal | Pantallas incluidas | Propósito |
+*Grupos de mockups por segmento*
+
+| Grupo de mockups | Segmento / subalcance | User goal | Pantallas incluidas | Propósito |
 |---|---|---|---|---|
-| S1 — Commercial Coordination | Valeria / S1 | Crear y seguir un pedido asistido | Login, dashboard, cliente, pedido, detalle, reportes | Evidenciar captura comercial guiada, validaciones y trazabilidad |
-| S2 — Operations / Account Owner | Roberto / S2 | Controlar inventario, despacho y evidencia de entrega simulada (`Proof of Delivery` / POD) | Dashboard, inventario, lote, despacho, evidencia de entrega simulada, reportes | Evidenciar monitoreo FEFO, operación logística y cierre operativo |
-| S3 — B2B Buyer Portal | Elena / S3: B2B Buyer Portal | Comprar y hacer seguimiento desde portal B2B | Login/Portal Entry, Home, Product Catalog, Product Detail, Request Builder, My Requests, My Orders/Tracking, Business Documents | Evidenciar el portal de autoservicio B2B con mockups desktop y mobile incorporados |
+| Segmento 1 | Segmento 1 — Commercial Coordination | Validar solicitudes, formalizar órdenes y atender pedidos | Login, Sales Dashboard, Purchase Requests, Request Detail, Purchase Orders, Manual Order Entry, Product Catalog, B2B Clients y Business Documents | Evidenciar decisiones comerciales, trazabilidad y acciones principales del flujo de Valeria |
+| Segmento 2 | Segmento 2 — Operations / Account Owner | Supervisar operación logística y configuración del workspace | Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Dispatch Detail, Proof of Delivery, Operational Analytics, Business Documents, Company Administration, Workspaces, Teammates, Company rules, Custom fields, Billing y Preferences | Evidenciar las ramas operativa y administrativa de Roberto dentro de un único segmento |
+| Segmento 3 | Segmento 3 — B2B Buyer Portal | Preparar solicitudes y consultar su seguimiento | Portal Home, Product Catalog, Product Detail, Request Builder, My Requests, My Orders, Order Detail con tracking y documentos visibles, Payments, Premium y Profile | Evidenciar el autoservicio del comprador B2B y la continuidad entre catálogo, solicitud y orden |
 
-#### S1 — Commercial Coordination: mockups de pedido asistido
+> *Nota:* La tabla resume las pantallas de alta fidelidad mostradas para cada segmento. Elaboración propia.
 
-![S1 Mock Ups](../assets/images/chapter-4/webapp/mockups/commercial.png)
+#### Segmento 1 — Commercial Coordination: mockups de pedido asistido
 
-> *Nota:* Este grupo muestra el recorrido comercial desde la selección de perfil hasta la evidencia de pedido y reportes. Las pantallas se eligieron porque cubren los puntos decisivos del user goal: acceso por rol, lectura de estado, revisión de cliente, armado de pedido, trazabilidad por creador y análisis comercial. Elaboración propia.
+*Mockups de pedido asistido para el Segmento 1 — Commercial Coordination*
 
-#### S2 — Operations / Account Owner: mockups de operación logística
+![Mockups del Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/mockups/sales.png)
 
-![S2 jefatura logística](../assets/images/chapter-4/webapp/mockups/operations.png)
+> *Nota:* Este grupo consolida las pantallas representativas del flujo comercial final: acceso, dashboard, solicitudes, órdenes, registro manual, catálogo, clientes y documentos. Elaboración propia.
 
-> *Nota.* Este grupo resume el recorrido operativo desde monitoreo hasta cierre operativo con evidencia de entrega simulada. Las pantallas seleccionadas cubren dashboard, inventario, lote, despacho, evidencia de entrega simulada (`Proof of Delivery` / POD) y reportes operativos, que son las evidencias visuales más representativas del flujo S2. Elaboración propia.
+#### Segmento 2 — Operations / Account Owner: mockups de operación logística
 
-#### S3 — B2B Buyer Portal: mockups de autoservicio B2B
+*Mockups de operación logística para el Segmento 2 — Operations / Account Owner*
 
-![S3 B2B](../assets/images/chapter-4/webapp/mockups/b2b.png)
+![Mockups del Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/mockups/operations.png)
 
-> *Nota:* Este grupo muestra el recorrido del comprador B2B dentro del portal, desde el acceso por perfil hasta la consulta y seguimiento de sus pedidos. Las pantallas se eligieron porque cubren los puntos decisivos del user goal: ingreso al portal, revisión de información comercial disponible, consulta de productos o pedidos, seguimiento del estado de atención y visualización de evidencias asociadas al proceso de compra. Elaboración propia.
+> *Nota:* Este grupo consolida la rama operativa de inventario, despacho, evidencia de entrega registrada o referencial según alcance y analítica, junto con el subalcance administrativo del workspace dentro de Segmento 2. Elaboración propia.
+
+#### Segmento 3 — B2B Buyer Portal: mockups de autoservicio B2B
+
+*Mockups de autoservicio para el Segmento 3 — B2B Buyer Portal*
+
+![Mockups del Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/mockups/b2b.png)
+
+> *Nota:* Este grupo consolida las pantallas representativas del flujo final de Elena: home, catálogo, detalle, Request Builder, solicitudes, órdenes, tracking con documentos visibles, Payments, Premium y Profile. Elaboración propia.
 
 **Vistas de Dispositivo Móvil (Mobile Mockups)**:
 
-#### S1 — Commercial Coordination: mockups de pedido asistido
+La cobertura responsive valida navegación compacta, lectura vertical, cards apiladas, tablas con desplazamiento horizontal cuando corresponde, acciones principales visibles, menor densidad textual y continuidad visual con desktop. Los Segmentos 1 y 2 priorizan desktop/tablet por la densidad de sus tareas; en mobile se favorecen consulta, revisión y acciones acotadas. El Segmento 3 recibe mayor prioridad mobile por su carácter de autoservicio para compradores B2B.
 
-![S1 Mock Ups](../assets/images/chapter-4/webapp/mockups/commercial-mobile.png)
+#### Segmento 1 — Commercial Coordination: mockups de pedido asistido
 
-#### S2 — Operations / Account Owner: mockups de operación logística
+*Mockups mobile del Segmento 1 — Commercial Coordination*
 
-![S2 jefatura logística](../assets/images/chapter-4/webapp/mockups/operator-mobile.png)
+![Mockups mobile del Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/mockups/sales-mobile.png)
 
-#### S3 — B2B Buyer Portal: mockups de autoservicio B2B
+> *Nota:* La imagen evidencia navegación compacta y consulta comercial en pantallas pequeñas, manteniendo desktop/tablet como superficie principal para tareas complejas de Segmento 1. Elaboración propia.
 
-![S3 B2B](../assets/images/chapter-4/webapp/mockups/b2b-mobile.png)
+#### Segmento 2 — Operations / Account Owner: mockups de operación logística
 
-*Nota: La cobertura mobile se documenta mediante mockups responsive incorporados en esta sección para S1, S2 y S3.*
+*Mockups mobile del Segmento 2 — Operations / Account Owner*
+
+![Mockups mobile del Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/mockups/operations-mobile.png)
+
+> *Nota:* La imagen evidencia consulta y revisión operativa en pantallas pequeñas, mientras las tareas de mayor densidad de Segmento 2 priorizan desktop/tablet. Elaboración propia.
+
+#### Segmento 3 — B2B Buyer Portal: mockups de autoservicio B2B
+
+*Mockups mobile del Segmento 3 — B2B Buyer Portal*
+
+![Mockups mobile del Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/mockups/b2b-mobile.png)
+
+> *Nota:* La imagen evidencia la adaptación responsive del autoservicio B2B, con lectura vertical, acciones visibles y continuidad con la experiencia desktop. Elaboración propia.
 
 ### 4.4.4. Web Applications User Flow Diagrams
 
 #### Criterios de resolución de flujo
 
-Para mantener trazabilidad entre investigación, diseño y solución, los recorridos de la Web Application se documentan en cuatro niveles: User Goal, Task Flow, Wireflow y User Flow. La lectura se mantiene por segmento para no mezclar responsabilidades entre coordinación comercial, Operations / Account Owner y comprador B2B.
+Para mantener trazabilidad entre investigación, diseño y solución, los recorridos de la Web Application se documentan en cuatro niveles: User Goal, Task Flow, Wireflow y User Flow. La lectura se mantiene por segmento para no mezclar responsabilidades entre Segmento 1, Segmento 2 y Segmento 3, considerando el account ownership como subalcance administrativo del Segmento 2.
 
-*Tabla: Niveles de resolución de flujo aplicados en Nexa*
+*Niveles de resolución de flujo aplicados en Nexa*
 
 | Nivel | Aplicación en Nexa | Representación en esta sección |
 |---|---|---|
-| **User Goal** | Objetivo operativo de cada persona dentro del flujo B2B refrigerado | Objetivos de S1, S2 y S3 derivados del needfinding |
+| **User Goal** | Objetivo operativo de cada persona dentro del flujo B2B refrigerado | Objetivos del Segmento 1, Segmento 2 y Segmento 3 derivados del needfinding, con alcance administrativo del Segmento 2 (account ownership) asociado al tenant/workspace |
 | **Task Flow** | Secuencia de acciones necesarias para completar solicitud, validación, despacho o seguimiento | Tabla por segmento |
-| **Wireflow** | Continuidad visual entre pantallas de la Web Application | Lucidchart S1, Lucidchart S2 y figuras de wireflow S2/S3 |
-| **User Flow** | Decisiones, rutas alternativas y estados del recorrido | Diagramas visuales Lucidchart para S1/S2/S3 |
+| **Wireflow** | Continuidad visual entre pantallas de la Web Application | Lucidchart del Segmento 1, Segmento 2 y Segmento 3 |
+| **User Flow** | Decisiones, rutas alternativas y estados del recorrido | Diagramas visuales Lucidchart para los flujos principales de Web Application y Buyer Portal |
 
-*Tabla: User Goals, Task Flows y referencias de flujo por segmento*
+> *Nota:* La tabla resume la correspondencia entre los niveles de flujo e investigación. Elaboración propia.
 
-| Segmento | Persona | User Goal | Resumen de task flow | Wireflow | User Flow |
+*User Goals, Task Flows y referencias de flujo por segmento*
+
+| Segmento / subalcance | Persona | User Goal | Resumen de task flow | Wireflow | User Flow |
 |---|---|---|---|---|---|
-| S1 — Commercial Coordination | Valeria Sánchez | Registrar o asistir un pedido B2B validando cliente, condición comercial, disponibilidad de productos y seguimiento posterior | Login — perfil Valeria → Dashboard comercial → Clientes → Detalle de cliente → Validación de condición comercial → Pedido asistido → Selección de productos → Validación de disponibilidad → Confirmación del pedido → Detalle y seguimiento del pedido → Reportes comerciales | https://lucid.app/lucidchart/4aeb3b33-353d-4b0c-b978-5bed19d4fdca/edit?viewport_loc=-11%2C-11%2C3028%2C1465%2C0_0&invitationId=inv_c95b5cdc-7bd7-46ad-aa88-0fa213649397| Userflow S1 en Lucidchart |
-| S2 — Operations / Account Owner | Roberto García | Supervisar inventario, lotes, riesgos FEFO, despacho, cierre operativo, evidencias y administración de empresa | Login — perfil Roberto → Dashboard operativo → Inventario → Detalle de lote → Revisión FEFO y stock → Priorización operativa → Tablero de despacho → Confirmación de despacho → Evidencia de entrega simulada → Validación de evidencia → Reportes operativos → Company Administration si corresponde | https://lucid.app/lucidchart/6573c628-5545-4360-8fb2-3bb444c7e648/edit?viewport_loc=-298%2C-263%2C3315%2C1788%2C0_0&invitationId=inv_5e548793-b34d-43ed-b8fc-0f9dd7cf81a5 | Userflow S2 en Lucidchart |
-| S3 — B2B Buyer Portal | Elena Litano | Consultar catálogo, enviar solicitud, revisar pedidos, acceder a documentos y seguir el estado del despacho con mayor autonomía | Login — perfil Elena → Portal Home → Product Catalog → Product Detail → constructor de solicitud (`Request Builder`) → My Requests → My Orders → Order Detail / Tracking → Business Documents → Payment Methods | https://lucid.app/lucidchart/6484c9d8-fa54-40a2-aea6-449700cd2285/edit?viewport_loc=-6260%2C-4950%2C18517%2C9389%2C0_0&invitationId=inv_fd80fa67-4315-4bbd-8ce0-56f1f3243954  | User flow S3 en Lucidchart|
+| Segmento 1 | Valeria Sánchez | Validar solicitudes, formalizar órdenes y atender pedidos comerciales | Login → Sales Dashboard → Purchase Requests → Request Detail → decisión: approve / observe / reject → Purchase Orders → Order Detail → Manual Order Entry → Product Catalog → B2B Clients → Business Documents | https://cutt.ly/9t61yC5n | User flow del Segmento 1 en Lucidchart |
+| Segmento 2 | Roberto García | Supervisar operación logística y gobierno del workspace | Rama operativa: Operations Dashboard → Inventory Control → Inventory Lots → Dispatch Orders → Dispatch Detail → Proof of Delivery → Operational Analytics → Business Documents.<br>Rama administrativa: Company Administration → Workspaces → Teammates → Company rules → Custom fields → Billing → Preferences | https://cutt.ly/et61yzL4 | User flow del Segmento 2 en Lucidchart |
+| Segmento 3 | Elena Litano | Preparar una solicitud y consultar el avance de su atención | Login → Portal Home → Product Catalog → Product Detail → Request Builder → Submit Request → My Requests → Request Detail → My Orders → Order Detail / Tracking / visible documents → Payments → Profile | https://cutt.ly/Qt61t8oH | User flow del Segmento 3 en Lucidchart |
 
-#### User Flow S1 — Commercial Coordination: validación y pedido asistido
+> *Nota:* La tabla detalla los enlaces Lucidchart y flujos conceptuales para cada segmento. Elaboración propia.
 
-El user flow de S1 representa el recorrido de Valeria, responsable de coordinación comercial, desde el acceso al sistema hasta la creación y seguimiento de un pedido asistido. El flujo incluye validaciones de condición comercial, disponibilidad de productos y rutas alternativas para restricciones de cliente o cantidad insuficiente.
+El User Flow de Segmento 2 se interpreta como un único flujo con dos ramas complementarias: una operativa y otra administrativa. Ambas pertenecen a **Segmento 2 — Operations / Account Owner**; Account Ownership no constituye un segmento adicional.
 
-https://lucid.app/lucidchart/8f6d6af2-f229-47f8-ba02-86b27cdc6fed/edit?invitationId=inv_09391266-7e11-4614-8edf-12cf979cdabf
+#### User Flow Segmento 1 — Commercial Coordination: validación y pedido asistido
 
-![S1 User flow coordinación comercial](../assets/images/chapter-4/webapp/user-flows/s1-commercial-userflow-lucid.png)
+El user flow del Segmento 1 representa el recorrido de Valeria desde el acceso al sistema hasta la atención comercial. La secuencia conecta Sales Dashboard, Purchase Requests y Request Detail con el punto de decisión de aprobar, observar o rechazar; luego continúa hacia Purchase Orders, Order Detail, Manual Order Entry, Product Catalog, B2B Clients y Business Documents.
 
-**Figura. User flow visual para S1 — Commercial Coordination.**
+https://cutt.ly/At61uc58
 
-#### User Flow S2 — Operations / Account Owner: inventario, despacho y cierre
+*User flow visual para el Segmento 1 — Commercial Coordination*
 
-El user flow de S2 representa el recorrido de Roberto, responsable de operaciones y cuenta, desde la revisión de inventario y lotes con criterio FEFO hasta la gestión de despacho y cierre con evidencia de entrega simulada (`Proof of Delivery` / POD). El flujo incluye rutas alternativas para riesgo operativo, despacho no listo, evidencia incompleta y administración de empresa cuando corresponde al account owner.
+![User flow del Segmento 1 — Commercial Coordination](../assets/images/chapter-4/webapp/user-flows/s1-userflow.png)
 
-https://lucid.app/lucidchart/b91c8e98-a38b-456a-92e5-f942be7e8439/edit?invitationId=inv_5c030713-67e5-4e84-90bf-661b26cef528
+> *Nota:* El diagrama representa el user flow del Segmento 1 para validación y pedidos. Elaboración propia.
 
-![S2 User flow jefatura logística](../assets/images/chapter-4/webapp/user-flows/s2-logistics-userflow-lucid.png)
+#### User Flow Segmento 2 — Operations / Account Owner: inventario, despacho y gobierno del workspace
 
-**Figura. User flow visual para S2 — Operations / Account Owner.**
+El user flow del Segmento 2 representa el recorrido de Roberto mediante dos ramas del mismo segmento. La rama operativa conecta Operations Dashboard, Inventory Control, Inventory Lots, Dispatch Orders, Dispatch Detail, Proof of Delivery, Operational Analytics y Business Documents. La rama administrativa conecta Company Administration, Workspaces, Teammates, Company rules, Custom fields, Billing y Preferences como opciones visibles de gobierno del tenant/workspace.
 
-#### User Flow S3 — B2B Buyer Portal: solicitud, pedido y seguimiento
+https://cutt.ly/Et61u1Sj
 
-El user flow de S3 representa el recorrido de Elena como compradora B2B. El flujo conecta el descubrimiento, acceso, construcción de solicitudes, pedidos confirmados, documentos y estado del pago. Esta representación diagramática complementa los mockups desktop y mobile de alta fidelidad incorporados en esta sección.
+*User flow visual para el Segmento 2 — Operations / Account Owner*
 
-https://lucid.app/lucidchart/fd9a95ac-41df-4050-b097-9ac255290e45/edit?view_items=jV76JIpS~GQ~%2CEE-69fu3SEZn%2C.x869HhjmLNZ%2CRK-6ZJxNGbXU%2CL196QvicmQVg%2ClU76RF2avL6M%2CAG-6WBY~X2a7%2CHp-6tXcRsOlP%2C-A-6w-SDYvhl%2C4C-6akbc7L6h%2Cl276CkhOmWTU%2CQy-6BvPXAV~n%2Co-96vNrpwFv4%2CiH-6tPVlqJ~t%2C_S76DK_lKxe0%2CDJ-6oe-3SeFb%2CNU76~dYYOGKw%2C4y-6KmugLEqt%2CmT763XdIavdu%2CZB-670PGAeBO%2C1T763mBjJlI6%2CeQ96-oZnMWG9%2CPA-6sghQQ68V%2C6U76LKo6njtH%2CCL-6Tizg1zZf%2C3K-6Rk5lg8Hb%2CuB-66-HzZfqH%2CYz-6kid1ejZ3%2CQC-6z8A~3dBL%2CxI-6DgDxHBfQ%2CgU76PxI~0a53%2CjD-6cAXRji8p%2CvI86ERula6-o%2Czv-6MAfnpLo3%2Cn976MIfJMQX~%2Cws-6d_5MiM4_%2Cg776~27srzo6%2CGA86Vy0STfAp%2C5B86w3ydsgO1%2Cy276~Zfq8YbP%2CNt-6w-GgvXLa%2C8076KHyf8nyv%2Cvy86n.J~nj8x%2CK376xZksEcUG%2CN776KbACctwI&page=0_0&invitationId=inv_4888a70f-e0f1-4797-83ed-a762247133cb
+![User flow del Segmento 2 — Operations / Account Owner](../assets/images/chapter-4/webapp/user-flows/s2-userflow.png)
 
-![S3 User flow B2B Buyer Portal](../assets/images/chapter-4/webapp/user-flows/s3-buyer-portal-userflow-lucid.png)
+> *Nota:* El diagrama representa el user flow del Segmento 2 para control de inventario y despacho. Elaboración propia.
 
-**Figura. User flow documentado para S3 — B2B Buyer Portal.**
+#### User Flow Segmento 3 — B2B Buyer Portal: solicitud, pedido y seguimiento
 
+El user flow del Segmento 3 representa el recorrido de Elena como compradora B2B: Login, Portal Home, Product Catalog, Product Detail, Request Builder, envío de solicitud, My Requests, Request Detail, My Orders, Order Detail con tracking y documentos visibles, Payments y Profile. Los documentos se consultan dentro del detalle de orden, mientras Payments presenta métodos, crédito, saldo o estado referencial de pago según el alcance disponible.
+
+[https://cutt.ly/ft40ZCeu](https://cutt.ly/ft40ZCeu)
+
+*User flow documentado para el Segmento 3 — B2B Buyer Portal*
+
+![User flow del Segmento 3 — B2B Buyer Portal](../assets/images/chapter-4/webapp/user-flows/s3-userflow.png)
+
+> *Nota:* El diagrama representa el user flow del Segmento 3 para navegación y compra en el portal. Elaboración propia.
