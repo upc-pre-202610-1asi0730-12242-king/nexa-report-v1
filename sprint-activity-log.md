@@ -52,3 +52,4 @@
 * [2026-06-30T18:08:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-2-information-architecture.md to ch4 structure
 * [2026-07-01T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [chore(ch5)] remove obsolete assets and update ch5 files
 * [2026-07-01T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [refactor(ch5)] add design-level-step-4-pivotal-catalog-and-commercial-validation.png (and 19 others) to ch5 structure
+* [2026-07-01T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireframe-detalle-pedido.jpg (and 19 others) to ch5 structure
