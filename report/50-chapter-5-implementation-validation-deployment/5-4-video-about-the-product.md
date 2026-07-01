@@ -49,3 +49,15 @@ El video relaciona la Landing Page y la Web Application con la propuesta de valo
 Desde la experiencia del comprador, se destacan la búsqueda de opciones, la comparación de proveedores y la consulta organizada de información. Desde la experiencia del proveedor, se presentan la exposición profesional de productos o servicios, la administración de información comercial y la posibilidad de mejorar su visibilidad. En conjunto, el video comunica los beneficios de conectar, gestionar y crecer dentro de un mismo ecosistema digital.
 
 Esta evidencia corresponde al alcance académico de AV2. La publicación y documentación del video no declaran operación productiva definitiva, integración completa ni resultados concluyentes de validación; las Validation Interviews AV2 y las evaluaciones heurísticas permanecen sujetas a evidencia real de ejecución.
+
+### 5.4.7. Integración final en la Landing Page
+
+Para el cierre TB2, el Video About-the-Product se encuentra embebido en la página pública **Platform** de `nexa-website`. La sección aparece inmediatamente después del bloque **“Functional workflow from day one. Integrations by roadmap.”**, dentro del elemento `section` identificado como `about-product-video`. El reproductor utiliza el embed de YouTube `https://www.youtube.com/embed/ypedAqjH19c`, incluye un título descriptivo y permite reproducir el contenido sin abandonar la Landing Page.
+
+**URL pública:** https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/pages/platform.html#about-product-video
+
+*Video About-the-Product integrado en la página Platform.*
+
+![Video About-the-Product integrado en la Landing Page](../assets/images/chapter-5/sprint-4/website-evidence/about-the-product-embedded-final.png)
+
+> *Nota*: La captura muestra la ubicación final del bloque About-the-Product debajo del flujo de implementación de la plataforma. El reproductor de YouTube continúa inmediatamente después del título visible. Elaboración propia mediante revisión del Website final.
