@@ -2,138 +2,125 @@
 
 ## 5.1. Software Configuration Management
 
-La gestión de la configuración del software en Nexa se documenta a partir de la evidencia disponible en los repositorios oficiales de la organización `upc-pre-202610-1asi0730-12242-king`. Esta sección integra el avance acumulado de AV1, TB1 y AV2, distinguiendo entre artefactos efectivamente implementados, versiones preparadas para revisión académica y capacidades todavía pendientes de evidencia verificable.
-
-El ecosistema técnico de Nexa se organiza en cuatro repositorios principales: `nexa-ecosystem-report`, `nexa-website`, `nexa-webapp` y `nexa-platform`. Esta separación permite mantener trazabilidad entre documentación académica, Landing Page, Web Application y Web Services, evitando mezclar código fuente, evidencias de sprint y documentación de arquitectura en un único repositorio.
+La gestión de configuración documenta el cierre técnico TB2 de Website, WebApp y Platform mediante evidencia verificable de repositorios, ramas, tags, convenciones, entornos y despliegue académico. Los releases base `v4.0.0`, `v3.0.0` y `v2.0.0` fueron seguidos por los hotfix de polish `v4.0.1`, `v3.0.1` y `v2.0.1`. La documentación evita equiparar estos artefactos con operación comercial y mantiene separados los datos sensibles.
 
 ### 5.1.1. Software Development Environment Configuration
 
-Para estandarizar el trabajo colaborativo del equipo y asegurar trazabilidad entre investigación, diseño, implementación, documentación y despliegue, se configuró un entorno de trabajo compuesto por herramientas de gestión, control de versiones, diseño, frontend, backend y documentación.
+*Entorno de desarrollo y gestión de Nexa.*
 
-*Configuración del entorno de desarrollo utilizado en Nexa*
+| Recurso | Tecnología o herramienta | Uso en el proyecto | Evidencia o acceso |
+|---|---|---|---|
+| Gestión ágil | Jira Software | Product Backlog, Sprint Backlog, issues y estados por sprint. | Evidencia documentada por sprint. |
+| Control de versiones | Git y GitHub | Branches, tags, releases y trazabilidad independiente por repositorio. | Repositorios oficiales de la organización KING. |
+| Documentación | Markdown / Docs-as-Code | Capítulos, evidencias y trazabilidad académica. | Repositorio `nexa-ecosystem-report`. |
+| Diseño UX/UI | Figma y FigJam | Wireframes, mockups, user flows y wireflows. | Artefactos documentados en el Capítulo 4. |
+| Landing Page | HTML5, CSS3, JavaScript | Website público multipágina. | https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/ |
+| Web Application | Vue 3, Vite, PrimeVue, PrimeFlex, PrimeIcons, Pinia, Vue Router, Vue I18n, Axios | Experiencias autenticadas de Buyer, Sales, Logistics y Account Owner. | https://nexa-webapp.onrender.com |
+| Web Services | ASP.NET Core Web API, C#, .NET 10, EF Core, Npgsql, Swagger/OpenAPI | Servicios RESTful, seguridad, multi-tenancy y persistencia. | https://nexa-platform-20wt.onrender.com |
+| Base de datos | PostgreSQL 16 / Render PostgreSQL | Persistencia relacional de Platform API. | Configuración protegida mediante variables de entorno. |
+| Containerización local | Docker Compose y Caddy | Coordina PostgreSQL, API, WebApp y reverse proxy para validación local. | `docker-compose.yml` y configuración local redactada. |
+| Deployment | GitHub Pages y Render | Publicación académica de Website, WebApp, API y PostgreSQL. | URLs públicas confirmadas en este capítulo. |
+| Evidencia de servicios | Swagger/OpenAPI y health checks | Revisión de contratos y disponibilidad técnica. | Swagger y controles de salud documentados para TB2. |
 
-| Componente del entorno | Herramienta o tecnología                                                       | Uso dentro del proyecto | Ruta de referencia |
-|---|--------------------------------------------------------------------------------|---|---|
-| Gestión del proyecto | Jira Software                                                                  | Planificación de Product Backlog, Sprint Backlog, issues y seguimiento de estado por sprint. | https://team-nexa.atlassian.net/jira/software/projects/NX/boards/1/backlog |
-| Control de versiones | Git + GitHub                                                                   | Versionado por repositorio, trazabilidad de commits, ramas, tags y releases. | https://github.com/upc-pre-202610-1asi0730-12242-king. |
-| Documentación técnica | Markdown bajo enfoque Docs-as-Code                                             | Redacción modular del informe, control de cambios y ensamblado del reporte académico. | Repositorio `nexa-ecosystem-report`, release documental `v3.0.0`. |
-| Diseño UX/UI | Figma / FigJam                                                                 | Wireframes, mockups, user flows, wireflows y evidencia visual del producto. | https://www.figma.com/design/Muy2QR2Q8EkrVZlzmgseB9/Style-Guidelines?node-id=38-301&p=f&t=qEsWursC2144onMp-0  |
-| Modelado de arquitectura | Herramientas de diagramación UML/C4                                            | Diagramas C4, bounded contexts, diseño orientado a objetos y diseño de base de datos. | Artefactos del Capítulo IV. |
-| Landing Page | HTML5, CSS3 y JavaScript                                                       | Sitio público multipágina, navegación, contenido bilingüe y entrada comercial al ecosistema Nexa. | https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/. |
-| Web Application | Vue 3, Vite, PrimeVue, PrimeFlex, PrimeIcons, Vue Router, Vue I18n y Axios     | Aplicación frontend para flujos internos, navegación por roles e integración progresiva con backend. | https://nexa-webapp.onrender.com. |
-| Web Services | ASP.NET Core Web API, C#, .NET 10, EF Core, PostgreSQL y Swagger/OpenAPI | Primera versión AV2 de Web Services organizada por bounded contexts, controllers, commands, queries e infrastructure. | Repositorio `nexa-platform`, tag `v1.0.0`, commits AV2 de PostgreSQL/Render y evidencia Swagger/OpenAPI incorporada. |
-| Despliegue frontend | GitHub Pages y Render | Publicación de Landing Page en GitHub Pages y Web Application en Render para revisión académica. |  https://nexa-webapp.onrender.com. |
-| Evidencia de servicios | Swagger/OpenAPI, README de ejecución y Render API | Validación de recursos REST, guía de revisión de la Web Services API y despliegue controlado de Platform API. | https://nexa-platform-api.onrender.com. |
-
-El entorno diferencia entre software frontend visible, software backend en revisión académica y documentación Docs-as-Code. `nexa-ecosystem-report v3.0.0` consolida el release documental del informe AV2; la Landing Page y la Web Application constituyen artefactos frontend revisables; `nexa-webapp v2.0.0` completa el cierre técnico de WebApp en AV2 y se alinea con el consumo progresivo de la Platform API y el despliegue Render; y `nexa-platform v1.0.0` representa la base Web Services AV2 con despliegue controlado en Render y configuración hacia PostgreSQL, sin declarar operación productiva.
+> *Nota*: La tabla resume las herramientas, tecnologías y entornos utilizados durante el cierre TB2 sin exponer credenciales. Elaboración propia.
 
 ### 5.1.2. Source Code Management
 
-El control de versiones se organiza mediante repositorios separados por responsabilidad. Cada repositorio conserva un propósito claro dentro del ecosistema Nexa: documentación académica, sitio público, aplicación web y plataforma backend. Esta separación facilita la trazabilidad entre entregables, commits, ramas, releases y evidencias de sprint.
+Cada producto se versiona de forma independiente. La trazabilidad detallada del informe se presenta en Project Report Collaboration Insights; el repositorio documental no se considera un producto desplegado ni recibe un release TB2 no evidenciado.
 
-*Repositorios oficiales del ecosistema Nexa*
+*Repositorios oficiales del ecosistema Nexa.*
 
-| Repositorio | Producto asociado | Release AV2 | Propósito | Rama principal | URL |
+| Repositorio | Producto asociado | Release final defendible | Rama principal | Propósito | URL |
 |---|---|---|---|---|---|
-| `nexa-ecosystem-report` | Project Report | `v3.0.0` | Informe académico, documentación Docs-as-Code, evidencias, capítulos, anexos y trazabilidad de entregas. | `main` | Repositorio `nexa-ecosystem-report`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
-| `nexa-website` | Landing Page | `v3.0.0` | Landing Page pública, navegación institucional, contenido bilingüe, páginas informativas y entrada hacia la Web Application. | `main` | Repositorio `nexa-website`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
-| `nexa-webapp` | Frontend Web Application | `v2.0.0` | Web Application frontend con flujos operativos, navegación por roles, integración progresiva con backend y releases frontend. | `main` | Repositorio `nexa-webapp`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
-| `nexa-platform` | Web Services | `v1.0.0` | Web Services backend con ASP.NET Core Web API, bounded contexts, Shared Kernel, persistencia inicial y Swagger/OpenAPI. | `main` | Repositorio `nexa-platform`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
+| `nexa-ecosystem-report` | Project Report / Docs-as-Code | No se asigna release TB2 sin tag verificado | `main` | Informe académico, capítulos, evidencias y trazabilidad documental. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
+| `nexa-website` | Landing Page | `v4.0.1` | `main` | Website público y acceso hacia registro o login. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
+| `nexa-webapp` | Frontend Web Application | `v3.0.1` | `main` | SPA Vue para los flujos funcionales del producto. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
+| `nexa-platform` | Web Services / Platform API | `v2.0.1` | `main` | API modular, persistencia, seguridad y documentación de servicios. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
 
-**GitFlow del Proyecto**
+> *Nota*: La tabla utiliza los releases finales defendibles verificados en la evidencia Git del 3 de julio de 2026. Elaboración propia.
 
+*Ramas y tags por repositorio al cierre TB2.*
 
-*Tipos de rama utilizados en Nexa*
+| Repositorio | Ramas remotas detectadas | Tags relevantes | Último commit verificado |
+|---|---|---|---|
+| `nexa-website` | `origin/main`, `origin/hotfix/v2.0.1-final-polish` | `v4.0.1`, `v4.0.0` | `e72d9c4` — `fix(website): refine final landing visuals` |
+| `nexa-webapp` | `origin/main`, `origin/develop`, `origin/hotfix/v2.0.1-final-polish` | `v3.0.1`, `v3.0.0` | `1a48715` — `fix(webapp): keep workspace registration public` |
+| `nexa-platform` | `origin/main`, `origin/develop`, `origin/hotfix/v2.0.1-final-polish` | `v2.0.1`, `v2.0.0` | `e3705d9` — `merge(release): finalize v2.0.1 polish` |
 
-| Tipo de rama | Propósito | Convención de nombre |
-|---|---|---|
-| `main` | Rama estable y entregable de cada repositorio. | `main` |
-| `develop` | Rama de integración previa al cierre de una entrega. | `develop` |
-| `feature/*` | Desarrollo enfocado por funcionalidad, bounded context, capítulo o frente técnico. | `feature/<scope-or-capability>` |
-| `release/*` | Preparación de versiones antes de consolidación final. | `release/vX.Y.Z` o `release/<milestone>` cuando se trate de un corte académico. |
-| `hotfix/*` | Corrección urgente sobre una versión estable. | `hotfix/<short-fix-description>` |
-| `backup/*` | Preservación temporal de un estado anterior del repositorio. | `backup/<reason>` |
+> *Nota*: La tabla prioriza git-evidence-final y evita incorporar ramas feature no detectadas en el corte final. Elaboración propia.
 
-*Ramas por repositorio al corte AV2*
+El equipo aplicó una adaptación de GitFlow según el repositorio y el hito: `feature/* → develop → release/* o hotfix/* → main`. El bloque final utilizó `hotfix/v2.0.1-final-polish` para correcciones de cierre. Esta descripción expresa el flujo observado sin afirmar que toda modificación haya seguido una única ruta.
 
-| Repositorio | Ramas principales | Feature branches | Release branches | Tags principales |
-|---|---|---|---|---|
-| `nexa-ecosystem-report` | `main`, `develop` | `feature/ch3`, `feature/ch4`, `feature/ch5` | No se registra release branch activa en el último corte auditado. | Tags principales hasta `v3.0.0`: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.1.0`, `v2.2.0`, `v2.3.0`, `v2.4.0`, `v3.0.0` |
-| `nexa-website` | `main`, `develop` | `feature/pre-v3-documentation` | No se registra release branch activa en el último corte auditado. | Tags principales hasta `v3.0.0`: `v0.1.0`, `v0.2.0`, `v1.0.0`, `v1.0.1`, `v1.1.0`, `v1.2.0`, `v2.0.0`, `v2.0.1`, `v2.1.0`, `v2.2.0`, `v2.3.0`, `v3.0.0` |
-| `nexa-webapp` | `main`, `develop` | `feature/catalog`, `feature/docs`, `feature/docs-infrastructure`, `feature/general`, `feature/iam`, `feature/invoicing`, `feature/logistics`, `feature/sales`, `feature/shared`, `feature/warehouse` | `release/v1.4.0`, `release/v1.7.0`, `release/v1.8.0`, `release/v2.0.0` | Tags principales hasta `v2.0.0`: `v0.1.0`, `v0.2.0`, `v1.0.0`, `v1.0.1`, `v1.1.0`, `v1.1.1`, `v1.2.0`, `v1.3.0`, `v1.4.0`, `v1.5.0`, `v1.6.0`, `v1.7.0`, `v1.7.1`, `v1.8.0`, `v2.0.0` |
-| `nexa-platform` | `main`, `develop` | `feature/catalog`, `feature/catalog-commands`, `feature/catalog-infrastructure`, `feature/catalog-queries`, `feature/docs`, `feature/docs-infrastructure`, `feature/general`, `feature/general-infrastructure`, `feature/iam`, `feature/iam-commands`, `feature/iam-infrastructure`, `feature/iam-queries`, `feature/invoicing`, `feature/invoicing-commands`, `feature/invoicing-infrastructure`, `feature/invoicing-queries`, `feature/logistics`, `feature/logistics-commands`, `feature/logistics-infrastructure`, `feature/logistics-queries`, `feature/sales`, `feature/sales-commands`, `feature/sales-infrastructure`, `feature/sales-queries`, `feature/shared`, `feature/shared-infrastructure`, `feature/warehouse`, `feature/warehouse-commands`, `feature/warehouse-infrastructure`, `feature/warehouse-queries` | `release/v0.3.0`, `release/v0.6.0`, `release/av2-render-postgres`, `release/v1.0.0` | Tags principales hasta `v1.0.0`: `v0.1.0`, `v0.1.1`, `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0`, `v0.6.0`, `v0.6.1`, `v0.7.0`, `v1.0.0` |
+El versionado adopta `vMAJOR.MINOR.PATCH`. Los releases finales defendibles son `nexa-website v4.0.1`, `nexa-webapp v3.0.1` y `nexa-platform v2.0.1`.
 
-**Flujo de integración aplicado**
+Los mensajes siguen Conventional Commits mediante `type(scope): description`. Ejemplos reales incluyen:
 
-`feature/* → develop → release/* → main`
+- `fix(website): refine final landing visuals`
+- `fix(webapp): keep workspace registration public`
+- `merge(release): finalize v2.0.1 polish`
+- `fix(api): remove legacy route aliases from public contract`
 
-El flujo anterior se adapta según el repositorio y el hito. En algunos cortes, el equipo consolida cambios directamente en `main` después de integrar ramas de trabajo; en otros, utiliza una rama `release/*` para estabilización previa. Para AV2, `nexa-platform` registra `v1.0.0`, `nexa-webapp` registra `v2.0.0`, `nexa-website` registra `v3.0.0` y `nexa-ecosystem-report` registra `v3.0.0` como release documental del informe.
-
-**Versionado semántico**
-
-Las versiones se nombran siguiendo Semantic Versioning mediante el patrón `vMAJOR.MINOR.PATCH`. En el corte revisado, los tags principales permiten diferenciar versiones documentales, versiones del sitio público, releases de Web Application y primera foundation backend de Web Services.
-
-**Convenciones de commits**
-
-Los commits siguen Conventional Commits mediante el patrón `type(scope): description`. El detalle de commits representativos se documenta en las subsecciones de Sprint Review dentro de `5.2`. Esta sección conserva únicamente la estrategia de configuración, ramas, tags, repositorios y convenciones generales de control de versiones.
+Los historiales detallados de commits se reservan para Development Evidence de Sprint 4.
 
 ### 5.1.3. Source Code Style Guide & Conventions
 
-Para garantizar mantenibilidad y lectura homogénea del proyecto, el equipo adopta convenciones explícitas tanto para el código fuente como para los artefactos documentales. Estas convenciones permiten revisar el avance por repositorio, interpretar los commits, mantener consistencia entre frontend/backend y conservar trazabilidad académica del reporte.
+*Convenciones de código y documentación de Nexa.*
 
-**Convención de commits**
-
-Los mensajes siguen el patrón de Conventional Commits: `type(scope): description`.
-
-Ejemplos de tipos utilizados:
-
-| Tipo | Uso |
+| Alcance | Convenciones aplicadas |
 |---|---|
-| `feat` | Nuevas funcionalidades o capacidades de producto. |
-| `fix` | Corrección de errores funcionales, visuales o de integración. |
-| `docs` | Cambios en documentación, README, evidencias o reporte académico. |
-| `refactor` | Reorganización de código sin cambiar comportamiento externo. |
-| `chore` | Ajustes de configuración, mantenimiento, releases o tareas auxiliares. |
-| `test` | Validación o documentación de payloads y pruebas técnicas. |
-| `ci` | Configuración de integración continua o automatización. |
-| `build` | Configuración de build, toolchain o dependencias. |
+| Docs-as-Code | Markdown por capítulos, rutas relativas estables, tablas legibles, captions y control de cambios mediante Git. |
+| Website | HTML semántico, CSS organizado por assets y componentes visuales, JavaScript modular, estructura multipágina y rutas compatibles con GitHub Pages. |
+| WebApp | Vue 3 con Vite; componentes y vistas en PascalCase; propiedades reactivas en camelCase; PrimeVue, PrimeFlex, PrimeIcons, Pinia, Vue Router, Vue I18n y Axios organizados por módulos. |
+| Backend | C# con PascalCase para tipos y métodos, camelCase para variables locales, separación Domain/Application/Infrastructure/Interfaces y dependencias desacopladas. |
+| REST | Rutas canónicas documentadas con Swagger/OpenAPI, contratos HTTP y compatibilidad revisada sin afirmar perfección absoluta. |
+| Persistencia | EF Core, Npgsql, PostgreSQL y migraciones versionadas. |
+| Seguridad y configuración | JWT, CORS y configuración sensible mediante variables de entorno; Stripe se trata como proveedor externo configurable para pagos referenciales. |
+| Commits | Conventional Commits para `feat`, `fix`, `refactor`, `docs`, `chore` y `merge`. |
 
-**Convenciones de documentación**
+> *Nota*: La tabla sintetiza las convenciones observadas en los repositorios y en la evidencia técnica final. Elaboración propia.
 
-- Los archivos del reporte se organizan por capítulo y sección para facilitar ensamblado Docs-as-Code.
-- Las imágenes se referencian mediante rutas relativas dentro de `assets/images`.
-- Las tablas de evidencia de commits mantienen la estructura solicitada: `Repository`, `Branch`, `Commit Id`, `Commit Message`, `Commit Message Body` y `Commited on (Date)`.
-- Las evidencias de sprint se documentan separando planificación, backlog, desarrollo, ejecución, servicios, despliegue y colaboración.
+La modularidad backend reconoce Identity and Access Management, Tenant Management, Catalog Management, Sales, Warehouse, Logistics, Invoicing y Shared Kernel/cross-cutting support.
 
-**Convenciones frontend**
-
-- `nexa-website` mantiene una organización de sitio público multipágina con HTML, CSS y JavaScript separados por responsabilidad.
-- `nexa-webapp` organiza el frontend por dominios o bounded contexts, rutas, servicios, stores, componentes y modelos.
-- La navegación se gestiona con Vue Router y la internacionalización con Vue I18n.
-- El consumo de datos se realiza mediante Axios y capas de servicios/adapters para mantener una integración ordenada con el backend.
-- Los estilos y componentes se apoyan en Material Design, PrimeVue, PrimeFlex y PrimeIcons para mantener consistencia visual.
-- Los nombres de archivos, rutas, componentes, variables y funciones se mantienen en inglés para conservar consistencia técnica entre repositorios.
-
-**Convenciones backend**
-
-- `nexa-platform` se estructura como backend modular con ASP.NET Core Web API.
-- Los recursos REST se organizan por bounded context y controller.
-- Las clases, interfaces, métodos, propiedades, controladores, DTOs, comandos, queries y servicios se nombran en inglés.
-- La documentación de servicios se valida mediante Swagger/OpenAPI.
-- La persistencia se prepara con EF Core y PostgreSQL para el despliegue controlado AV2 en Render, dejando MySQL como antecedente/local previo cuando aparezca en evidencias anteriores.
-- Se evita declarar base de datos de operación final, autenticación productiva completa o integración total si la evidencia aún corresponde a ejecución local, despliegue controlado o revisión académica.
+La revisión final de Swagger registra **165 paths OpenAPI**, **281 operaciones**, **0 operaciones deprecated** y **0 operaciones visibles con patrones legacy**. Estas métricas describen el contrato expuesto en la evidencia final, sin convertirlas en una afirmación absoluta sobre toda la arquitectura.
 
 ### 5.1.4. Software Deployment Configuration
 
-La configuración de despliegue de Nexa se documenta por artefacto, distinguiendo entre publicación frontend, documentación académica y primera versión backend para AV2. Esta separación evita declarar como productivo un componente que todavía se encuentra en validación local o revisión académica.
+El despliegue académico separa Website, WebApp, Platform API y PostgreSQL. Docker Compose complementa estos servicios como entorno local de validación, no como operación comercial.
 
-*Configuración de despliegue y release por artefacto*
+*Configuración de despliegue por artefacto.*
 
-| Artefacto | Configuración o mecanismo | Estado defendible | Evidencia |
-|---|---|---|---|
-| Landing Page `nexa-website` | GitHub Pages desde el repositorio del sitio público. | Publicada como capa pública del producto. | Repositorio `nexa-website`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website / GitHub Pages: https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/ |
-| Web Application `nexa-webapp` | Render con navegación frontend, configuración de rutas y tag `v2.0.0`. | Publicada para revisión académica con flujos frontend e integración progresiva con backend. | Repositorio `nexa-webapp`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp / Render WebApp: https://nexa-webapp.onrender.com |
-| Project Report `nexa-ecosystem-report` | Docs-as-Code en Markdown, versionado en GitHub y release documental `v3.0.0`. | Fuente oficial del informe académico AV2, incluyendo evidencias, anexos, version history, colaboración, implementación y preparación de entrega. | Repositorio `nexa-ecosystem-report`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
-| Web Services `nexa-platform` | ASP.NET Core Web API, Swagger/OpenAPI, README de ejecución, tag `v1.0.0`, PostgreSQL y configuración Render. | Release de cierre AV2 de Web Services con despliegue controlado en Render y evidencia Swagger/OpenAPI incorporada, sin declarar operación productiva. | Repositorio `nexa-platform`: https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform / Render API: https://nexa-platform-api.onrender.com |
+| Artefacto | Plataforma | Release | URL o referencia | Alcance |
+|---|---|---|---|---|
+| Landing Page `nexa-website` | GitHub Pages | `v4.0.1` | https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/ | Website público del entorno de revisión académica. |
+| Web Application `nexa-webapp` | Render Static Site | `v3.0.1` | https://nexa-webapp.onrender.com | Frontend desplegado para revisión de flujos. |
+| Web Services `nexa-platform` | Render Web Service | `v2.0.1` | https://nexa-platform-20wt.onrender.com | Platform API y documentación de servicios. |
+| PostgreSQL | Render PostgreSQL / PostgreSQL 16 | No aplica | Configuración protegida | Persistencia relacional de Platform API sin exponer host, usuario ni contraseña. |
+| Docker local | Docker Compose | No aplica | PostgreSQL, API, WebApp y Caddy | Entorno local reproducible para validación técnica. |
+| Swagger/OpenAPI | Platform API | Asociado a `v2.0.1` | Documentación ampliada en 5.2.4.6 | Consulta general de contratos RESTful. |
 
-El procedimiento de despliegue defendible para el corte actual se resume en cuatro líneas: publicar la Landing Page como entrada pública, mantener la Web Application como frontend revisable en Render, documentar la Platform API desplegada en Render y registrar la migración/configuración hacia PostgreSQL para el despliegue controlado AV2. La evidencia de Jira, Swagger, releases, ejecución y capturas de servicios debe revisarse nuevamente para evitar sobredeclarar capacidades no verificadas.
+> *Nota*: La tabla resume los artefactos del despliegue académico y sus releases verificables para TB2. Elaboración propia.
+
+*Repositorios asociados con los artefactos desplegados.*
+
+| Artefacto | Repositorio visible |
+|---|---|
+| Landing Page | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
+| Web Application | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
+| Platform API | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
+
+> *Nota*: La tabla conserva las URLs directas de los repositorios de producto asociados con el despliegue académico. Elaboración propia.
+
+*Variables de entorno y tratamiento documental.*
+
+| Variable | Uso | Tratamiento en el reporte |
+|---|---|---|
+| `CONNECTIONSTRINGS__DEFAULTCONNECTION` | Conexión PostgreSQL de Platform API. | `[REDACTED]` |
+| `NEXA_JWT_SECRET` | Firma de tokens JWT. | `[REDACTED]` |
+| `STRIPE_SECRET_KEY` | Proveedor externo configurable para pagos referenciales. | `[REDACTED]` |
+| `CORS_ALLOWED_ORIGINS` | Orígenes permitidos para WebApp. | Valor documentable sin secretos. |
+| `VITE_NEXA_API_BASE_URL` | URL base consumida por WebApp. | https://nexa-platform-20wt.onrender.com |
+| `ASPNETCORE_ENVIRONMENT` | Selección del entorno de ejecución. | Nombre del entorno, sin credenciales. |
+
+> *Nota*: La tabla documenta el propósito de las variables sin publicar secretos, credenciales ni cadenas de conexión. Elaboración propia.
+
+Los controles finales registran respuestas HTTP 200 para health, Swagger UI, OpenAPI JSON, login de WebApp, Website local, ruta simulada de GitHub Pages y una consulta autenticada de catálogo respaldada por base de datos. Esta evidencia corresponde a validación técnica y no implica operación comercial.
