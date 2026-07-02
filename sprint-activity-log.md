@@ -56,3 +56,4 @@
 * [2026-07-01T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [refactor(ch5)] add nexa-platform-v1-0-0-release.png (and 18 others) to ch5 structure
 * [2026-07-02T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch5)] remove obsolete assets and update ch5 files
 * [2026-07-02T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add c4-container-structurizr-code.txt (and 20 others) to ch5 structure
+* [2026-07-02T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireflow-s2-jefatura-logistica-coordinacion-operativa-alt.png (and 20 others) to ch5 structure
