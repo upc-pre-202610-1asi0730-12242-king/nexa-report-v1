@@ -58,3 +58,4 @@
 * [2026-07-02T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add c4-container-structurizr-code.txt (and 20 others) to ch5 structure
 * [2026-07-02T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireflow-s2-jefatura-logistica-coordinacion-operativa-alt.png (and 20 others) to ch5 structure
 * [2026-07-02T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add render-dashboard-overview.png (and 18 others) to ch5 structure
+* [2026-07-03T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [feat(ch5)] remove obsolete assets and update ch5 files
