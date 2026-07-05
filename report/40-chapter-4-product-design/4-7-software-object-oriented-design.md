@@ -1,241 +1,310 @@
-# 4.7. Software Object-Oriented Design
+## 4.7. Software Object-Oriented Design
 
-Esta sección presenta el diseño orientado a objetos de Nexa. El diseño está alineado con la arquitectura de software dirigida por el dominio definida en la sección 4.6 y utiliza diagramas de clases UML para representar las principales entidades, value objects, enumeraciones, servicios, repositorios y relaciones requeridas por el sistema.
+Esta sección presenta el diseño orientado a objetos de la plataforma Nexa. El diseño está estructurado a partir de los patrones tácticos de Domain-Driven Design (DDD) y modela la estructura de clases, interfaces, tipos de datos y relaciones de los componentes de negocio. 
 
-El modelo orientado a objetos se organiza alrededor de los bounded contexts finales de Nexa: **Catalog Management**, **Sales**, **Warehouse**, **Logistics** e **Invoicing**. Identity and Access Management se documenta como soporte transversal porque permite el acceso seguro y la operación basada en tenants, pero no se considera uno de los bounded contexts principales del negocio.
+El modelo se organiza alrededor de los siete bounded contexts core del sistema:
 
-Los diagramas también mantienen trazabilidad con el diseño de base de datos presentado en la sección 4.8. Por ello, las entidades principales representadas en los diagramas de clases tienen una estructura de persistencia correspondiente en el modelo relacional de base de datos.
+- **Catalog Management**
+- **Sales**
+- **Warehouse**
+- **Logistics**
+- **Invoicing**
+- **Tenant Management**
+- **Identity and Access Management (IAM)**.
 
-## 4.7.1. Class Diagrams
+### 4.7.1. Class Diagrams
 
-Los diagramas de clases incluyen clases, atributos, operaciones, scope, enumeraciones, asociaciones y multiplicidades. El objetivo es representar la estructura orientada a implementación de cada bounded context sin perder consistencia con el lenguaje del dominio.
+Los diagramas de clases describen el diseño estático y el comportamiento de las clases principales en cada uno de los contextos delimitados. Para cada componente se especifican atributos, métodos y visibilidad, así como las cardinalidades y los tipos de asociación (composición, agregación, herencia y dependencia).
 
 Se consideraron los siguientes criterios:
 
+
+*Criterios aplicados al diseño orientado a objetos de Nexa.*
+
 | Criterio | Aplicación en Nexa |
 |---|---|
-| Separación por bounded context | Cada diagrama agrupa clases según una responsabilidad específica del negocio. |
-| Entidades | Clases con identidad y ciclo de vida, como Product, PurchaseRequest, SalesOrder, InventoryLot y DispatchOrder. |
-| Value Objects | Clases sin identidad propia que describen valores del dominio, como TemperatureRange, DeliveryWindow, ChargeSummary o FEFOCriteria. |
-| Enumeraciones | Estados del dominio como ProductStatus, RequestStatus, OrderStatus, DispatchStatus y PaymentStatus. |
-| Multiplicidad | Las relaciones incluyen cardinalidades para evitar ambigüedad entre clases. |
-| Soporte transversal | Las clases de Identity and Access se separan de los principales contextos de negocio. |
-| Trazabilidad | Las clases están alineadas con los bounded contexts y las tablas de base de datos documentadas en este capítulo. |
+| **Separación por Bounded Context** | Cada diagrama de clases representa de forma aislada e independiente uno de los siete contextos delimitados de la solución. |
+| **Entidades y Agregados** | Clases con identidad propia y ciclo de vida transaccional, tales como `CatalogItem`, `PurchaseRequest`, `Order`, `InventoryLot`, `DispatchOrder` e `Invoice`. |
+| **Value Objects** | Clases sin identidad que modelan atributos inmutables del dominio, tales como `Money`, `StockQuantity`, `ColdChainRequirement`, `ShipmentCode` y `BillingAmount`. |
+| **Enumeraciones** | Tipos estructurados que controlan los estados del ciclo de vida del negocio, tales como `OrderStatus`, `DeliveryStatus` y `PaymentStatus`. |
+| **Multiplicidad y Relaciones** | Asignación estricta de multiplicidades y cardinalidades en el diagrama UML para modelar la agregación, composición y herencia en el dominio. |
+| **Desacoplamiento Controlado** | Evita referencias directas de memoria entre agregados de diferentes contextos, utilizando en su lugar identificadores externos (`Id`) para la integración. |
+| **Trazabilidad** | Coherencia estricta entre el modelo táctico orientado a objetos, los requisitos funcionales (User Stories) y la persistencia de datos (DbSets y Tablas). |
 
-### Consolidated Tactical Class Map
+> *Nota*: La tabla resume los criterios, responsabilidades y elementos principales del diseño orientado a objetos de Nexa. Elaboración propia.
 
-![Consolidated DDD Tactical Map](../assets/images/chapter-4/architecture/class-diagrams/consolidated-ddd-tactical-map.png)
+#### Consolidated Class Diagram
 
-**Nota:** El mapa táctico resume la relación entre bounded contexts, aggregates y componentes de soporte transversal.
+*Diagrama consolidado de clases de Nexa.*
 
-El mapa táctico de clases presenta los cinco bounded contexts principales y sus objetos de dominio más relevantes:
+![Consolidated Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/consolidated-class-diagram.svg)
 
-| Bounded Context | Clases principales |
-|---|---|
-| Catalog Management | Product, Category, Promotion, ProductInternalCode, TemperatureRange, ProductStatus |
-| Sales | B2BClient, PurchaseRequest, SalesOrder, OrderItem, CommercialCondition, CreditWarning, OrderObservation |
-| Warehouse | Warehouse, InventoryLot, Reservation, StockMovement, StockAvailability, FEFOCriteria |
-| Logistics | DispatchOrder, TraceabilityEvent, DeliveryIncident, TemperatureCheck, DeliveryWindow, DeliveryEvidence |
-| Invoicing | CommercialDocument, PaymentRecord, PaymentStatus, InvoiceSummary, ChargeSummary |
-| Transversal Support | User, Role, Permission, Tenant, UserSession, AccessPolicy |
+> *Nota*: El diagrama muestra la estructura consolidada de clases, relaciones y responsabilidades principales de Nexa. Elaboración propia.
 
-### Identity and Access Support Class Diagram
+El diagrama consolidado de clases presenta la estructura completa del diseño orientado a objetos de Nexa, agrupando los siete bounded contexts definidos para la solución. Este diagrama funciona como la vista maestra del modelo táctico, a partir de la cual se derivan las vistas individuales por bounded context.
 
-![Identity and Access Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-identity-access.png)
 
-**Nota:** Identity and Access se representa como soporte transversal para autenticación, autorización y control de acceso basado en tenants.
+*Responsabilidades generales y clases principales por bounded context.*
 
-El modelo de soporte de Identity and Access contiene las clases requeridas para gestionar el acceso a la plataforma. Este soporte permite la operación de la Web Application mediante la validación de usuarios, sesiones, roles y permisos.
-
-| Clase | Tipo | Responsabilidad |
+| Bounded Context | Responsabilidad general | Clases principales |
 |---|---|---|
-| User | Entidad | Representa un usuario de la plataforma con credenciales y datos de perfil. |
-| Role | Entidad | Define el rol funcional asignado a un usuario. |
-| Permission | Entidad | Representa una capacidad de acceso permitida dentro de la plataforma. |
-| Tenant | Entidad | Representa la organización o cuenta que utiliza Nexa. |
-| UserSession | Entidad | Representa una sesión autenticada. |
-| AccessPolicy | Domain Service / lógica de soporte | Valida si un usuario puede realizar una operación. |
+| Tenant Management | Gestión de la estructura SaaS multi-tenant, workspaces, reglas de configuración, suscripciones y membresías. | `Tenant`, `TenantMember`, `Workspace`, `UserWorkspaceMembership`, `TenantSubscription`, `OrganizationRegistrationRequest`, `ITenantRepository` |
+| Identity and Access Management (IAM) | Autenticación de credenciales, control de accesos, roles globales y perfiles de usuarios. | `User`, `IUserRepository`, `AuthenticationController`, `UsersController`, `ProfileController` |
+| Catalog Management | Gestión de productos, categorías, marcas, precios y conservación de cadena de frío. | `CatalogItem`, `Category`, `Brand`, `ColdChainRequirement`, `ICatalogItemRepository`, `CatalogItemsController` |
+| Sales | Gestión de clientes B2B, alertas de crédito, procesamiento de solicitudes de compra y confirmación de órdenes de venta. | `Order`, `OrderItem`, `ClientAccount`, `PurchaseRequest`, `PurchaseRequestLine`, `CreditRequest`, `IOrderRepository` |
+| Warehouse | Gestión física de almacenes, existencias agregadas, lotes con vencimiento, movimientos y reservas de stock bajo criterios FEFO. | `Warehouse`, `InventoryItem`, `InventoryLot`, `InventoryMovement`, `InventoryReservationRecord`, `IWarehouseRepository` |
+| Logistics | Programación de envíos, órdenes de despacho en ruta, eventos de trazabilidad, mediciones térmicas y evidencia de entrega. | `Shipment`, `DispatchOrder`, `DispatchEvent`, `ProofOfDeliveryRecord`, `TemperatureLog`, `CustomerPortalTask`, `IDispatchOrderRepository` |
+| Invoicing | Emisión de facturas comerciales, registro de pagos simulados, visibilidad de archivos financieros y cálculo de cargos y tasas. | `Invoice`, `Payment`, `BusinessDocument`, `PaymentMethodRecord`, `PaymentProcessRecord`, `IInvoiceRepository` |
 
-Este modelo no debe interpretarse como un bounded context principal. Es una capacidad de soporte transversal requerida por todos los módulos de negocio.
+> *Nota*: La tabla resume los criterios, responsabilidades y elementos principales del diseño orientado a objetos de Nexa. Elaboración propia.
 
-### Catalog Management Class Diagram
+#### Catalog Management Class Diagram
 
-![Catalog Management Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-catalog.png)
+*Diagrama de clases de Catalog Management.*
 
-**Nota:** Catalog Management gestiona productos, categorías, promociones, visibilidad del producto e información de conservación.
+![Catalog Management Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/catalog-management-class-diagram.png)
 
-Catalog Management es responsable de mantener el catálogo comercial de productos. Los productos se identifican usando un código interno de producto, no SKU, porque el lenguaje ubicuo de Nexa utiliza el concepto de código interno de producto.
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
 
-| Clase | Tipo | Responsabilidad |
-|---|---|---|
-| Product | Entidad / Aggregate Root | Representa un producto gourmet refrigerado ofrecido en el catálogo. |
-| Category | Entidad | Agrupa productos según una categoría de negocio. |
-| Promotion | Entidad | Representa promociones comerciales asociadas a productos o categorías. |
-| ProductInternalCode | Value Object | Encapsula el código interno usado para identificar productos. |
-| TemperatureRange | Value Object | Define el rango de temperatura recomendado para la conservación. |
-| ProductStatus | Enumeración | Define si el producto está activo, inactivo o no disponible. |
-| CatalogApplicationService | Application Service | Coordina los casos de uso del catálogo. |
-| ProductRepository | Repository Interface | Proporciona operaciones de persistencia para productos. |
+El contexto de Catalog Management administra la información comercial de los productos gourmet, sus categorías y marcas correspondientes, regulando adicionalmente las condiciones técnicas de conservación térmica (cadena de frío) y stock disponible.
 
-Relaciones recomendadas:
 
-| Relación | Multiplicidad | Descripción |
-|---|---|---|
-| Category - Product | 1 a muchos | Una categoría puede agrupar muchos productos. |
-| Product - ProductInternalCode | 1 a 1 | Cada producto tiene un código interno de producto. |
-| Product - TemperatureRange | 1 a 1 | Cada producto refrigerado tiene un rango de temperatura recomendado. |
-| Product - Promotion | muchos a muchos o 1 a muchos | Un producto puede estar asociado a promociones según las reglas del negocio. |
 
-### Sales Class Diagram
 
-![Sales Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-orders-commercial-management.png)
 
-**Nota:** Sales gestiona clientes B2B, solicitudes de compra, validación comercial y órdenes de venta confirmadas.
 
-Sales es el bounded context responsable del flujo comercial de pedidos. Este contexto distingue una solicitud de compra de una orden de venta confirmada. Esta distinción es importante porque no toda solicitud se convierte en orden. Una solicitud primero requiere validación comercial, revisión de crédito y coordinación de disponibilidad de stock.
 
-| Clase | Tipo | Responsabilidad |
-|---|---|---|
-| B2BClient | Entidad / Aggregate Root | Representa un cliente empresarial que compra productos mediante Nexa. |
-| PurchaseRequest | Entidad / Aggregate Root | Representa la solicitud inicial enviada por un comprador o registrada manualmente por un usuario comercial. |
-| SalesOrder | Entidad / Aggregate Root | Representa una orden comercialmente validada y confirmada. |
-| OrderItem | Entidad | Representa un producto y cantidad incluidos en una solicitud u orden. |
-| CommercialCondition | Entidad / Value Object | Representa términos de pago, condiciones de crédito y reglas comerciales de un cliente. |
-| CreditWarning | Entidad / Value Object | Representa una alerta relacionada con crédito o pagos pendientes. |
-| OrderObservation | Entidad | Representa notas comerciales u observaciones operativas relacionadas con una solicitud u orden. |
-| RequestStatus | Enumeración | Representa el estado del ciclo de vida de una solicitud de compra. |
-| OrderStatus | Enumeración | Representa el estado del ciclo de vida de una orden de venta. |
-| SalesApplicationService | Application Service | Coordina el envío de solicitudes, validación y confirmación de órdenes. |
-| SalesOrderRepository | Repository Interface | Proporciona operaciones de persistencia para órdenes de venta. |
 
-Relaciones recomendadas:
+*Clases, interfaces y enums de Catalog Management.*
 
-| Relación | Multiplicidad | Descripción |
-|---|---|---|
-| B2BClient - PurchaseRequest | 1 a muchos | Un cliente B2B puede enviar varias solicitudes de compra. |
-| PurchaseRequest - OrderItem | 1 a muchos | Una solicitud contiene uno o más ítems solicitados. |
-| PurchaseRequest - SalesOrder | 0..1 a 1 | Una solicitud validada puede convertirse en una orden de venta confirmada. |
-| SalesOrder - OrderItem | 1 a muchos | Una orden contiene uno o más ítems. |
-| B2BClient - CommercialCondition | 1 a 1 o 1 a muchos | Un cliente tiene condiciones comerciales usadas durante la validación. |
-| PurchaseRequest - OrderObservation | 0 a muchos | Una solicitud puede contener observaciones comerciales u operativas. |
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `CatalogItem` | Aggregate Root | Producto publicado en el catálogo del tenant con precios y stock visible. | Domain (Backend) |
+| `Category` | Entity | Clasificación comercial de productos. | Domain (Backend) |
+| `Brand` | Entity | Marca del fabricante asociada a los productos. | Domain (Backend) |
+| `CatalogItemId` | Value Object | Identificador único del ítem en el catálogo comercial. | Domain (Backend) |
+| `ProductId` | Value Object | Identificador único del producto a nivel de producción. | Domain (Backend) |
+| `ItemName` | Value Object | Objeto de valor que encapsula el nombre descriptivo del producto. | Domain (Backend) |
+| `BrandName` | Value Object | Objeto de valor que resguarda la marca comercial registrada. | Domain (Backend) |
+| `CategoryName` | Value Object | Objeto de valor que representa la categoría de clasificación gourmet. | Domain (Backend) |
+| `Money` | Value Object | Representa el importe monetario y la divisa del catálogo. | Domain (Backend) |
+| `StockQuantity` | Value Object | Representa la cantidad física de existencias en el catálogo. | Domain (Backend) |
+| `ColdChainRequirement` | Value Object | Restricciones de cadena de frío y conservación del producto. | Domain (Backend) |
+| `ICatalogItemRepository` | Interface | Contrato para la persistencia y búsquedas del catálogo comercial. | Domain (Backend) |
+| `CatalogItemsController` | Controller | Endpoints REST para el registro y consulta de productos del catálogo. | Interface / API (Backend) |
+| `CatalogItem` | JS Class | Representa un producto del catálogo en la UI. | Frontend |
+| `CatalogItemsApi` | Service | Cliente HTTP (Axios) para consumir los servicios del catálogo. | Frontend |
 
-### Warehouse Class Diagram
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
 
-![Warehouse Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-inventory.png)
+Las relaciones lógicas asocian cada producto (`CatalogItem`) a su categoría (`Category`) y marca (`Brand`). Cada producto expone métodos específicos como `ReserveStock()` and `SynchronizeAvailableStock()` para reflejar los cambios transaccionales del stock operativo e interactúa con el frontend a través del servicio adaptado `CatalogItemsApi`.
 
-**Nota:** Warehouse gestiona almacenes, lotes de inventario, reservas de stock, movimientos de stock y criterios FEFO.
+#### Sales Class Diagram
 
-Warehouse es responsable de la disponibilidad física y operativa de los productos. Este contexto debe representar explícitamente lotes de inventario y reservas de stock porque los productos gourmet refrigerados requieren trazabilidad por lote y fecha de vencimiento.
+*Diagrama de clases de Sales.*
 
-| Clase | Tipo | Responsabilidad |
-|---|---|---|
-| Warehouse | Entidad / Aggregate Root | Representa una ubicación de almacenamiento de inventario. |
-| InventoryLot | Entidad | Representa stock asociado a un producto, almacén y fecha de vencimiento. |
-| Reservation | Entidad | Representa stock reservado para una solicitud de compra u orden de venta. |
-| StockMovement | Entidad | Representa movimientos de ingreso, salida o ajuste. |
-| StockAvailability | Value Object / Read Model | Representa cantidades disponibles, reservadas y totales de stock. |
-| FEFOCriteria | Value Object / Domain Service | Encapsula la lógica de selección basada en earliest-expiration-first. |
-| LotStatus | Enumeración | Representa si un lote está disponible, reservado, bloqueado o vencido. |
-| MovementType | Enumeración | Representa movimientos de ingreso, salida, ajuste o liberación. |
-| WarehouseApplicationService | Application Service | Coordina los casos de uso de inventario. |
-| InventoryLotRepository | Repository Interface | Proporciona operaciones de persistencia para lotes de inventario. |
+![Sales Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/sales-class-diagram.png)
 
-Relaciones recomendadas:
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
 
-| Relación | Multiplicidad | Descripción |
-|---|---|---|
-| Warehouse - InventoryLot | 1 a muchos | Un almacén contiene muchos lotes de inventario. |
-| InventoryLot - Reservation | 1 a muchos | Un lote puede reservarse varias veces hasta agotar su cantidad disponible. |
-| InventoryLot - StockMovement | 1 a muchos | Un lote puede tener muchos movimientos de stock. |
-| Reservation - PurchaseRequest / SalesOrder | muchos a 1 | Las reservas se asocian con la demanda comercial proveniente de Sales. |
-| InventoryLot - FEFOCriteria | muchos a 1 lógico | Los criterios FEFO se usan para seleccionar lotes por fecha de vencimiento. |
+El contexto de Sales gobierna el proceso comercial B2B de pedidos. Este contexto recibe y valida solicitudes de compra iniciales, valida la capacidad de crédito del cliente mediante su cuenta comercial y confirma formalmente la creación de las órdenes del negocio.
 
-### Logistics Class Diagram
+*Clases, interfaces y enums de Sales.*
 
-![Logistics Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-dispatch-traceability.png)
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `Order` | Aggregate Root | Orden comercial de venta confirmada y en proceso. | Domain (Backend) |
+| `OrderItem` | Entity | Ítem de producto y cantidad que forma parte de una orden comercial. | Domain (Backend) |
+| `ClientAccount` | Aggregate Root | Cuenta comercial del cliente B2B con control de crédito y plazos. | Domain (Backend) |
+| `PurchaseRequest` | Aggregate Root | Solicitud de compra inicial generada desde el portal B2B. | Domain (Backend) |
+| `PurchaseRequestLine` | Entity | Línea detallada de artículo y cantidad en la solicitud de compra. | Domain (Backend) |
+| `CreditRequest` | Entity | Solicitud de crédito o ampliación comercial para cuentas cliente. | Domain (Backend) |
+| `Promotion` | Entity | Promoción comercial aplicable a los productos de catálogo. | Domain (Backend) |
+| `OrderStatus` | Enum | Estados del ciclo de vida de la orden (Pending, Confirmed, Paid, Cancelled, Rejected). | Domain (Backend) |
+| `Money` | Value Object | Estructura para importes monetarios en el contexto de ventas, con método `Add()`. | Domain (Backend) |
+| `IOrderRepository` | Interface | Contrato de persistencia para las órdenes comerciales. | Domain (Backend) |
+| `IClientAccountRepository` | Interface | Contrato de persistencia para las cuentas comerciales B2B. | Domain (Backend) |
+| `IPurchaseRequestRepository` | Interface | Contrato de persistencia para las solicitudes de compra. | Domain (Backend) |
+| `ICreditRequestRepository` | Interface | Contrato de persistencia para solicitudes de ampliación de crédito. | Domain (Backend) |
+| `IPromotionRepository` | Interface | Contrato de persistencia para promociones y campañas comerciales. | Domain (Backend) |
+| `OrdersController` | Controller | Endpoints REST para el registro, confirmación e historial de pedidos. | Interface / API (Backend) |
+| `ClientsController` | Controller | Endpoint REST para gestionar las cuentas comerciales de clientes B2B. | Interface / API (Backend) |
+| `PurchaseRequestsController` | Controller | Endpoint REST para administrar las solicitudes de compra del cliente B2B. | Interface / API (Backend) |
+| `CreditRequestsController` | Controller | Endpoint REST para gestionar las solicitudes de ampliación de crédito. | Interface / API (Backend) |
+| `PromotionsController` | Controller | Endpoint REST para registrar y administrar las campañas de promociones. | Interface / API (Backend) |
+| `Order` | JS Class | Representa la orden de venta comercial en la UI del cliente. | Frontend |
 
-**Nota:** Logistics gestiona órdenes de despacho, eventos de trazabilidad, incidencias de entrega, controles de temperatura y evidencia de entrega.
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
 
-Logistics es responsable de monitorear el proceso de entrega desde la programación del despacho hasta la evidencia de entrega. El modelo incluye eventos de trazabilidad y evidencia de entrega porque el negocio necesita visibilidad sobre el estado de cada orden y entrega.
+Las clases definen que una orden (`Order`) se compone directamente de múltiples ítems (`OrderItem`), y se asocia de forma referencial a una cuenta comercial (`ClientAccount`). `Order` expone métodos para controlar la transición del estado comercial de la orden (`Confirm`, `Reject`, `Cancel`). Las sumas acumuladas de importes se resuelven mediante el método `Add()` de `Money`.
 
-| Clase | Tipo | Responsabilidad |
-|---|---|---|
-| DispatchOrder | Entidad / Aggregate Root | Representa un despacho creado para una orden de venta confirmada. |
-| TraceabilityEvent | Entidad | Representa un evento de seguimiento registrado durante la entrega. |
-| DeliveryIncident | Entidad | Representa una incidencia durante el proceso de despacho. |
-| TemperatureCheck | Entidad / Value Object | Representa una lectura o control referencial de temperatura durante la entrega. |
-| DeliveryWindow | Value Object | Representa el rango esperado de entrega. |
-| DeliveryEvidence | Entidad | Representa evidencia de entrega, como datos de confirmación o evidencia adjunta. |
-| DispatchStatus | Enumeración | Representa estados como programado, en tránsito, con incidencia, entregado o cancelado. |
-| IncidentSeverity | Enumeración | Representa el nivel de severidad de una incidencia de entrega. |
-| LogisticsApplicationService | Application Service | Coordina los casos de uso de despacho y trazabilidad. |
-| DispatchOrderRepository | Repository Interface | Proporciona operaciones de persistencia para órdenes de despacho. |
+#### Warehouse Class Diagram
 
-Relaciones recomendadas:
+*Diagrama de clases de Warehouse.*
 
-| Relación | Multiplicidad | Descripción |
-|---|---|---|
-| SalesOrder - DispatchOrder | 1 a 0..1 | Una orden de venta confirmada puede generar una orden de despacho. |
-| DispatchOrder - TraceabilityEvent | 1 a muchos | Un despacho tiene varios eventos de trazabilidad. |
-| DispatchOrder - DeliveryIncident | 1 a muchos | Un despacho puede tener cero o más incidencias de entrega. |
-| DispatchOrder - TemperatureCheck | 1 a muchos | Un despacho puede incluir varios controles de temperatura. |
-| DispatchOrder - DeliveryEvidence | 1 a 0..1 | Un despacho entregado debe tener evidencia de entrega. |
-| DispatchOrder - DeliveryWindow | 1 a 1 | Un despacho tiene una ventana esperada de entrega. |
+![Warehouse Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/warehouse-class-diagram.png)
 
-### Invoicing Class Diagram
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
 
-![Invoicing Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/class-diagram-invoicing.png)
+El contexto de Warehouse administra el almacenamiento y disponibilidad física de los productos. Gestiona la configuración espacial de almacenes, el stock de productos, los movimientos de ingreso o egreso de stock, y las reservas asociadas a la demanda comercial.
 
-**Nota:** Invoicing gestiona documentos comerciales, resúmenes de cobro, pagos simulados y visibilidad del estado de pago.
+*Clases, interfaces y enums de Warehouse.*
 
-Invoicing es responsable de la visibilidad documental y de pago de la orden. En el alcance actual, el proceso de pago se representa como un flujo simulado, mientras que el dominio mantiene el modelado de estado de pago y visibilidad de documentos comerciales.
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `Warehouse` | Aggregate Root | Almacén físico con límites de temperatura controlada. | Domain (Backend) |
+| `InventoryItem` | Aggregate Root | Existencias agregadas y reservadas de un producto en el almacén. | Domain (Backend) |
+| `InventoryLot` | Entity | Lote físico de inventario asociado a un vencimiento y control térmico. | Domain (Backend) |
+| `InventoryMovement` | Entity | Registro de movimientos de stock (ingreso, salida o ajuste). | Domain (Backend) |
+| `InventoryReservationRecord` | Entity | Reserva física de stock asociada a una orden o solicitud comercial. | Domain (Backend) |
+| `IWarehouseRepository` | Interface | Contrato de persistencia de almacenes físicos. | Domain (Backend) |
+| `IInventoryItemRepository` | Interface | Contrato para el control del inventario y existencias. | Domain (Backend) |
+| `IInventoryOperationsCommandRepository` | Interface | Contrato para registrar de forma transaccional lotes, movimientos y reservas. | Domain (Backend) |
+| `IInventoryOperationsReadRepository` | Interface | Contrato para realizar consultas agregadas de lotes y movimientos de stock. | Domain (Backend) |
+| `WarehousesController` | Controller | Endpoint REST para registrar y consultar almacenes físicos. | Interface / API (Backend) |
+| `InventoryItemsController` | Controller | Endpoint REST para consultar existencias físicas y registrar ingresos. | Interface / API (Backend) |
+| `InventoryLotsController` | Controller | Endpoint REST para consultar el stock clasificado por lotes. | Interface / API (Backend) |
+| `ReservationsController` | Controller | Endpoint REST para gestionar las solicitudes de reservas de stock. | Interface / API (Backend) |
 
-| Clase | Tipo | Responsabilidad |
-|---|---|---|
-| CommercialDocument | Entidad / Aggregate Root | Representa un documento comercial asociado a una orden de venta. |
-| PaymentRecord | Entidad | Representa el registro de un pago simulado. |
-| PaymentStatus | Enumeración / Entidad | Representa el estado de pago actual de una orden. |
-| InvoiceSummary | Entidad / Read Model | Representa el resumen de cargos comerciales de una orden. |
-| ChargeSummary | Value Object | Encapsula subtotal, impuestos, descuentos, cargos de entrega y monto total. |
-| DocumentVisibility | Value Object / Policy | Define si un documento es visible para el comprador. |
-| PaymentMethod | Enumeración | Representa el método de pago simulado seleccionado. |
-| InvoicingApplicationService | Application Service | Coordina los casos de uso de generación documental y estado de pago. |
-| CommercialDocumentRepository | Repository Interface | Proporciona operaciones de persistencia para documentos comerciales. |
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
 
-Relaciones recomendadas:
+El modelo estructural divide la existencia agregada (`InventoryItem`) en lotes físicos específicos (`InventoryLot`), permitiendo una administración granular del inventario. La lógica del negocio expone métodos como `Reserve()` and `Release()` en `InventoryItem`, que interactúan con `InventoryReservationRecord` y `InventoryLot` para apartar mercancía perecible siguiendo estrictas directrices basadas en la fecha de expiración del lote.
 
-| Relación | Multiplicidad | Descripción |
-|---|---|---|
-| SalesOrder - CommercialDocument | 1 a muchos | Una orden de venta puede generar uno o más documentos comerciales. |
-| SalesOrder - InvoiceSummary | 1 a 1 | Una orden de venta tiene un resumen de cargos para visibilidad de pago. |
-| SalesOrder - PaymentRecord | 1 a muchos | Una orden puede tener uno o más registros de pago. |
-| PaymentRecord - PaymentStatus | muchos a 1 | Los registros de pago actualizan o reflejan el estado de pago actual. |
-| CommercialDocument - DocumentVisibility | 1 a 1 | Cada documento tiene reglas de visibilidad para el comprador. |
+#### Logistics Class Diagram
 
-### Traceability Matrix: Requirements and Object-Oriented Design
+*Diagrama de clases de Logistics.*
 
-La siguiente matriz conecta las principales user stories con las clases responsables de soportarlas.
+![Logistics Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/logistics-class-diagram.png)
 
-| User Story ID | Título del requisito | Bounded Context | Clase principal | Método o lógica relacionada |
-|---|---|---|---|---|
-| US07 | Consultar catálogo gourmet autorizado | Catalog Management | Product / Category | filterActiveProducts(), isVisibleForClient() |
-| US08 | Buscar productos por nombre comercial o código interno | Catalog Management | Product | matchesSearchCriteria(), findByInternalCode() |
-| US14 | Agregar producto gourmet al catálogo | Catalog Management | Product | registerProduct(), validateRequiredFields() |
-| US16 | Gestionar promociones operativas | Catalog Management | Promotion | publishPromotion(), validatePromotionPeriod() |
-| US33 | Validar datos comerciales del cliente | Sales | CommercialCondition / B2BClient | hasAvailableCredit(), getPaymentTerms() |
-| US37 | Confirmar validación comercial | Sales | PurchaseRequest | confirmCommercialValidation(), validateCommercialCondition() |
-| US38 | Convertir solicitud validada en orden | Sales | PurchaseRequest / SalesOrder | convertToSalesOrder(), confirmSalesOrder() |
-| US41 | Registrar pedido recibido por canal externo | Sales | PurchaseRequest | registerManualRequest(), setExternalChannelOrigin() |
-| US54 | Consultar inventario operativo | Warehouse | InventoryLot / Warehouse | getAvailableStock(), getReservedStock() |
-| US63 | Reservar inventario para solicitud validada | Warehouse | Reservation / InventoryLot | reserveForRequest(), validateStockAvailability() |
-| US65 | Aplicar criterio FEFO en reserva | Warehouse | FEFOCriteria / Reservation | selectLotsByFefo(), excludeExpiredLots() |
-| US68 | Crear orden de despacho | Logistics | DispatchOrder | createFromSalesOrder(), assignDeliveryAddress() |
-| US73 | Actualizar estado de despacho | Logistics | DispatchOrder / TraceabilityEvent | updateStatus(), validateStatusTransition() |
-| US78 | Registrar temperatura referencial | Logistics | TemperatureCheck | registerTemperatureCheck(), isOutOfRange() |
-| US81 | Registrar proof of delivery | Logistics | DeliveryEvidence / DispatchOrder | registerDeliveryEvidence(), markDelivered() |
-| US84 | Consultar resumen de cobro valorizado | Invoicing | InvoiceSummary / ChargeSummary | calculateChargeSummary(), getPaymentStatus() |
-| US86 | Confirmar proceso de pago | Invoicing | PaymentRecord | registerSimulatedPayment(), updatePaymentStatus() |
-| US88 | Revisar documentos comerciales | Invoicing | CommercialDocument | listBySalesOrder(), markAsReviewed() |
-| US90 | Consultar documentos comerciales referenciales visibles | Invoicing | CommercialDocument | isVisibleForBuyer(), getDocumentHistory() |
-| US92 | Consultar estado de pago de la orden | Invoicing | PaymentStatus | getCurrentStatus(), isActionRequired() |
-El diseño orientado a objetos evita dependencias circulares entre bounded contexts. Catalog Management posee la información de productos, Sales posee las solicitudes de compra y órdenes de venta, Warehouse posee las reservas de inventario, Logistics posee la trazabilidad del despacho e Invoicing posee los documentos comerciales y la visibilidad de pagos.
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
+
+El contexto de Logistics programa y supervisa el despacho físico de los pedidos. Registra asignaciones de transportistas y vehículos, control térmico de la cadena de frío referencial en ruta, incidentes logísticos y evidencias finales de la entrega del pedido.
+
+*Clases, interfaces y enums de Logistics.*
+
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `Shipment` | Aggregate Root | Estado de entrega macro y control térmico del envío de un pedido. | Domain (Backend) |
+| `DispatchOrder` | Entity | Orden operativa de despacho asignada a un transportista y ruta. | Domain (Backend) |
+| `DispatchEvent` | Entity | Evento de trazabilidad logística registrado en ruta. | Domain (Backend) |
+| `ProofOfDeliveryRecord` | Entity | Evidencia final de entrega con firmas y conformidad del comprador. | Domain (Backend) |
+| `TemperatureLog` | Entity | Medición referencial de temperatura de cadena de frío tomada en ruta. | Domain (Backend) |
+| `CustomerPortalTask` | Entity | Requisitos de entrega documental exigidos por el cliente B2B. | Domain (Backend) |
+| `DeliveryStatus` | Enum | Estados del ciclo de vida del despacho (Scheduled, InTransit, Delivered, Cancelled). | Domain (Backend) |
+| `IShipmentRepository` | Interface | Contrato de persistencia de envíos. | Domain (Backend) |
+| `IDispatchOrderRepository` | Interface | Contrato de persistencia de órdenes de despacho. | Domain (Backend) |
+| `ILogisticsOperationalRecordRepository` | Interface | Contrato de persistencia para eventos, firmas y logs térmicos. | Domain (Backend) |
+| `ShipmentsController` | Controller | Endpoint REST para programar y cancelar envíos operativos. | Interface / API (Backend) |
+| `DispatchOrdersController` | Controller | Endpoint REST para gestionar la preparación, inicio de ruta y entrega de pedidos. | Interface / API (Backend) |
+| `ProofOfDeliveryRecordsController` | Controller | Endpoint REST para registrar la conformidad física firmada de entrega. | Interface / API (Backend) |
+| `TemperatureLogsController` | Controller | Endpoint REST para registrar telemetría y lecturas térmicas en ruta. | Interface / API (Backend) |
+| `DispatchEventsController` | Controller | Endpoint REST para reportar incidentes o avances en ruta. | Interface / API (Backend) |
+
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
+
+El ciclo logístico inicia con la programación de un envío (`Shipment`). Operativamente, se crea una orden de despacho (`DispatchOrder`) asociada a una ruta, registrando incidentes o progresos a través de `DispatchEvent`. Los registros de temperatura se administran mediante `TemperatureLog`, vinculados al método `Shipment.RegisterTemperature(celsius)`. La entrega concluye al registrarse la conformidad del receptor en `ProofOfDeliveryRecord`.
+
+#### Invoicing Class Diagram
+
+*Diagrama de clases de Invoicing.*
+
+![Invoicing Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/invoicing-class-diagram.png)
+
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
+
+El contexto de Invoicing centraliza las operaciones de cobro y cumplimiento documental del pedido. Emite facturas comerciales, asocia transacciones de pagos simulados, y proporciona visibilidad de los archivos comerciales para el cliente B2B.
+
+*Clases, interfaces y enums de Invoicing.*
+
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `Invoice` | Aggregate Root | Factura comercial generada para una orden de venta. | Domain (Backend) |
+| `Payment` | Aggregate Root | Transacción de cobro simulado asociada a una factura o pedido. | Domain (Backend) |
+| `BusinessDocument` | Entity | Archivo comercial complementario visible en el portal (XML, PDF). | Domain (Backend) |
+| `PaymentMethodRecord` | Entity | Método de pago registrado por el comprador en su portal B2B. | Domain (Backend) |
+| `PaymentProcessRecord` | Entity | Cálculo detallado de cargos: flete, subtotal, IGV y total comercial. | Domain (Backend) |
+| `NotificationRecord` | Entity | Alerta o notificación de cobro para el cliente. | Domain (Backend) |
+| `PaymentStatus` | Enum | Estados de pago simulados (Pending, Confirmed, Failed, Rejected, Cancelled, Paid). | Domain (Backend) |
+| `InvoicePaid` | Domain Event | Evento de dominio publicado tras conciliar y confirmar el pago de la factura. | Domain (Backend) |
+| `IInvoiceRepository` | Interface | Contrato de persistencia de facturas comerciales. | Domain (Backend) |
+| `IPaymentRepository` | Interface | Contrato de persistencia para transacciones de cobros simulados. | Domain (Backend) |
+| `IBusinessDocumentRepository` | Interface | Contrato de persistencia de documentos complementarios (XML, PDF). | Domain (Backend) |
+| `IPaymentMethodRecordRepository` | Interface | Contrato de persistencia de los métodos de pago guardados por clientes B2B. | Domain (Backend) |
+| `InvoicesController` | Controller | Endpoint REST para registrar facturas y marcarlas como canceladas. | Interface / API (Backend) |
+| `PaymentsController` | Controller | Endpoint REST para gestionar transacciones de cobros y conciliaciones. | Interface / API (Backend) |
+| `BusinessDocumentsController` | Controller | Endpoint REST para administrar los documentos comerciales visibles. | Interface / API (Backend) |
+| `PaymentMethodRecordsController` | Controller | Endpoint REST para administrar las tarjetas y medios de pago del cliente. | Interface / API (Backend) |
+| `PaymentProcessRecordsController` | Controller | Endpoint REST para procesar las liquidaciones de cobro detalladas. | Interface / API (Backend) |
+| `NotificationRecordsController` | Controller | Endpoint REST para enviar notificaciones e historial de cobranza. | Interface / API (Backend) |
+
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
+
+En este contexto, la facturación se representa por la clase `Invoice`, que expone operaciones para cancelar la factura (`Cancel`) o certificar su cobro (`MarkPaid`), publicando un evento de dominio `InvoicePaid`. La visibilidad documental es controlada por la clase `BusinessDocument` y sus reglas de estado, y la persistencia de los archivos complementarios se delega a `IBusinessDocumentRepository`.
+
+#### Tenant Management Class Diagram
+
+*Diagrama de clases de Tenant Management.*
+
+![Tenant Management Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/tenant-management-class-diagram.png)
+
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
+
+El contexto de Tenant Management administra el soporte multi-tenant de la aplicación. Gestiona el aprovisionamiento de las organizaciones o cuentas empresariales, el registro e historial de suscripciones y la delegación de espacios de trabajo (workspaces) y sus miembros operativos.
+
+*Clases, interfaces y enums de Tenant Management.*
+
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `Tenant` | Aggregate Root | Representa a la organización o empresa cliente registrada en el portal SaaS. | Domain (Backend) |
+| `TenantMember` | Entity | Miembro administrativo o del personal asignado a un tenant. | Domain (Backend) |
+| `TenantRule` | Entity | Regla operativa personalizada configurada para el tenant. | Domain (Backend) |
+| `TenantCustomField` | Entity | Campo personalizado dinámico definido por el tenant para sus recursos. | Domain (Backend) |
+| `Workspace` | Entity | Espacio de trabajo del tenant con su subdominio y configuración regional. | Domain (Backend) |
+| `UserWorkspaceMembership` | Entity | Vincula a un usuario con un workspace y rol específico en el tenant. | Domain (Backend) |
+| `WorkspacePreference` | Entity | Preferencia de clave-valor establecida para el workspace del tenant. | Domain (Backend) |
+| `TenantSubscription` | Entity | Estipula la suscripción comercial activa y límites contratados. | Domain (Backend) |
+| `OrganizationRegistrationRequest` | Entity | Solicitud de alta de una nueva organización pendiente de aprobación. | Domain (Backend) |
+| `ITenantRepository` | Interface | Contrato para la persistencia e historial de tenants. | Domain (Backend) |
+| `ITenantAdministrationRepository` | Interface | Contrato para la administración de workspaces y membresías de personal. | Domain (Backend) |
+| `IOrganizationRegistrationRequestRepository` | Interface | Contrato para la persistencia de solicitudes de alta de organizaciones. | Domain (Backend) |
+| `TenantsController` | Controller | Expone los endpoints REST para registrar y consultar organizaciones. | Interface / API (Backend) |
+| `WorkspacesController` | Controller | Endpoint REST para administrar los espacios de trabajo del tenant. | Interface / API (Backend) |
+| `TenantMembersController` | Controller | Endpoint REST para gestionar los miembros operativos del tenant. | Interface / API (Backend) |
+| `UserWorkspaceMembershipsController` | Controller | Endpoint REST para administrar las membresías de los workspaces. | Interface / API (Backend) |
+| `OrganizationRegistrationsController` | Controller | Endpoint REST para gestionar las solicitudes de registro organizacionales. | Interface / API (Backend) |
+| `Tenant` | JS Class | Representación en el frontend de la configuración y datos del tenant. | Frontend |
+| `OrganizationRegistration` | JS Class | Representación en el frontend del estado de la solicitud de registro. | Frontend |
+
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
+
+Las asociaciones en este contexto definen que un agregado `Tenant` posee de forma compositiva una suscripción activa (`TenantSubscription`) y múltiples workspaces (`Workspace`). La membresía operativa (`UserWorkspaceMembership`) vincula jerárquicamente a los usuarios del contexto IAM dentro de la jerarquía de un workspace en Tenant Management.
+
+#### Identity and Access Management (IAM) Class Diagram
+
+*Diagrama de clases de Identity and Access Management.*
+
+![Identity and Access Management Class Diagram](../assets/images/chapter-4/architecture/class-diagrams/identity-and-access-management-class-diagram.png)
+
+> *Nota*: El diagrama muestra la estructura de clases, relaciones y responsabilidades principales del bounded context correspondiente. Elaboración propia.
+
+El contexto de Identity and Access Management (IAM) es responsable de las operaciones globales de autenticación, autorización de accesos, resguardo criptográfico de credenciales de usuario y mantenimiento de roles del sistema.
+
+*Clases, interfaces y enums de Identity and Access Management.*
+
+| Clase / Interface / Enum | Tipo | Responsabilidad | Origen / Capa |
+|---|---|---|---|
+| `User` | Aggregate Root | Cuenta global de usuario con credenciales hash y rol asignado. | Domain (Backend) |
+| `IUserRepository` | Interface | Contrato de persistencia e inicio de sesión de usuarios. | Domain (Backend) |
+| `AuthenticationController` | Controller | Endpoint REST para el login y registro de nuevos usuarios. | Interface / API (Backend) |
+| `UsersController` | Controller | Endpoint REST para la consulta y administración de cuentas de usuario. | Interface / API (Backend) |
+| `ProfileController` | Controller | Endpoint REST para la gestión del perfil del usuario autenticado. | Interface / API (Backend) |
+| `User` | JS Class | Representa el perfil del usuario autenticado en la UI. | Frontend |
+| `UserSession` | JS Class | Encapsula el token de acceso y la sesión activa en el navegador. | Frontend |
+
+> *Nota*: La tabla resume las clases, interfaces y enums principales del bounded context correspondiente, manteniendo la separación por capas y responsabilidades del diseño orientado a objetos. Elaboración propia.
+
+El diseño orienta a `User` como raíz de agregado con métodos para actualizar datos de perfil (`UpdateProfile`) y cambiar la contraseña cifrada (`ChangePasswordHash`). Los controladores autentican las credenciales delegando la validación del correo y nombre de usuario en el contrato `IUserRepository`.
+
+#### Cross-context decoupling note
+
+El diseño orientado a objetos mantiene la separación entre bounded contexts mediante identificadores compartidos, contratos de API y referencias controladas por ID. Catalog Management expone identificadores de catálogo y producto; Sales referencia clientes, solicitudes y órdenes; Warehouse utiliza identificadores de orden y solicitud para reservas; Logistics utiliza identificadores de orden y cliente para despachos; Invoicing utiliza identificadores de orden, factura y pago; Tenant Management delimita la operación por organización; e Identity and Access Management centraliza la identidad de usuario sin acoplarse a datos operacionales del negocio.

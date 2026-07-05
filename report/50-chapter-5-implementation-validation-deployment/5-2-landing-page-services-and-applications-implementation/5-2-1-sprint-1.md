@@ -1,8 +1,8 @@
-## 5.2.1. Sprint 1
+### 5.2.1. Sprint 1
 
 El Sprint 1 corresponde a la línea base AV1. El objetivo fue establecer la estructura Docs-as-Code del informe, documentar los primeros artefactos de discovery y diseño, y publicar la Landing Page como primer incremento visible del producto. La evidencia se organiza en planificación, backlog, commits, ejecución, despliegue y colaboración.
 
-### 5.2.1.1. Sprint Planning 1.
+#### 5.2.1.1. Sprint Planning 1.
 
 La planificación del Sprint 1 organizó la base documental, visual y pública del proyecto. El alcance del sprint se concentró en Landing Page, reporte Docs-as-Code, Product Backlog inicial, User Stories, discovery y artefactos de diseño.
 
@@ -22,11 +22,10 @@ La planificación del Sprint 1 organizó la base documental, visual y pública d
 | Sprint 1 Velocity | 99 Story Points |
 | Sum of Story Points | 99 Story Points |
 
+*Reunión virtual del equipo para coordinación de Sprint 1.*
 ![Reunión virtual de planificación del Sprint 1](../../assets/images/front-matter/collaboration/team-collaboration-meeting.jpg)
 
-Figura. Reunión virtual del equipo para coordinación de Sprint 1.
-
-### 5.2.1.2. Aspect Leaders and Collaborators.
+#### 5.2.1.2. Aspect Leaders and Collaborators.
 
 La ejecución del sprint evidencia una distribución funcional del liderazgo. En lugar de concentrar toda la iteración en un único perfil, el equipo repartió la responsabilidad entre dominio, diseño, arquitectura, documentación y construcción visible del sitio. Esta organización es consistente con el Student Outcome ABET 5 y explica por qué el incremento AV1 combina trabajo público demostrable con profundidad ingenieril.
 
@@ -40,15 +39,15 @@ La ejecución del sprint evidencia una distribución funcional del liderazgo. En
 | Torrejón De Los Santos, Gino Rodrigo | R0obxdnt-bit | C | C | C | C | L |
 | Rojas Mancilla, Gerard Gianpier | GerardRojasMancilla | C | C | L | L | C |
 
-### 5.2.1.3. Sprint Backlog 1.
+#### 5.2.1.3. Sprint Backlog 1.
 
 El Sprint Backlog 1 concentra el trabajo realizado entre el **2026-04-01 y 2026-04-24**. El objetivo principal del sprint fue construir la base documental del proyecto, organizar el trabajo bajo Docs-as-Code y consolidar el primer entregable visible mediante el Landing Page, junto con los artefactos iniciales de investigación, diseño y backlog.
 
 ![Sprint Backlog 1 en Jira](../../assets/images/chapter-5/sprint-evidence/jira/sprint-1-backlog-jira.png)
 
-> *Nota.* La captura muestra la planificación actualizada del Sprint 1 en Jira, incluyendo User Stories, work-items, responsables, estados y estimaciones utilizadas para la trazabilidad del incremento inicial. Elaboración propia.
+> *Nota:* La captura muestra la planificación actualizada del Sprint 1 en Jira, incluyendo User Stories, work-items, responsables, estados y estimaciones utilizadas para la trazabilidad del incremento inicial. Elaboración propia.
 
-**URL del Jira Backlog — Proyecto Nexa:** [https://team-nexa.atlassian.net/jira/software/projects/NX/boards/1/backlog](https://team-nexa.atlassian.net/jira/software/projects/NX/boards/1/backlog)
+**URL del Jira Backlog — Proyecto Nexa:** https://team-nexa.atlassian.net/jira/software/projects/NX/boards/1/backlog
 
 La siguiente tabla presenta los User Stories asignados al Sprint 1 y los Work-items utilizados para descomponer el trabajo. Además de las User Stories, el sprint incluye tareas de soporte documental, configuración y evidencia necesarias para completar el incremento comprometido.
 
@@ -86,47 +85,14 @@ La siguiente tabla presenta los User Stories asignados al Sprint 1 y los Work-it
 | Sprint 1 | N/A | Desplegar Landing Page en hosting estático | NX-544 | Publicar Landing Page | Desplegar el Landing Page para disponer de una evidencia pública del primer incremento. | 7.0 | Diego Yucra Sandoval | Done |
 
 
-Nota. Las estimaciones se registran en horas para el control del Sprint Backlog, mientras que la priorización general del Product Backlog se mantiene en Story Points. Elaboración propia.
+> *Nota:* Las estimaciones se registran en horas para el control del Sprint Backlog, mientras que la priorización general del Product Backlog se mantiene en Story Points. Elaboración propia.
 
-### 5.2.1.4. Development Evidence for Sprint Review.
+#### 5.2.1.4. Development Evidence for Sprint Review.
 
-La evidencia de desarrollo del Sprint 1 corresponde al alcance AV1: estructura Docs-as-Code del informe, documentación inicial del producto, artefactos de discovery, arquitectura base y primera versión del Landing Page. Por ello, la evidencia se concentra en los repositorios `nexa-ecosystem-report` y `nexa-website`.
+La evidencia de desarrollo del Sprint 1 corresponde al alcance AV1 de producto: la primera versión del Landing Page implementada en `nexa-website`.
 
-El repositorio `nexa-ecosystem-report` conserva la evolución documental del informe académico, mientras que `nexa-website` contiene la implementación real del Landing Page desplegado como primer incremento visible del producto. La Web Application y los Web Services se mantienen como alcance posterior, por lo que no se declaran como implementación completada dentro del Sprint 1.
+El repositorio `nexa-website` contiene el Landing Page desplegado como primer incremento visible. La Web Application y los Web Services se mantienen como fases posteriores y no se declaran como implementación del Sprint 1. La trazabilidad GitHub del informe académico se consolida en Project Report Collaboration Insights.
 
-*Commits del repositorio `nexa-ecosystem-report`*
-
-Documentación académica del proyecto, estructura Docs-as-Code, discovery inicial, requisitos, diseño y evidencia de Sprint 1.
-
-| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Commited on (Date) |
-|---|---|---|---|---|---|
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `448be89` | `chore(repo): initialize repository structure and base readme` | | 2026-04-01 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `bb5a55c` | `docs(front-matter): add cover page` | | 2026-04-01 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `3caaf0f` | `docs(front-matter): add version history table` | | 2026-04-02 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `f2769d1` | `docs(front-matter): add table of contents` | | 2026-04-02 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `ed1bce5` | `docs(front-matter): add student outcome section` | | 2026-04-03 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `9f586da` | `docs(ch1): add startup profile with team background and mission` | | 2026-04-03 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `f702fd6` | `docs(ch1): add solution profile and lean ux hypothesis` | | 2026-04-04 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `413a4d5` | `docs(ch1): add target segments S1, S2 and S3` | | 2026-04-04 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `da2b836` | `docs(ch2): add competitive analysis of Riqra, Drivin and OnTracking` | | 2026-04-04 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `2ac622f` | `docs(ch2): add interview guide and candidate registry` | | 2026-04-05 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `4895fb2` | `docs(ch2): add needfinding with user personas and journey maps` | | 2026-04-05 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `918a120` | `docs(ch2): add big picture event storming session notes` | | 2026-04-06 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `4bf08b9` | `docs(ch2): add ubiquitous language glossary` | | 2026-04-06 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `019c262` | `docs(ch3): add user stories for S1, S2 and S3 with acceptance criteria` | | 2026-04-07 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `fa13f29` | `docs(ch3): add impact mapping for distributor and buyer goals` | | 2026-04-07 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `c550e3a` | `docs(ch3): add product backlog with epics and story points` | | 2026-04-07 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `30b753d` | `docs(ch4): add style guidelines with colors, typography and spacing tokens` | | 2026-04-08 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `34cdf83` | `docs(ch4): add information architecture and navigation systems` | | 2026-04-08 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `cc6c075` | `docs(ch4): add landing page wireframes and mockups` | | 2026-04-09 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `211a045` | `docs(ch4): add domain-driven architecture with C4 context and container diagrams` | | 2026-04-10 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `db4805b` | `docs(ch4): add object-oriented design and class diagrams` | | 2026-04-10 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `33c85a8` | `docs(ch4): add database design and entity-relationship model` | | 2026-04-11 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `f1fd2f9` | `docs(ch5): add software configuration management and tooling` | | 2026-04-11 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `2298c02` | `docs(ch5): tighten sprint evidence` | | 2026-04-22 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `08c48ee` | `docs(ch5): update sprint review evidence blocks and replace jira screenshots` | | 2026-04-23 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `324370e` | `docs(jira): document sprint 1 backlog evidence` | | 2026-04-24 |
-| `upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report` | `main` | `5f5b19f` | `docs(ch5): expand development evidence table with real commits from all four repositories` | | 2026-04-24 |
 
 *Commits del repositorio `nexa-website`*
 
@@ -155,7 +121,7 @@ Implementación real del Landing Page como primera versión visible del producto
 | `upc-pre-202610-1asi0730-12242-king/nexa-website` | `main` | `211d614` | `feat(solutions): add cold storage solution page` | | 2026-04-21 |
 | `upc-pre-202610-1asi0730-12242-king/nexa-website` | `main` | `83a6dae` | `style(responsive): align layout for first delivery` | | 2026-04-22 |
 
-La selección anterior representa el alcance real del Sprint 1. `nexa-ecosystem-report` documenta el informe académico y la trazabilidad de AV1, mientras que `nexa-website` registra la implementación del Landing Page. La Web Application y los Web Services quedan documentados como fases posteriores del producto, no como implementación completada en AV1.
+La selección anterior representa el alcance de producto del Sprint 1: `nexa-website` registra la implementación del Landing Page. La Web Application y los Web Services corresponden a fases posteriores.
 
 ### 5.2.1.5. Execution Evidence for Sprint Review.
 
@@ -177,7 +143,7 @@ La ejecución visible del sprint ya se materializa en una landing page pública 
 
 Al mismo tiempo, la ejecución debe leerse con honestidad de alcance: el portal B2B autenticado, la captura transaccional de pedidos, el catálogo privado, la autenticación y el seguimiento operativo aún no forman parte del incremento entregado. Su presencia en backlog y en arquitectura demuestra preparación, pero no debe confundirse con ejecución completada dentro de AV1.
 
-### 5.2.1.6. Services Documentation Evidence for Sprint Review.
+#### 5.2.1.6. Services Documentation Evidence for Sprint Review.
 
 La documentación de servicios en AV1 existe principalmente como **evidencia de diseño y preparación técnica**. El backlog ya incorpora historias de API y documentación (`NX-138`, además de las historias técnicas del bloque US58-US64), mientras que el capítulo 4 conserva la arquitectura DDD/C4, el diseño orientado a objetos y la base de datos que servirán de soporte a una fase posterior. Esta base es válida como sustento de ingeniería, porque muestra contratos previstos, separación de capas y reglas de negocio modeladas antes de implementar controladores productivos.
 
@@ -202,16 +168,17 @@ La evidencia de despliegue de AV1 sí existe, pero está concentrada en el frent
 | Artefacto | Estado observable en AV1 | Evidencia |
 |---|---|---|
 | Landing page pública | **Desplegada y navegable** | **GitHub Pages:** [https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/](https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/) |
-| Repositorio documental | **Versionado y colaborativo** | **nexa-ecosystem-report:** [https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report) |
 | Repositorio del sitio público | **Implementación visible del frontend público** | **nexa-website:** [https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website) |
 | Web application autenticada | **Fase posterior del producto** | **nexa-webapp:** [https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp). Nombrada en diseño y backlog, no como evidencia de despliegue AV1 |
 | Backend / servicios | **Fase posterior del producto** | **nexa-platform:** [https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform). Nombrado en arquitectura y backlog, no como evidencia de despliegue AV1 |
 
 Esta lectura permite defender el despliegue con precisión: Nexa ya tiene una capa pública activa y demostrable, pero la capa transaccional aún debe presentarse como roadmap técnico respaldado por backlog y arquitectura, no como despliegue concluido ni como parte del alcance observable de esta entrega.
 
-### 5.2.1.8. Team Collaboration Insights during Sprint.
+#### 5.2.1.8. Team Collaboration Insights during Sprint.
 
 El Sprint 1 distribuyó responsabilidades entre investigación, UX/UI, implementación pública, arquitectura y documentación. Esta organización permitió avanzar en paralelo sin separar el reporte del software visible.
+
+La trazabilidad GitHub del informe académico se consolida en Project Report Collaboration Insights; esta sección conserva la colaboración y las evidencias asociadas al incremento del Sprint 1.
 
 La principal conclusión colaborativa del sprint es que Nexa no se construyó como un esfuerzo fragmentado entre “los que escriben” y “los que programan”. El incremento visible solo fue posible porque Jira, el reporte, el diseño y la landing page evolucionaron de manera sincronizada. Aun cuando persista backlog remanente para portal B2B, autenticación, inventario transaccional y servicios, el equipo deja en AV1 una base de trabajo sólida, trazable y escalable para la siguiente iteración.
 
@@ -219,7 +186,7 @@ La principal conclusión colaborativa del sprint es que Nexa no se construyó co
 
 | Frente | Evidencia usada en el sprint | Resultado |
 |---|---|---|
-| Gestión y trazabilidad | Jira Software, commits en `nexa-ecosystem-report` y estructura Docs-as-Code | Backlog, capítulos y evidencias quedaron conectados al avance AV1 |
+| Gestión y trazabilidad | Jira Software, Sprint Backlog y coordinación del equipo | Backlog y evidencias quedaron conectados al avance AV1 |
 | Diseño UX/UI | Wireframes, mockups y decisiones de navegación de Landing Page | La propuesta pública pudo explicarse con pantallas y recorrido de usuario |
 | Implementación pública | Repositorio `nexa-website` y despliegue en GitHub Pages | Landing Page navegable para revisión académica |
 | Coordinación del equipo | Sesión remota enlazada en Sprint Planning 1 y distribución LACX | Responsabilidades separadas por gestión, diseño, arquitectura, frontend y documentación |

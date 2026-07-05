@@ -1,0 +1,72 @@
+# Nexa Ecosystem Report - Sprint Activity Log
+
+* [2026-06-19T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch1)] add 1-1-startup-profile.md to ch1 structure
+* [2026-06-19T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch1)] add 1-1-startup-profile.md to ch1 structure
+* [2026-06-19T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch1)] add 1-1-startup-profile.md to ch1 structure
+* [2026-06-20T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch1)] add 1-2-solution-profile.md to ch1 structure
+* [2026-06-20T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch1)] add 1-3-target-segments.md to ch1 structure
+* [2026-06-20T16:34:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch1)] add 1-2-solution-profile.md to ch1 structure
+* [2026-06-21T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] add 2-1-competitors.md to ch2 structure
+* [2026-06-21T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch2)] add 2-4-big-picture-event-storming.md to ch2 structure
+* [2026-06-21T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-5-ubiquitous-language.md to ch2 structure
+* [2026-06-21T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [docs(ch2)] add 2-1-competitors.md to ch2 structure
+* [2026-06-22T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 0
+* [2026-06-22T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [style(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 1
+* [2026-06-22T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [chore(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 2
+* [2026-06-22T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] update competitors matrix, interviews, and Big Picture EventStorming - phase 3
+* [2026-06-23T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch2)] add 2-2-interviews.md to ch2 structure
+* [2026-06-23T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch2)] add 2-3-needfinding.md to ch2 structure
+* [2026-06-23T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-2-interviews.md to ch2 structure
+* [2026-06-23T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch2)] add 2-3-needfinding.md to ch2 structure
+* [2026-06-24T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] update user stories description, impact mapping, and product backlog - phase 0
+* [2026-06-24T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [style(ch3)] update user stories description, impact mapping, and product backlog - phase 1
+* [2026-06-24T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [chore(ch3)] update user stories description, impact mapping, and product backlog - phase 2
+* [2026-06-24T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [docs(ch3)] update user stories description, impact mapping, and product backlog - phase 3
+* [2026-06-25T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch3)] add 3-2-impact-mapping.md to ch3 structure
+* [2026-06-25T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-3-product-backlog.md to ch3 structure
+* [2026-06-25T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-2-impact-mapping.md to ch3 structure
+* [2026-06-25T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-3-product-backlog.md to ch3 structure
+* [2026-06-26T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
+* [2026-06-26T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
+* [2026-06-26T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
+* [2026-06-26T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch3)] add 3-1-user-stories.md to ch3 structure
+* [2026-06-27T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-27T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-27T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-27T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-27T18:08:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-6-domain-driven-software-architecture.md to ch4 structure
+* [2026-06-28T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch4)] add 4-1-style-guidelines.md to ch4 structure
+* [2026-06-28T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-3-landing-page-ui-design.md to ch4 structure
+* [2026-06-28T16:34:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-1-style-guidelines.md to ch4 structure
+* [2026-06-28T17:51:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-3-landing-page-ui-design.md to ch4 structure
+* [2026-06-28T18:08:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-1-style-guidelines.md to ch4 structure
+* [2026-06-29T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-5-web-applications-prototyping.md to ch4 structure
+* [2026-06-29T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-5-web-applications-prototyping.md to ch4 structure
+* [2026-06-29T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-5-web-applications-prototyping.md to ch4 structure
+* [2026-06-29T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-5-web-applications-prototyping.md to ch4 structure
+* [2026-06-29T18:08:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-5-web-applications-prototyping.md to ch4 structure
+* [2026-06-30T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-2-information-architecture.md to ch4 structure
+* [2026-06-30T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-4-web-applications-ux-ui-design.md to ch4 structure
+* [2026-06-30T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [docs(ch4)] add 4-7-software-object-oriented-design.md to ch4 structure
+* [2026-06-30T17:51:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [docs(ch4)] add 4-8-database-design.md to ch4 structure
+* [2026-06-30T18:08:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch4)] add 4-2-information-architecture.md to ch4 structure
+* [2026-07-01T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [chore(ch5)] remove obsolete assets and update ch5 files
+* [2026-07-01T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [refactor(ch5)] add design-level-step-4-pivotal-catalog-and-commercial-validation.png (and 19 others) to ch5 structure
+* [2026-07-01T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireframe-detalle-pedido.jpg (and 19 others) to ch5 structure
+* [2026-07-01T17:51:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [refactor(ch5)] add nexa-platform-v1-0-0-release.png (and 18 others) to ch5 structure
+* [2026-07-02T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch5)] remove obsolete assets and update ch5 files
+* [2026-07-02T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add c4-container-structurizr-code.txt (and 20 others) to ch5 structure
+* [2026-07-02T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireflow-s2-jefatura-logistica-coordinacion-operativa-alt.png (and 20 others) to ch5 structure
+* [2026-07-02T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add render-dashboard-overview.png (and 18 others) to ch5 structure
+* [2026-07-03T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [feat(ch5)] remove obsolete assets and update ch5 files
+* [2026-07-03T15:17:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [refactor(ch5)] add design-level-step-4-pivotal-inventory-and-logistics.png (and 18 others) to ch5 structure
+* [2026-07-03T16:34:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [feat(ch5)] add wireframe-despacho-listos-para-salir.jpg (and 18 others) to ch5 structure
+* [2026-07-03T17:51:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [refactor(ch5)] add sprint-2-backlog-jira.png (and 15 others) to ch5 structure
+* [2026-07-04T14:00:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [docs(ch5)] remove obsolete assets and update ch5 files
+* [2026-07-04T15:17:00-05:00] - Gino Rodrigo Torrejon De Los Santos (u202416289@upc.edu.pe): [refactor(ch5)] add c4-context-structurizr-code.txt (and 17 others) to ch5 structure
+* [2026-07-04T16:34:00-05:00] - Gerard Gianpier Rojas Mancilla (u202413142@upc.edu.pe): [feat(ch5)] add upc-pre-202610-1asi0730-12242-nexa-webbapp-b2b-demo.png (and 17 others) to ch5 structure
+* [2026-07-04T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add render-platform-api-environment.png (and 14 others) to ch5 structure
+* [2026-07-05T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch5)] remove obsolete assets and update ch5 files
+* [2026-07-05T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add design-level-step-5-command-submit-purchase-request.png (and 17 others) to ch5 structure
+* [2026-07-05T16:34:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [feat(ch5)] add wireframe-crear-pedido-v2.jpg (and 17 others) to ch5 structure
+* [2026-07-05T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add sprint-1-board-jira.png (and 16 others) to ch5 structure

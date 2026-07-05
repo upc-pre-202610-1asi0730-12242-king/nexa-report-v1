@@ -23,10 +23,11 @@ SOURCES=(
   $(find 30-chapter-3-requirements-specification -name "*.md" | sort)
   $(find 40-chapter-4-product-design -name "*.md" | sort)
   50-chapter-5-implementation-validation-deployment/5-1-software-configuration-management.md
-  50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation/5-2-landing-page-services-and-applications-implementation.md
+  50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation.md
   50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation/5-2-1-sprint-1.md
   50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation/5-2-2-sprint-2.md
   50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation/5-2-3-sprint-3.md
+  50-chapter-5-implementation-validation-deployment/5-2-landing-page-services-and-applications-implementation/5-2-4-sprint-4.md
   50-chapter-5-implementation-validation-deployment/5-3-validation-interviews.md
   50-chapter-5-implementation-validation-deployment/5-4-video-about-the-product.md
   90-conclusions.md
@@ -38,12 +39,21 @@ SOURCES=(
 # 1. Normalise ../../assets/ and ../assets/ to assets/ so paths resolve when running from report/
 # 2. Strip SVG image references — xelatex requires inkscape/rsvg to embed SVGs
 #    which is not always available; replace with bracketed alt text instead.
+# 3. Strip legacy captures above 12,000 px, which exceed XeLaTeX's dimension limit.
 > "$COMBINED"
 for f in "${SOURCES[@]}"; do
   sed \
     -e 's|\.\./\.\./assets/|assets/|g' \
     -e 's|\.\./assets/|assets/|g' \
     -e 's|!\(\[[^]]*\]\)(assets/[^)]*\.svg)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-3/impact-mapping/impact-map-updated\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/landing/mockups/desktop/landing-page\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/mockups/b2b-mobile\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/mockups/operator-mobile\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/user-flows/s1-userflow\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/user-flows/s2-userflow\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/user-flows/s3-userflow\.png)|\1|g' \
+    -e 's|!\(\[[^]]*\]\)(assets/images/chapter-4/webapp/wireflows/wireflow-s1\.jpeg)|\1|g' \
     "$f" >> "$COMBINED"
   printf '\n\n' >> "$COMBINED"
 done
