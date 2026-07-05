@@ -69,3 +69,4 @@
 * [2026-07-05T14:00:00-05:00] - Diego Sebastian Yucra Sandoval (diego64g284@gmail.com): [docs(ch5)] remove obsolete assets and update ch5 files
 * [2026-07-05T15:17:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add design-level-step-5-command-submit-purchase-request.png (and 17 others) to ch5 structure
 * [2026-07-05T16:34:00-05:00] - Joaquin Francisco Verde Bueno (u20241a054@upc.edu.pe): [feat(ch5)] add wireframe-crear-pedido-v2.jpg (and 17 others) to ch5 structure
+* [2026-07-05T17:51:00-05:00] - Cesar Fernando Marin Cueva (cesarmarin2802@gmail.com): [refactor(ch5)] add sprint-1-board-jira.png (and 16 others) to ch5 structure
