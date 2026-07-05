@@ -6,7 +6,7 @@ Como respaldo de la fase de levantamiento de requisitos e investigación de camp
 
 | Artefacto | Enlace de Evidencia |
 |---|---|
-| Entrevistas Consolidadas | **Video de Entrevistas Juntas (Stream):** [https://upcedupe-my.sharepoint.com/:v:/g/personal/u202323040_upc_edu_pe/IQCQOBuwf0GTTbCMpL2XzFXzAacXrD22oEX1Gat-emtg9u4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=IeXiWj](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202323040_upc_edu_pe/IQCQOBuwf0GTTbCMpL2XzFXzAacXrD22oEX1Gat-emtg9u4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=IeXiWj) |
+| Entrevistas Consolidadas | **Video de Entrevistas Juntas (Stream):** https://cutt.ly/nyqqss6X|
 
 ## C.2. Validation Interviews AV2
 
@@ -14,7 +14,7 @@ Como respaldo de la fase de levantamiento de requisitos e investigación de camp
 
 | Evidencia | Enlace de Evidencia | Sobre el contenido | Estado |
 |---|---|---|---|
-| Validation Interviews AV2 | https://upcedupe-my.sharepoint.com/:v:/g/personal/u202416289_upc_edu_pe/IQCl_8cJxwFxQJ2j-SPApYDZAZWDTrZYgNXN_r3o5jYW9bE?e=TLhRWn | Presenta validaciones, hallazgos y reacciones de usuarios frente al producto o prototipo, incluyendo tareas realizadas y observaciones principales. | Antecedente histórico AV2 |
+| Validation Interviews AV2 | https://cutt.ly/Gyqqs1nI | Presenta validaciones, hallazgos y reacciones de usuarios frente al producto o prototipo, incluyendo tareas realizadas y observaciones principales. | Antecedente histórico AV2 |
 
 > *Nota*: Esta evidencia se conserva como antecedente histórico del corte AV2 y se diferencia de las entrevistas TB2 registradas posteriormente. Elaboración propia.
 
