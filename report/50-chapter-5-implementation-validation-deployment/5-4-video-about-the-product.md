@@ -16,12 +16,12 @@ Para el segmento proveedor, el video explica que Nexa permite presentar producto
 
 | Elemento | Detalle |
 |---|---|
-| Título del video | `upc-pre-202610-1asi0730-12242-King-about-the-product-sprint-3` |
+| Título del video | `upc-pre-202610-1asi0730-12242-King-about-the-product-sprint-4` |
 | Plataforma de publicación | Microsoft Stream / SharePoint y YouTube |
-| URL Microsoft Stream | https://upcedupe-my.sharepoint.com/personal/u202416289_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202416289%5Fupc%5Fedu%5Fpe%2FDocuments%2Fupc%2Dpre%2D202610%2D%201asi0730%2D12242%2Dking%2Fnexa%2Dmedia%2Fupc%2Dpre%2D202610%2D1asi0730%2D12242%2DKing%2Dabout%2Dthe%2Dproduct%2Dsprint%2D3%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Edc587b63%2Db4f9%2D46cf%2Dbf5f%2D8428348af1f3 |
-| URL YouTube | https://youtu.be/ypedAqjH19c?si=YKAWFK_y6Vo0jM5n |
-| Duración | `2:14` |
-| Fecha de publicación | 18/06/2026 |
+| URL Microsoft Stream | https://cutt.ly/qt668WnI |
+| URL YouTube | https://youtu.be/cNdHZbD52eE?si=8bCM3ejQaW6vm6VM |
+| Duración | `3:42` |
+| Fecha de publicación | 5/06/2026 |
 | Testimonio positivo incluido | Testimonios de un usuario del segmento comprador y un usuario del segmento proveedor |
 | Responsable de edición | Gino Torrejón |
 | Responsable de narración | Diego Yucra |
@@ -29,9 +29,9 @@ Para el segmento proveedor, el video explica que Nexa permite presentar producto
 
 ### 5.4.4. Evidencia del video
 
-La siguiente captura corresponde al Video About-the-Product publicado para el cierre AV2:
+La siguiente captura corresponde al Video About-the-Product publicado para el cierre TB2:
 
-![Video About-the-Product AV2](../assets/images/chapter-5/video-about-the-product/nexa-about-the-product-av2-screenshot.png)
+![Video About-the-Product TB2](../assets/images/chapter-5/video-about-the-product/nexa-about-the-product-screenshot.png)
 
 ### 5.4.5. Testimonios positivos incluidos
 
@@ -42,13 +42,15 @@ El video incorpora los siguientes testimonios positivos como apoyo a la presenta
 | Usuario del segmento comprador | “Me parece útil porque me ayudaría a encontrar opciones más rápido y comparar proveedores sin tener que buscar en muchos lugares diferentes”. |
 | Usuario del segmento proveedor | “La plataforma puede ayudar a que más personas conozcan mi negocio y a organizar mejor la información que muestro a mis clientes”. |
 
-### 5.4.6. Relación del video con el alcance AV2
+### 5.4.6. Relación del video con el alcance TB2
 
-El video relaciona la Landing Page y la Web Application con la propuesta de valor de Nexa. La Landing Page comunica el problema, los beneficios y el acceso a la solución; la Web Application presenta un espacio centralizado para consultar información y gestionar interacciones entre compradores y proveedores.
+El video relaciona la Landing Page y la Web Application con la propuesta de valor de Nexa dentro del alcance desarrollado para TB2. La Landing Page comunica el problema, los beneficios principales y el acceso a la solución; la Web Application presenta un entorno centralizado para consultar información, comparar alternativas y gestionar interacciones entre compradores y proveedores.
 
-Desde la experiencia del comprador, se destacan la búsqueda de opciones, la comparación de proveedores y la consulta organizada de información. Desde la experiencia del proveedor, se presentan la exposición profesional de productos o servicios, la administración de información comercial y la posibilidad de mejorar su visibilidad. En conjunto, el video comunica los beneficios de conectar, gestionar y crecer dentro de un mismo ecosistema digital.
+Desde la experiencia del comprador, se destacan la búsqueda de opciones, la comparación de proveedores y la consulta organizada de información comercial. Desde la experiencia del proveedor, se presentan la exposición profesional de productos o servicios, la administración de información comercial y la posibilidad de mejorar su visibilidad frente a potenciales clientes. En conjunto, el video comunica los beneficios de conectar, gestionar y crecer dentro de un mismo ecosistema digital.
 
-Esta evidencia corresponde al alcance académico de AV2. La publicación y documentación del video no declaran operación productiva definitiva, integración completa ni resultados concluyentes de validación; las Validation Interviews AV2 y las evaluaciones heurísticas permanecen sujetas a evidencia real de ejecución.
+Para esta iteración, la evidencia del video se complementa con las Validation Interviews realizadas en TB2, las cuales permitieron contrastar la propuesta de valor con usuarios vinculados a los segmentos objetivo. Los testimonios y respuestas obtenidas respaldan la relevancia de centralizar la búsqueda, comparación y gestión de proveedores, así como la necesidad de ofrecer mayor visibilidad y orden comercial para quienes brindan productos o servicios.
+
+Esta evidencia corresponde al alcance académico de TB2. La publicación y documentación del video, junto con las Validation Interviews realizadas, no declaran una operación productiva definitiva ni una integración completa en entorno real; sin embargo, sí representan evidencia cualitativa de validación inicial sobre la utilidad, claridad y pertinencia de Nexa para los segmentos evaluados.
 
 ### 5.4.7. Integración final en la Landing Page
 
