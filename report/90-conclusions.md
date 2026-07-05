@@ -48,3 +48,26 @@ El trabajo colaborativo del equipo KING bajo metodologías ágiles Scrum y Jira 
 4. **Módulo de facturación electrónica tributaria (SUNAT):** Diseñar un microservicio en Invoicing para firmar digitalmente los documentos referenciales XML generados por la plataforma, conectándolos con los OSE correspondientes bajo normativas locales.
 5. **App móvil híbrida para choferes de reparto:** Diseñar una interfaz móvil responsiva simplificada o app híbrida (PWA) enfocada exclusivamente en el chofer, facilitando la captura de firmas y fotos de conformidad de entrega (Proof of Delivery) en ruta.
 6. **Consolidación cualitativa de validación (Fase de producción):** Ejecutar las 5 entrevistas de validación cualitativa complementarias planificadas por el equipo para alcanzar un volumen estadístico concluyente en todos los segmentos antes del lanzamiento productivo oficial.
+
+## Video About-The-Team
+
+### Resumen de Aspectos Relevantes
+El video "About-The-Team" sintetiza la trayectoria del equipo **King** en el desarrollo de **Nexa**, una plataforma SaaS B2B diseñada para centralizar procesos comerciales y logísticos. El material detalla el ciclo de vida del proyecto: desde el levantamiento de requerimientos y artefactos de UX, hasta la implementación técnica basada en *Domain-Driven Design*, *Bounded Contexts* y APIs RESTful. El video destaca el trabajo colaborativo bajo metodologías ágiles, el enfoque *Docs-as-Code* y la importancia de la trazabilidad entre el dolor del usuario y la solución técnica. Finalmente, incluye testimonios individuales donde cada integrante detalla sus responsabilidades, roles de liderazgo y las competencias técnicas y blandas adquiridas durante el desarrollo.
+
+### Pauta de Secuencias de Contenido
+
+| Sección | Descripción | Timing (hh:mm:ss) |
+| :--- | :--- | :--- |
+| **Introducción** | Propuesta de valor de Nexa y objetivo del equipo | 00:00:01 - 00:01:06 |
+| **Roles del Equipo** | Distribución de responsabilidades (Diego, César, Jed, Gino, Joaquín) | 00:01:06 - 00:01:41 |
+| **Metodología** | Gestión de sprints, GitFlow y enfoque Docs-as-Code | 00:01:41 - 00:02:07 |
+| **Aprendizajes** | Reflexión técnica sobre arquitectura y experiencia de usuario | 00:02:07 - 00:02:59 |
+| **Testimonios** | Exposición de actividades, logros y competencias por integrante | 00:02:59 - 00:07:16 |
+| **Cierre** | Conclusión colectiva y visión final del proyecto | 00:07:16 - 00:08:01 |
+
+### Evidencia y Enlaces
+> ![Captura representativa del video About-The-Team](assets/images/chapter-5/interviews/AboutTheTeam.png)
+
+* **URL Microsoft Stream:** https://cutt.ly/rt66rjSO
+* **URL YouTube:** https://youtu.be/cNdHZbD52eE
+
