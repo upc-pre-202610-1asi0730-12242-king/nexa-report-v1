@@ -129,3 +129,12 @@ Este anexo respalda las secciones de colaboración del informe. A continuación,
 ![Práctica de exposición AV2](../assets/images/front-matter/collaboration/sprint-3-expo-av2.png)
 
 > *Nota*: Práctica de exposición y preparación de la sustentación AV2 del equipo KING. Elaboración propia.
+
+### Sprint 4
+
+*Práctica de exposición TB2.*
+
+![Práctica de exposición TB2](../assets/images/front-matter/collaboration/sprint-4-expo-tb2.png)
+
+> *Nota*: Práctica de exposición y preparación de la sustentación TB2 del equipo KING. Elaboración propia.
+
