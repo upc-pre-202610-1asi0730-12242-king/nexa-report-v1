@@ -13,9 +13,9 @@
 
 | Artefacto | Enlace |
 |---|---|
-| `nexa-website v3.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website/releases/tag/v3.0.0:** 
-| `nexa-webapp v2.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/releases/tag/v2.0.0:** 
-| `nexa-platform v1.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform/releases/tag/v1.0.0:** 
+| `nexa-website v3.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website/releases/tag/v3.0.0:**
+| `nexa-webapp v2.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/releases/tag/v2.0.0:**
+| `nexa-platform v1.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform/releases/tag/v1.0.0:**
 | `nexa-ecosystem-report v3.0.0` | **https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report/releases/tag/v3.0.0:** último release documental del reporte AV2. |
 
 > *Nota*: `nexa-ecosystem-report v3.0.0` consolida el último release documental AV2 del informe académico. Los repositorios `nexa-website`, `nexa-platform` y `nexa-webapp` respaldan el ecosistema implementado. Elaboración propia.
@@ -50,8 +50,9 @@
 | `nexa-website v4.0.1` | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website/releases/tag/v4.0.1 | <img src="../assets/images/chapter-5/sprint-evidence/releases/nexa-website-v4-0-1-release.png" alt="GitHub Release nexa-website v4.0.1" width="320"> |
 | `nexa-webapp v3.0.1` | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/releases/tag/v3.0.1 | <img src="../assets/images/chapter-5/sprint-evidence/releases/nexa-webapp-v3-0-1-release.png" alt="GitHub Release nexa-webapp v3.0.1" width="320"> |
 | `nexa-platform v2.0.1` | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform/releases/tag/v2.0.1 | <img src="../assets/images/chapter-5/sprint-evidence/releases/nexa-platform-v2-0-1-release.png" alt="GitHub Release nexa-platform v2.0.1" width="320"> |
+| `nexa-ecosystem-report v4.0.1` | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report/releases/tag/v4.0.1 | Release documental final del reporte oficial, sincronizado desde la versión final validada, con release notes por tag y limpieza de archivos auxiliares. |
 
-> *Nota*: Los releases TB2 identifican de forma independiente la versión final del Website, la Web Application y la Platform API. Las notas y artefactos fuente quedan asociados a sus tags SemVer correspondientes. Elaboración propia.
+> *Nota*: Los releases TB2 identifican de forma independiente la versión final del Website, la Web Application, la Platform API y el Project Report oficial. Las notas y artefactos fuente quedan asociados a sus tags SemVer correspondientes. Elaboración propia.
 
 ## D.5. Evidencia GitHub TB2 del Project Report
 
@@ -64,11 +65,11 @@ Durante TB2, el repositorio `nexa-ecosystem-report` registró actividad document
 | Commits recientes TB2 del Project Report | Actividad documental asociada a la consolidación del informe académico durante TB2. | <img src="../assets/images/front-matter/collaboration/report-commits/nexa-ecosystem-report-commits-tb2.png" alt="Commits recientes TB2 del Project Report" width="320"> |
 | Branches del Project Report durante TB2 | Evidencia de las ramas utilizadas para organizar y consolidar el trabajo documental. | <img src="../assets/images/front-matter/collaboration/report-branches/nexa-ecosystem-report-branches-tb2.png" alt="Branches del Project Report durante TB2" width="320"> |
 | GitHub Insights/Pulse del Project Report durante TB2 | Evidencia de actividad y colaboración documental registrada por GitHub durante TB2. | <img src="../assets/images/front-matter/collaboration/github-insights/nexa-ecosystem-report-insights-pulse-tb2.png" alt="GitHub Insights Pulse del Project Report durante TB2" width="320"> |
-| Tags documentales del Project Report durante TB2 | Referencia de versionado documental que incluye el tag `v4.0.0`. | <img src="../assets/images/front-matter/collaboration/report-releases/nexa-ecosystem-report-tags-tb2.png" alt="Tags documentales del Project Report durante TB2" width="320"> |
+| Tags documentales del Project Report durante TB2 | Referencia de versionado documental que incluye el release final `v4.0.1`. | <img src="../assets/images/front-matter/collaboration/report-releases/nexa-ecosystem-report-tags-tb2.png" alt="Tags documentales del Project Report durante TB2" width="320"> |
 
-El tag `v4.0.0` se registra como referencia documental TB2. La evidencia de release formal podrá incorporarse posteriormente solo cuando exista una captura real del release.
+El tag `v4.0.1` se registra como release documental final TB2 y cuenta con evidencia visual real del GitHub Release publicado.
 
-> *Nota*: La evidencia GitHub TB2 del Project Report respalda la trazabilidad documental del informe. El tag `v4.0.0` se presenta como referencia de versionado, sin declararlo como release formal mientras no exista captura específica de release. Elaboración propia.
+> *Nota*: La evidencia GitHub TB2 del Project Report respalda la trazabilidad documental del informe. El tag `v4.0.1` se presenta como release formal final del Project Report y queda respaldado por captura específica de GitHub Release. Elaboración propia.
 
 ## D.6. Evidencia de coordinación grupal
 

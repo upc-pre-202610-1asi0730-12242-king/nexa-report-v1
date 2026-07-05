@@ -1,6 +1,6 @@
 ## 4.7. Software Object-Oriented Design
 
-Esta sección presenta el diseño orientado a objetos de la plataforma Nexa. El diseño está estructurado a partir de los patrones tácticos de Domain-Driven Design (DDD) y modela la estructura de clases, interfaces, tipos de datos y relaciones de los componentes de negocio. 
+Esta sección presenta el diseño orientado a objetos de la plataforma Nexa. El diseño está estructurado a partir de los patrones tácticos de Domain-Driven Design (DDD) y modela la estructura de clases, interfaces, tipos de datos y relaciones de los componentes de negocio.
 
 El modelo se organiza alrededor de los siete bounded contexts core del sistema:
 

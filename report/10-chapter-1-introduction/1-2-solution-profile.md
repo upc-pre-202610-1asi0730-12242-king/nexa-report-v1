@@ -6,7 +6,7 @@ La cadena de frío cumple un rol crítico en sectores como alimentos, productos 
 
 *Temperaturas promedio (°C) en cortes de carne de res*
 <div align="center">
-  
+
 | Supermercado | Enero | Febrero | Marzo | Abril | Mayo | Media General |
 | --- | --- | --- | --- | --- | --- | --- |
 | Supermercado 1 | 10.17 | 9.78 | 10.16 | 8.91 | 9.71 | 9.75 |
@@ -23,7 +23,7 @@ En el contexto peruano, investigaciones en salud y logística evidencian que las
 *Rupturas de cadena de frío por meses según tipo de desviación térmica en establecimientos de salud*
 
 <div align="center">
-  
+
 | Mes | < 0°C (Congelación) | > 8°C (Sobrecalentamiento) | Total de Rupturas |
 | --- | --- | --- | --- |
 | Enero | 0 | 5 | 5 |
@@ -44,12 +44,12 @@ En el contexto peruano, investigaciones en salud y logística evidencian que las
 
 > *Nota:* La tabla evidencia la recurrencia mensual de fallas en la cadena de frío, siendo el sobrecalentamiento (>8°C) la principal causa de riesgo. Adaptado de "Rupturas de cadena de frío en los establecimientos de salud de una Microred de salud - Perú" por R. Bravo De la Cruz, L. Orihuela De Santana y M. Huaman Huaman, 2025, Advances in Science and Innovation, 4(1), p. 59.
 
-De forma similar, trabajos de tesis y proyectos tecnológicos en Perú muestran que la falta de sistemas de seguimiento y trazabilidad en tiempo real contribuye a pérdidas significativas de productos alimenticios refrigerados y a una visibilidad limitada del proceso logístico (Torres & Tardillo, 2020).  
-En paralelo, análisis regionales de la CEPAL y asociaciones del sector señalan que, aunque la infraestructura básica de frío en América Latina se ha expandido, persisten cuellos de botella en flotas refrigeradas, almacenes especializados y sistemas de monitoreo, lo que se traduce en pérdidas de alimentos y riesgos para la inocuidad (Aguayo et al., 2025). Estas brechas son especialmente relevantes para organizaciones que trabajan con productos refrigerados y congelados, como importadoras y distribuidoras, donde una falla en el control logístico afecta simultáneamente la eficiencia operativa, la calidad del producto y el cumplimiento normativo (Vértiz, 2011; Rivas & Castillo, 2020).  
+De forma similar, trabajos de tesis y proyectos tecnológicos en Perú muestran que la falta de sistemas de seguimiento y trazabilidad en tiempo real contribuye a pérdidas significativas de productos alimenticios refrigerados y a una visibilidad limitada del proceso logístico (Torres & Tardillo, 2020).
+En paralelo, análisis regionales de la CEPAL y asociaciones del sector señalan que, aunque la infraestructura básica de frío en América Latina se ha expandido, persisten cuellos de botella en flotas refrigeradas, almacenes especializados y sistemas de monitoreo, lo que se traduce en pérdidas de alimentos y riesgos para la inocuidad (Aguayo et al., 2025). Estas brechas son especialmente relevantes para organizaciones que trabajan con productos refrigerados y congelados, como importadoras y distribuidoras, donde una falla en el control logístico afecta simultáneamente la eficiencia operativa, la calidad del producto y el cumplimiento normativo (Vértiz, 2011; Rivas & Castillo, 2020).
 
 En cuanto a la digitalización del abastecimiento B2B en el canal tradicional peruano, la evidencia académica y de mercado apunta a una adopción heterogénea. Un estudio reciente sobre pagos digitales y competitividad de bodegas tradicionales en Huancavelica muestra que los pequeños comercios han comenzado a incorporar billeteras digitales y aplicaciones móviles, pero aún se encuentran en etapas iniciales de madurez digital (Taipe Quispe, 2025). De forma complementaria, el estudio de madurez digital del canal tradicional elaborado por Lucky-Xplora (2022) reporta que alrededor de un 28% de bodegas utiliza alguna aplicación para gestionar tareas del negocio, mientras que la mayoría sigue en un nivel "principiante". Estas cifras provienen de una fuente profesional de mercado, pero son coherentes con la caracterización académica de baja madurez digital en pequeños comercios.
 
-Sobre esta base, es razonable inferir que una parte importante de la coordinación comercial entre empresas distribuidoras y clientes B2B del canal tradicional todavía se realiza mediante llamadas telefónicas, mensajes de WhatsApp y registros aislados, más que a través de plataformas transaccionales integradas. Esta forma de operar resulta particularmente problemática en el caso de productos refrigerados, donde el pedido no puede desvincularse de variables como disponibilidad real, rotación según fecha de vencimiento y conservación en frío. La literatura sobre riesgos en cadenas de suministro de alimentos perecederos subraya que la falta de integración entre pedidos, inventario y logística incrementa la exposición a disrupciones, desperdicios y fallas de servicio (Buenaño et al., 2024).  
+Sobre esta base, es razonable inferir que una parte importante de la coordinación comercial entre empresas distribuidoras y clientes B2B del canal tradicional todavía se realiza mediante llamadas telefónicas, mensajes de WhatsApp y registros aislados, más que a través de plataformas transaccionales integradas. Esta forma de operar resulta particularmente problemática en el caso de productos refrigerados, donde el pedido no puede desvincularse de variables como disponibilidad real, rotación según fecha de vencimiento y conservación en frío. La literatura sobre riesgos en cadenas de suministro de alimentos perecederos subraya que la falta de integración entre pedidos, inventario y logística incrementa la exposición a disrupciones, desperdicios y fallas de servicio (Buenaño et al., 2024).
 
 En términos operativos, el proceso actual de gestión de pedidos en muchas organizaciones puede describirse como un flujo manual y fragmentado: el cliente comercial comunica su pedido mediante texto libre, llamada o nota de voz; el personal administrativo interpreta y transcribe esa información a hojas de cálculo o sistemas aislados; y el área operativa prepara el pedido con base en información que no siempre refleja la disponibilidad actualizada ni los criterios óptimos de rotación.
 

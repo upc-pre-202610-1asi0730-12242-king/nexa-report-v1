@@ -175,13 +175,13 @@ Durante Sprint 4 / TB2, el repositorio documental consolidó el cierre técnico 
 
 ![Tags documentales del Project Report durante TB2](../assets/images/front-matter/collaboration/report-releases/nexa-ecosystem-report-tags-tb2.png)
 
-> *Nota*: La captura muestra los tags documentales del repositorio `nexa-ecosystem-report`, incluyendo `v4.0.0` como referencia de cierre documental TB2. Elaboración propia.
+> *Nota*: La captura muestra los tags documentales del repositorio `nexa-ecosystem-report`, incluyendo `v4.0.1` como release documental final TB2 del repositorio `nexa-ecosystem-report`. Elaboración propia.
 
-*Release documental del Project Report para TB2.*
+*Release documental v4.0.1 del Project Report para TB2.*
 
-![Release documental del Project Report para TB2](../assets/images/front-matter/collaboration/report-releases/nexa-ecosystem-report-v4-0-0-release.png)
+**Release documental oficial v4.0.1:** https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report/releases/tag/v4.0.1
 
-> *Nota*: La captura muestra el release documental `nexa-ecosystem-report v4.0.0`, usado como evidencia de cierre TB2 del informe académico. Elaboración propia.
+> *Nota*: La captura muestra el release documental `nexa-ecosystem-report v4.0.1`, usado como evidencia final del cierre TB2 del informe académico, la limpieza de archivos auxiliares y la publicación de release notes por tag. Elaboración propia.
 
 ### Síntesis de colaboración documental
 
@@ -192,6 +192,6 @@ Durante Sprint 4 / TB2, el repositorio documental consolidó el cierre técnico 
 | Sprint 1 / AV1 | Base Docs-as-Code, estructura inicial, capítulos de discovery y diseño inicial. | Commits AV1 de `nexa-ecosystem-report`. |
 | Sprint 2 / TB1 | Actualización del informe, UX/UI, backlog, evidencias y documentación TB1. | Commits TB1 de `nexa-ecosystem-report`. |
 | Sprint 3 / AV2 | Integración de documentación técnica, mockups, Sprint 3 y cierre documental AV2. | Commits AV2 y release documental `v3.0.0` del Project Report. |
-| Sprint 4 / TB2 | Consolidación documental del cierre técnico TB2, actualización de evidencias finales, anexos, validaciones, conclusiones y assets del reporte. | Commits TB2, GitHub Insights/Pulse, branches/tags y tag documental `v4.0.0` del Project Report. |
+| Sprint 4 / TB2 | Consolidación documental del cierre técnico TB2, actualización de evidencias finales, anexos, validaciones, conclusiones, assets del reporte y publicación oficial final. | Commits TB2, GitHub Insights/Pulse, branches/tags y release documental oficial `v4.0.1` del Project Report. |
 
 > *Nota*: La tabla resume la evolución documental del informe académico. La evidencia de producto se mantiene en las secciones de sprint correspondientes. Elaboración propia.

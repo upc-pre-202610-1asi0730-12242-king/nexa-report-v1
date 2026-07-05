@@ -8,3 +8,10 @@ commits website/
 
 # PDF build output
 dist/
+
+# Local-only audit/reference files
+/project-rubric.pdf
+/platform release.png
+/webapp release.png
+/website release.png
+/software architect /

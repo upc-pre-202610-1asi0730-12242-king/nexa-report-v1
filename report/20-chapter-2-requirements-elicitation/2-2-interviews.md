@@ -254,7 +254,7 @@ Cinthia enfatiza la necesidad de simplicidad. Describe su flujo actual como una 
 - **Inicio de la entrevista:** 0:47:06
 - **Fin de la entrevista:** 1:04:01
 - **Duración:** 16:55
-- **Video individual de entrevista:** **Celia Pérez:** 
+- **Video individual de entrevista:** **Celia Pérez:**
 - **Video consolidado de entrevistas:** **Entrevistas consolidadas:** https://cutt.ly/Ct7JM0DK
 
 **Resumen de la Entrevista**

@@ -22,15 +22,30 @@
 ![Cycle](https://img.shields.io/badge/Cycle-2026--10-0a2540?style=flat-square)
 ![University](https://img.shields.io/badge/University-UPC-0a2540?style=flat-square)
 ![Team](https://img.shields.io/badge/Team-King-2a67d9?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Release%203.0.0-22c55e?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Release%20v4.0.1-22c55e?style=flat-square)
 
 <br/>
 
-🌐 **[View Project Wiki →](./wiki/Home.md)**
+**[Start Project Flow](https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/)** ·
+**[Open Live WebApp](https://nexa-webapp.onrender.com/#/auth/login)** ·
+**[Open Platform Swagger](https://nexa-platform-20wt.onrender.com/swagger/index.html)** ·
+**[View Project Wiki](./wiki/Home.md)**
 
 <br/>
 
 </div>
+
+---
+
+## Project Entry Flow
+
+Start the Nexa review from the public Website and continue through the operational products:
+
+1. **Website:** https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/
+2. **WebApp:** https://nexa-webapp.onrender.com/#/auth/login
+3. **Platform API:** https://nexa-platform-20wt.onrender.com
+4. **Swagger UI:** https://nexa-platform-20wt.onrender.com/swagger/index.html
+5. **Report Repository:** https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report
 
 ---
 
@@ -57,7 +72,7 @@ The `nexa-ecosystem-report` repository centralizes the academic research, requir
     <td width="50%">
       <p><a href="https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp">nexa-webapp</a></p>
       <p>Main web application for B2B buyer portal, operator workflows, and cold-chain logs.</p>
-      <p><a href="https://nexa-webapp.onrender.com/">Open Live WebApp</a></p>
+      <p><a href="https://nexa-webapp.onrender.com/#/auth/login">Open Live WebApp</a></p>
       <p>
         <img alt="Vue 3" src="https://img.shields.io/badge/Vue%203-35495E?style=flat-square&logo=vue.js&logoColor=4FC08D" />
         <img alt="Vite" src="https://img.shields.io/badge/Vite-0F172A?style=flat-square&logo=vite&logoColor=FFD62E" />
@@ -68,12 +83,12 @@ The `nexa-ecosystem-report` repository centralizes the academic research, requir
   <tr>
     <td width="50%">
       <p><a href="https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform">nexa-platform</a></p>
-      <p>Backend platform and API service layer context workspace.</p>
-      <p><a href="https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform/wiki">Open Engineering Wiki</a></p>
+      <p>Backend platform and API service layer for domain, persistence, security, and deployment concerns.</p>
+      <p><a href="https://nexa-platform-20wt.onrender.com/swagger/index.html">Open Swagger UI</a></p>
       <p>
         <img alt="Platform" src="https://img.shields.io/badge/Platform-backend%20workspace-512BD4?style=flat-square" />
         <img alt="API" src="https://img.shields.io/badge/API-domain%20services-0EA5E9?style=flat-square" />
-        <img alt="EF Core" src="https://img.shields.io/badge/EF%20Core-9.0-512BD4?style=flat-square" />
+        <img alt="EF Core" src="https://img.shields.io/badge/EF%20Core-PostgreSQL-512BD4?style=flat-square" />
       </p>
     </td>
     <td width="50%">
@@ -81,6 +96,7 @@ The `nexa-ecosystem-report` repository centralizes the academic research, requir
       <p>Academic report, product backlog, architectural research documentation, and evidence logs.</p>
       <p><a href="./wiki/Home.md">Open Report Wiki</a></p>
       <p>
+        <img alt="Version" src="https://img.shields.io/badge/v4.0.1-TB2-22c55e?style=flat-square" />
         <img alt="Documentation" src="https://img.shields.io/badge/Documentation-report-0F172A?style=flat-square" />
         <img alt="UPC" src="https://img.shields.io/badge/UPC-course%20evidence-0EA5E9?style=flat-square" />
       </p>

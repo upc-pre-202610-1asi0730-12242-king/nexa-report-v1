@@ -1,6 +1,6 @@
 # Project Overview
 
-Nexa is a B2B SaaS platform designed to optimize cold-chain distribution workflows for temperature-sensitive goods (e.g., pharmaceuticals, fresh produce, frozen products). 
+Nexa is a B2B SaaS platform designed to optimize cold-chain distribution workflows for temperature-sensitive goods (e.g., pharmaceuticals, fresh produce, frozen products).
 
 ## Problem Statement
 

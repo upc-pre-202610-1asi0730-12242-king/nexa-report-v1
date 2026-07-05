@@ -26,18 +26,18 @@ La gestión de configuración documenta el cierre técnico TB2 de Website, WebAp
 
 ### 5.1.2. Source Code Management
 
-Cada producto se versiona de forma independiente. La trazabilidad detallada del informe se presenta en Project Report Collaboration Insights; el repositorio documental no se considera un producto desplegado ni recibe un release TB2 no evidenciado.
+Cada producto se versiona de forma independiente. La trazabilidad detallada del informe se presenta en Project Report Collaboration Insights; el repositorio documental se publica como artefacto Docs-as-Code y recibe releases SemVer asociados a tags del repositorio oficial.
 
 *Repositorios oficiales del ecosistema Nexa.*
 
 | Repositorio | Producto asociado | Release final defendible | Rama principal | Propósito | URL |
 |---|---|---|---|---|---|
-| `nexa-ecosystem-report` | Project Report / Docs-as-Code | No se asigna release TB2 sin tag verificado | `main` | Informe académico, capítulos, evidencias y trazabilidad documental. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
+| `nexa-ecosystem-report` | Project Report / Docs-as-Code | `v4.0.1` | `main` | Informe académico, capítulos, evidencias, release notes y trazabilidad documental. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
 | `nexa-website` | Landing Page | `v4.0.1` | `main` | Website público y acceso hacia registro o login. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
 | `nexa-webapp` | Frontend Web Application | `v3.0.1` | `main` | SPA Vue para los flujos funcionales del producto. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
 | `nexa-platform` | Web Services / Platform API | `v2.0.1` | `main` | API modular, persistencia, seguridad y documentación de servicios. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
 
-> *Nota*: La tabla utiliza los releases finales defendibles verificados en la evidencia Git del 3 de julio de 2026. Elaboración propia.
+> *Nota*: La tabla utiliza los releases finales defendibles del cierre TB2, incluyendo el reporte como artefacto Docs-as-Code versionado. Elaboración propia.
 
 *Ramas y tags por repositorio al cierre TB2.*
 
@@ -46,12 +46,13 @@ Cada producto se versiona de forma independiente. La trazabilidad detallada del 
 | `nexa-website` | `origin/main`, `origin/hotfix/v2.0.1-final-polish` | `v4.0.1`, `v4.0.0` | `e72d9c4` — `fix(website): refine final landing visuals` |
 | `nexa-webapp` | `origin/main`, `origin/develop`, `origin/hotfix/v2.0.1-final-polish` | `v3.0.1`, `v3.0.0` | `1a48715` — `fix(webapp): keep workspace registration public` |
 | `nexa-platform` | `origin/main`, `origin/develop`, `origin/hotfix/v2.0.1-final-polish` | `v2.0.1`, `v2.0.0` | `e3705d9` — `merge(release): finalize v2.0.1 polish` |
+| `nexa-ecosystem-report` | `origin/main`, histórico `develop` | `v4.0.1`, `v4.0.0`, `v3.0.0` | `v4.0.1` — publicación oficial sincronizada desde la versión final validada del informe |
 
 > *Nota*: La tabla prioriza git-evidence-final y evita incorporar ramas feature no detectadas en el corte final. Elaboración propia.
 
 El equipo aplicó una adaptación de GitFlow según el repositorio y el hito: `feature/* → develop → release/* o hotfix/* → main`. El bloque final utilizó `hotfix/v2.0.1-final-polish` para correcciones de cierre. Esta descripción expresa el flujo observado sin afirmar que toda modificación haya seguido una única ruta.
 
-El versionado adopta `vMAJOR.MINOR.PATCH`. Los releases finales defendibles son `nexa-website v4.0.1`, `nexa-webapp v3.0.1` y `nexa-platform v2.0.1`.
+El versionado adopta `vMAJOR.MINOR.PATCH`. Los releases finales defendibles son `nexa-website v4.0.1`, `nexa-webapp v3.0.1`, `nexa-platform v2.0.1` y `nexa-ecosystem-report v4.0.1`.
 
 Los mensajes siguen Conventional Commits mediante `type(scope): description`. Ejemplos reales incluyen:
 

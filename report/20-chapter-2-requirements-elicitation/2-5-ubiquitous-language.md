@@ -1,4 +1,4 @@
-## 2.5. Ubiquitous Language 
+## 2.5. Ubiquitous Language
 
 El equipo utiliza términos canónicos en inglés para mantener una comprensión compartida del dominio de Nexa entre entrevistas, needfinding, event storming, historias de usuario, backlog, diseño de producto y arquitectura de dominio. La traducción al español se incluye para facilitar la lectura del reporte por parte de stakeholders y evaluadores.
 

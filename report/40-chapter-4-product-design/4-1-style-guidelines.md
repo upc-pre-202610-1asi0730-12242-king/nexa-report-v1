@@ -24,7 +24,7 @@ El diseño del ecosistema se organiza en torno a decisiones visuales modulares y
 
 #### Branding
 
-Nexa se define como un ecosistema SaaS B2B especializado en la coordinación comercial, autogestión de compradores B2B, control de inventarios logísticos, monitoreo de despachos, administración de documentos comerciales, simulaciones de pago, gestión de catálogos de producto y configuración multi-inquilino (tenant/workspace). 
+Nexa se define como un ecosistema SaaS B2B especializado en la coordinación comercial, autogestión de compradores B2B, control de inventarios logísticos, monitoreo de despachos, administración de documentos comerciales, simulaciones de pago, gestión de catálogos de producto y configuración multi-inquilino (tenant/workspace).
 
 La identidad visual de Nexa está diseñada para comunicar confianza, control operativo, trazabilidad transaccional, claridad comercial y solidez técnica. Asimismo, debido al contexto operativo del producto en la cadena de frío, la marca transmite precisión operacional en la gestión y distribución de productos bajo condiciones de temperatura controlada (FEFO). Se evita rigurosamente proyectar la imagen de un ERP genérico o de un sitio puramente promocional (landing page), enfocándose en cambio en la continuidad lógica de los procesos que vinculan desde el catálogo y la solicitud comercial inicial hasta la entrega final del producto y su posterior registro de facturación.
 

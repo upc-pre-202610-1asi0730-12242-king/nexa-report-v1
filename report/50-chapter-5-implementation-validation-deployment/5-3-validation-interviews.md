@@ -272,7 +272,7 @@ El alcance de esta evaluación incluye la revisión de la usabilidad de las sigu
 **Heurística violada:** Usabilidad - Relación entre el sistema y el mundo real
 
 **Problema:**
-Actualmente, el sistema no permite la generación ni exportación de documentos fundamentales para los usuarios, como las guías y facturas en formatos estándar (XML y PDF). Esto genera frustración y viola esta heurística, ya que la aplicación no está utilizando los conceptos y convenciones que resultan familiares para el usuario en su día a día administrativo y contable. 
+Actualmente, el sistema no permite la generación ni exportación de documentos fundamentales para los usuarios, como las guías y facturas en formatos estándar (XML y PDF). Esto genera frustración y viola esta heurística, ya que la aplicación no está utilizando los conceptos y convenciones que resultan familiares para el usuario en su día a día administrativo y contable.
 
 ![Figura 1 - Vista de facturas sin opción de descarga XML/PDF](../assets/images/chapter-5/interviews/Fig1.png)
 
@@ -285,7 +285,7 @@ Implementar botones de acción claros en la vista de detalle de cada guía y fac
 **Heurística violada:** Usabilidad - Visibilidad del estado del sistema
 
 **Problema:**
-Cuando se genera una orden nueva, la tarjeta (card) correspondiente que aparece en el listado no posee ningún anuncio o etiqueta que la destaque del resto. Al no informar al usuario sobre lo que está ocurriendo (el ingreso de un nuevo registro) de manera visible y rápida, se incrementa la carga cognitiva, obligándolo a leer fechas y detalles manualmente. 
+Cuando se genera una orden nueva, la tarjeta (card) correspondiente que aparece en el listado no posee ningún anuncio o etiqueta que la destaque del resto. Al no informar al usuario sobre lo que está ocurriendo (el ingreso de un nuevo registro) de manera visible y rápida, se incrementa la carga cognitiva, obligándolo a leer fechas y detalles manualmente.
 
 ![Figura 2 - Listado de cards de órdenes sin etiqueta New](../assets/images/chapter-5/interviews/Fig2.png)
 
@@ -298,7 +298,7 @@ Incorporar un componente visual tipo "badge" o etiqueta con el texto "NEW" o "NU
 **Heurística violada:** Usabilidad - Reconocer antes que recordar / Visibilidad del estado del sistema
 
 **Problema:**
-Durante el análisis de las entrevistas a Juan Sebastian Artiaga y Jessica Sandoval, los usuarios indicaron que en la sección de facturación (billing) el sistema no les muestra cuánto crédito tienen. Esto obliga al usuario a tratar de recordar o calcular su saldo, sobrecargando su memoria y dificultando la toma de decisiones al momento de usar sus créditos. 
+Durante el análisis de las entrevistas a Juan Sebastian Artiaga y Jessica Sandoval, los usuarios indicaron que en la sección de facturación (billing) el sistema no les muestra cuánto crédito tienen. Esto obliga al usuario a tratar de recordar o calcular su saldo, sobrecargando su memoria y dificultando la toma de decisiones al momento de usar sus créditos.
 
 ![Figura 3 - Sección de billing sin saldo visible](../assets/images/chapter-5/interviews/Fig3.png)
 
@@ -311,7 +311,7 @@ Hacer visible esta información clave diseñando e integrando un panel o indicad
 **Heurística violada:** Usabilidad - Flexibilidad y eficiencia en el uso
 
 **Problema:**
-De acuerdo con las entrevistas (como la de Enzo Pardo), el sistema carece de opciones de filtros rápidos en las vistas de órdenes de compra y generación de documentos. La falta de estos "atajos" obliga a los usuarios a navegar y buscar registros de manera manual y extensa, lo cual ralentiza su flujo de trabajo y hace que el uso de la aplicación sea ineficiente, especialmente para usuarios que manejan un alto volumen de información. 
+De acuerdo con las entrevistas (como la de Enzo Pardo), el sistema carece de opciones de filtros rápidos en las vistas de órdenes de compra y generación de documentos. La falta de estos "atajos" obliga a los usuarios a navegar y buscar registros de manera manual y extensa, lo cual ralentiza su flujo de trabajo y hace que el uso de la aplicación sea ineficiente, especialmente para usuarios que manejan un alto volumen de información.
 
 ![Figura 4 - Sección sin opciones de filtrado rápido](../assets/images/chapter-5/interviews/Fig4.png)
 
@@ -328,13 +328,10 @@ A continuación, se documenta la matriz de hallazgos UX incorporados físicament
 
 | Hallazgo de validación | Segmento | Severidad | Mejora aplicada | Evidencia en la solución | Estado |
 | :--- | :---: | :---: | :--- | :--- | :--- |
-| **Carrito no persistente al navegar:** El comprador perdía los productos seleccionados en el constructor al retornar al catálogo para buscar nuevos ítems. | S3 | 3 | Se implementó la persistencia del carrito de compras en el Local Storage a través de Pinia Store. | [cart.store.js](file:///Users/diegosandoval284/Documents/Universidad/12242-aplicaciones-web/repositories/nexa-webapp/src/app/application/stores/cart.store.js) | **Implementado en versión final** |
-| **Falta de distintivo para órdenes nuevas:** Dificultad para identificar a primera vista las solicitudes recién recibidas en la bandeja operativa, obligando a leer fechas manualmente. | S2 | 2 | Se añadió una etiqueta visual destacada con el texto `NEW` de color verde en las tarjetas de órdenes entrantes. | [catalog-view.vue](file:///Users/diegosandoval284/Documents/Universidad/12242-aplicaciones-web/repositories/nexa-webapp/src/catalog-management/presentation/product-catalog/views/catalog-view.vue) | **Implementado en versión final** |
-| **Ausencia de filtros de búsqueda:** Inexistencia de herramientas de búsqueda rápida en los listados extensos de órdenes, clientes y documentos comerciales. | S1 / S2 | 2 | Se agregaron filtros computados reactivos en Vue para filtrado inmediato por nombre de cliente, SKU y categoría. | [catalog-view.vue](file:///Users/diegosandoval284/Documents/Universidad/12242-aplicaciones-web/repositories/nexa-webapp/src/catalog-management/presentation/product-catalog/views/catalog-view.vue) | **Implementado en versión final** |
-| **Crédito disponible invisible:** El comprador B2B no visualizaba con claridad su saldo de crédito disponible antes de armar su solicitud de compra. | S3 | 3 | Se diseñó e integró un visor dinámico con el saldo crediticio autorizado y método de pago referencial del cliente en la sección de Billing. | [data.store.js](file:///Users/diegosandoval284/Documents/Universidad/12242-aplicaciones-web/repositories/nexa-webapp/src/app/application/stores/data.store.js) | **Implementado en versión final** |
-| **Descarga de XML/PDF inactiva:** Los usuarios no podían generar ni descargar archivos XML y PDF de sus comprobantes comerciales y guías logísticas. | S1 | 3 | Se habilitaron botones con triggers de descarga de representaciones impresas (PDF) y archivos de intercambio (XML) referenciales. | [BusinessDocumentsApi.js](file:///Users/diegosandoval284/Documents/Universidad/12242-aplicaciones-web/repositories/nexa-webapp/src/invoicing/infrastructure/business-documents/business-documents-api.js) | **Implementado en versión final** |
+| **Carrito no persistente al navegar:** El comprador perdía los productos seleccionados en el constructor al retornar al catálogo para buscar nuevos ítems. | S3 | 3 | Se implementó la persistencia del carrito de compras en el Local Storage a través de Pinia Store. | [cart.store.js](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/blob/main/src/app/application/stores/cart.store.js) | **Implementado en versión final** |
+| **Falta de distintivo para órdenes nuevas:** Dificultad para identificar a primera vista las solicitudes recién recibidas en la bandeja operativa, obligando a leer fechas manualmente. | S2 | 2 | Se añadió una etiqueta visual destacada con el texto `NEW` de color verde en las tarjetas de órdenes entrantes. | [catalog-view.vue](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/blob/main/src/catalog-management/presentation/product-catalog/views/catalog-view.vue) | **Implementado en versión final** |
+| **Ausencia de filtros de búsqueda:** Inexistencia de herramientas de búsqueda rápida en los listados extensos de órdenes, clientes y documentos comerciales. | S1 / S2 | 2 | Se agregaron filtros computados reactivos en Vue para filtrado inmediato por nombre de cliente, SKU y categoría. | [catalog-view.vue](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/blob/main/src/catalog-management/presentation/product-catalog/views/catalog-view.vue) | **Implementado en versión final** |
+| **Crédito disponible invisible:** El comprador B2B no visualizaba con claridad su saldo de crédito disponible antes de armar su solicitud de compra. | S3 | 3 | Se diseñó e integró un visor dinámico con el saldo crediticio autorizado y método de pago referencial del cliente en la sección de Billing. | [data.store.js](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/blob/main/src/app/application/stores/data.store.js) | **Implementado en versión final** |
+| **Descarga de XML/PDF inactiva:** Los usuarios no podían generar ni descargar archivos XML y PDF de sus comprobantes comerciales y guías logísticas. | S1 | 3 | Se habilitaron botones con triggers de descarga de representaciones impresas (PDF) y archivos de intercambio (XML) referenciales. | [BusinessDocumentsApi.js](https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp/blob/main/src/invoicing/infrastructure/business-documents/business-documents-api.js) | **Implementado en versión final** |
 
 Esta matriz demuestra la transición real desde el UX Research de validación hacia la implementación física en la entrega TB2, sustentando el cumplimiento del criterio de Mejora Continua y Ciclo de Vida del producto.
-
-
-

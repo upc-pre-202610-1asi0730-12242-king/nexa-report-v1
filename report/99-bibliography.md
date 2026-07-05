@@ -1,6 +1,6 @@
 # Bibliografía
 
-Aguayo, R., Mical, R. L., & Salinas, R. (2025). *Cold chain logistics: The case of Paraguay and territories along the bioceanic corridor*. https://hdl.handle.net/11362/84524 
+Aguayo, R., Mical, R. L., & Salinas, R. (2025). *Cold chain logistics: The case of Paraguay and territories along the bioceanic corridor*. https://hdl.handle.net/11362/84524
 
 Arriaga, P., Maldonado, E., Ramírez, R., Martínez, P. A., Tirado, D. N., & Saavedra, L. A. (2023). Evaluación de la cadena de frío en cortes de res vendida en supermercados. *Revista Chapingo Serie Agricultura Tropical, 3*(1), 21–30. https://doi.org/10.5154/r.rchsagt.2023.03.02
 

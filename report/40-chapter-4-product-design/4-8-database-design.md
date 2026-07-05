@@ -90,7 +90,7 @@ Restricciones principales:
 
 *Diagrama de base de datos de Catalog Management.*
 
-![Catalog Management Database Diagram](../assets/images/chapter-4/database/catalog.png) 
+![Catalog Management Database Diagram](../assets/images/chapter-4/database/catalog.png)
 
 > *Nota*: Catalog Management almacena el catálogo maestro de productos, sus categorías, marcas, precios, stock visible y condiciones de cadena de frío. Elaboración propia.
 
