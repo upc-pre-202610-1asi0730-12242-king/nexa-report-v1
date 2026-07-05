@@ -139,4 +139,4 @@ El backlog contiene la totalidad de las User Stories y Technical Stories vigente
 
 ### Evidencia del Product Backlog en herramienta
 
-**URL pública del Product Backlog:** https://team-nexa.atlassian.net/jira/software/projects/NX/boards/1/backlog?atlOrigin=eyJpIjoiMjRhMGNhM2M0N2Q4NDAzODk3OTdjY2MwNjU1N2ZjZTkiLCJwIjoiaiJ9
+**URL pública del Product Backlog:** [https://cutt.ly/UyqqfIJn](https://cutt.ly/UyqqfIJn)
