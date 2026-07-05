@@ -56,7 +56,7 @@ Esta evidencia corresponde al alcance académico de TB2. La publicación y docum
 
 Para el cierre TB2, el Video About-the-Product se encuentra embebido en la página pública **Platform** de `nexa-website`. La sección aparece inmediatamente después del bloque **“Functional workflow from day one. Integrations by roadmap.”**, dentro del elemento `section` identificado como `about-product-video`. El reproductor utiliza el embed de YouTube `https://www.youtube.com/embed/ypedAqjH19c`, incluye un título descriptivo y permite reproducir el contenido sin abandonar la Landing Page.
 
-**URL pública:** https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/pages/platform.html#about-product-video
+**URL pública:** https://cutt.ly/FyqqoFDq
 
 *Video About-the-Product integrado en la página Platform.*
 
