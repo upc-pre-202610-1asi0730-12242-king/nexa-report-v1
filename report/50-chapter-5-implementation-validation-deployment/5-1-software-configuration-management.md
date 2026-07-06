@@ -14,8 +14,8 @@ La gestión de configuración documenta el cierre técnico TB2 de Website, WebAp
 | Control de versiones | Git y GitHub | Branches, tags, releases y trazabilidad independiente por repositorio. | Repositorios oficiales de la organización KING. |
 | Documentación | Markdown / Docs-as-Code | Capítulos, evidencias y trazabilidad académica. | Repositorio `nexa-ecosystem-report`. |
 | Diseño UX/UI | Figma y FigJam | Wireframes, mockups, user flows y wireflows. | Artefactos documentados en el Capítulo 4. |
-| Landing Page | HTML5, CSS3, JavaScript | Website público multipágina. | https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/ |
-| Web Application | Vue 3, Vite, PrimeVue, PrimeFlex, PrimeIcons, Pinia, Vue Router, Vue I18n, Axios | Experiencias autenticadas de Buyer, Sales, Logistics y Account Owner. | https://nexa-webapp.onrender.com |
+| Landing Page | HTML5, CSS3, JavaScript | Website público multipágina. | https://cutt.ly/5yqqz5VP |
+| Web Application | Vue 3, Vite, PrimeVue, PrimeFlex, PrimeIcons, Pinia, Vue Router, Vue I18n, Axios | Experiencias autenticadas de Buyer, Sales, Logistics y Account Owner. | https://cutt.ly/1yqqxr3J |
 | Web Services | ASP.NET Core Web API, C#, .NET 10, EF Core, Npgsql, Swagger/OpenAPI | Servicios RESTful, seguridad, multi-tenancy y persistencia. | https://nexa-platform-20wt.onrender.com |
 | Base de datos | PostgreSQL 16 / Render PostgreSQL | Persistencia relacional de Platform API. | Configuración protegida mediante variables de entorno. |
 | Containerización local | Docker Compose y Caddy | Coordina PostgreSQL, API, WebApp y reverse proxy para validación local. | `docker-compose.yml` y configuración local redactada. |
@@ -32,10 +32,10 @@ Cada producto se versiona de forma independiente. La trazabilidad detallada del 
 
 | Repositorio | Producto asociado | Release final defendible | Rama principal | Propósito | URL |
 |---|---|---|---|---|---|
-| `nexa-ecosystem-report` | Project Report / Docs-as-Code | `v4.0.1` | `main` | Informe académico, capítulos, evidencias, release notes y trazabilidad documental. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-ecosystem-report |
-| `nexa-website` | Landing Page | `v4.0.1` | `main` | Website público y acceso hacia registro o login. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
-| `nexa-webapp` | Frontend Web Application | `v3.0.1` | `main` | SPA Vue para los flujos funcionales del producto. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
-| `nexa-platform` | Web Services / Platform API | `v2.0.1` | `main` | API modular, persistencia, seguridad y documentación de servicios. | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
+| `nexa-ecosystem-report` | Project Report / Docs-as-Code | `v4.0.1` | `main` | Informe académico, capítulos, evidencias, release notes y trazabilidad documental. | https://cutt.ly/YyqqccYa |
+| `nexa-website` | Landing Page | `v4.0.1` | `main` | Website público y acceso hacia registro o login. | https://cutt.ly/TyqqcUn4 |
+| `nexa-webapp` | Frontend Web Application | `v3.0.1` | `main` | SPA Vue para los flujos funcionales del producto. | https://cutt.ly/HyqqviBz |
+| `nexa-platform` | Web Services / Platform API | `v2.0.1` | `main` | API modular, persistencia, seguridad y documentación de servicios. | https://cutt.ly/byqqvhqJ |
 
 > *Nota*: La tabla utiliza los releases finales defendibles del cierre TB2, incluyendo el reporte como artefacto Docs-as-Code versionado. Elaboración propia.
 
@@ -92,8 +92,8 @@ El despliegue académico separa Website, WebApp, Platform API y PostgreSQL. Dock
 
 | Artefacto | Plataforma | Release | URL o referencia | Alcance |
 |---|---|---|---|---|
-| Landing Page `nexa-website` | GitHub Pages | `v4.0.1` | https://upc-pre-202610-1asi0730-12242-king.github.io/nexa-website/ | Website público del entorno de revisión académica. |
-| Web Application `nexa-webapp` | Render Static Site | `v3.0.1` | https://nexa-webapp.onrender.com | Frontend desplegado para revisión de flujos. |
+| Landing Page `nexa-website` | GitHub Pages | `v4.0.1` | https://cutt.ly/byqqvhqJ | Website público del entorno de revisión académica. |
+| Web Application `nexa-webapp` | Render Static Site | `v3.0.1` | https://cutt.ly/byqqvhqJ | Frontend desplegado para revisión de flujos. |
 | Web Services `nexa-platform` | Render Web Service | `v2.0.1` | https://nexa-platform-20wt.onrender.com | Platform API y documentación de servicios. |
 | PostgreSQL | Render PostgreSQL / PostgreSQL 16 | No aplica | Configuración protegida | Persistencia relacional de Platform API sin exponer host, usuario ni contraseña. |
 | Docker local | Docker Compose | No aplica | PostgreSQL, API, WebApp y Caddy | Entorno local reproducible para validación técnica. |
@@ -105,9 +105,9 @@ El despliegue académico separa Website, WebApp, Platform API y PostgreSQL. Dock
 
 | Artefacto | Repositorio visible |
 |---|---|
-| Landing Page | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website |
-| Web Application | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-webapp |
-| Platform API | https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-platform |
+| Landing Page | [https://github.com/upc-pre-202610-1asi0730-12242-king/nexa-website](https://cutt.ly/byqqvhqJ) |
+| Web Application | https://cutt.ly/HyqqviBz |
+| Platform API | https://cutt.ly/byqqvhqJ |
 
 > *Nota*: La tabla conserva las URLs directas de los repositorios de producto asociados con el despliegue académico. Elaboración propia.
 
