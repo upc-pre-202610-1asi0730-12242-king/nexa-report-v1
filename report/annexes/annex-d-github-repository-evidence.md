@@ -13,9 +13,9 @@
 
 | Artefacto | Enlace |
 |---|---|
-| `nexa-website v3.0.0` | **https://cutt.ly/qyqqmAdC:**
-| `nexa-webapp v2.0.0` | **https://cutt.ly/syqqmHo6:**
-| `nexa-platform v1.0.0` | **https://cutt.ly/HyqqmL0k:**
+| `nexa-website v3.0.0` | **https://cutt.ly/qyqqmAdC:** último release documental del website AV2. |
+| `nexa-webapp v2.0.0` | **https://cutt.ly/syqqmHo6:** último release documental del webapp AV2. |
+| `nexa-platform v1.0.0` | **https://cutt.ly/HyqqmL0k:** último release documental del platform AV2. |
 | `nexa-ecosystem-report v3.0.0` | **https://cutt.ly/7yqqm7ym:** último release documental del reporte AV2. |
 
 > *Nota*: `nexa-ecosystem-report v3.0.0` consolida el último release documental AV2 del informe académico. Los repositorios `nexa-website`, `nexa-platform` y `nexa-webapp` respaldan el ecosistema implementado. Elaboración propia.
