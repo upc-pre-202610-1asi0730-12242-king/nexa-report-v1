@@ -14,6 +14,6 @@ Este anexo centraliza las evidencias TB2 ya disponibles y los límites que deben
 | Captura Video About-the-Team TB2 | Captura o evidencia visual del video publicado. | ![About-The-Team](../assets/images/chapter-5/interviews/AboutTheTeam.png) |
 | Exposición TB2 | Archivo audiovisual en formato `.mp4`, correspondiente a la exposición de TB2. | https://cutt.ly/qt66bep7 |
 | Coordinación Sprint 4 / TB2 | Captura real de coordinación Sprint 4 / TB2 incorporada al reporte. | ![](../assets/images/front-matter/collaboration/sprint-4-expo-tb2.png) |
-| Revisión de evidencias TB2 | Captura real de revisión de evidencias TB2 incorporada al reporte. | ![](../assets/images/front-matter/collaboration/team-collaboration-meeting-3.jpeg) |
+| Revisión de evidencias TB2 | Captura real de revisión de evidencias TB2 incorporada al reporte. | ![](../assets/images/front-matter/collaboration/team-collaboration-metting-4.jpg) |
 
 > *Nota*: El corte TB2 documenta evidencias disponibles para revisión académica. Esto no declara operación productiva definitiva ni validación estadísticamente concluyente del producto. Elaboración propia.
