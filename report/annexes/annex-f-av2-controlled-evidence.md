@@ -11,9 +11,9 @@ Este anexo centraliza las evidencias AV2 ya disponibles y los límites que deben
 | Captura Video About-the-Product AV2 | Captura o evidencia visual del video publicado. | <a href="../assets/images/chapter-5/video-about-the-product">Video About the product</a> |
 | Testimonio positivo incluido en Video About-the-Product | Registro textual o audiovisual de un testimonio positivo validado por usuario. | <a href="../50-chapter-5-implementation-validation-deployment/5-4-video-about-the-product.md">5.4. Video About-the-Product</a> |
 | Video About-the-Team AV2 — Microsoft Stream URL | Video en formato `.mp4`, con testimonios de integrantes y resumen del proceso colaborativo. | https://cutt.ly/1yqqhM4x |
-| Captura Video About-the-Team AV2 | Captura o evidencia visual del video publicado. | <a href="../assets/images/front-matter/collaboration/nexa-about-the-team-av2-screenshot.png">Video About the Team</a> |
+| Captura Video About-the-Team AV2 | Captura o evidencia visual del video publicado. | ![about-team-av2](../assets/images/front-matter/collaboration/nexa-about-the-team-av2-screenshot.png) |
 | Exposición AV2 | Archivo audiovisual en formato `.mp4`, correspondiente a la exposición de AV2. | https://cutt.ly/5yqqjfml |
-| Coordinación Sprint 3 / AV2 | Captura real de coordinación Sprint 3 / AV2 incorporada al reporte. | <a href="../assets/images/front-matter/collaboration/sprint-3-collaboration-meeting.jpeg">Coordinación Sprint 3 / AV2</a> |
+| Coordinación Sprint 3 / AV2 | Captura real de coordinación Sprint 3 / AV2 incorporada al reporte. | ![sprint-3](../assets/images/front-matter/collaboration/sprint-3-collaboration-meeting.jpeg) |
 | Revisión de evidencias AV2 | Captura real de revisión de evidencias AV2 incorporada al reporte. | <a href="../assets/images/front-matter/collaboration/team-collaboration-meeting-3.jpeg">Revisión de evidencias AV2</a> |
 
 > *Nota*: El corte AV2 documenta evidencias disponibles para revisión académica. Esto no declara operación productiva definitiva ni validación estadísticamente concluyente del producto. Elaboración propia.
