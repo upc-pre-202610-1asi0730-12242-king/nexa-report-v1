@@ -44,7 +44,7 @@
 
 <br>
 
-<p align="center"><strong>Ciclo académico 2026-10</strong></p>
+<p align="center"><strong>Período 202610</strong></p>
 
 <br>
 
