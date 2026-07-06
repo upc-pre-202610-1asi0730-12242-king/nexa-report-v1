@@ -20,10 +20,10 @@
 <p align="center">Docente</p>
 <p align="center"><strong>Velásquez Núñez, Ángel Augusto</strong></p>
 
-<p align="center">Startup</p>
+<p align="center">Equipo</p>
 <p align="center"><strong>King</strong></p>
 
-<p align="center">Producto</p>
+<p align="center">Proyecto</p>
 <p align="center"><strong>Nexa</strong></p>
 
 <br>
