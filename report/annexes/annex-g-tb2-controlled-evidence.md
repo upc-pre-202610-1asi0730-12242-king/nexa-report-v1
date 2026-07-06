@@ -11,9 +11,9 @@ Este anexo centraliza las evidencias TB2 ya disponibles y los límites que deben
 | Captura Video About-the-Product TB2 | Captura o evidencia visual del video publicado. | <a href="../assets/images/chapter-5/video-about-the-product">Video About the product</a> |
 | Testimonio positivo incluido en Video About-the-Product | Registro textual o audiovisual de un testimonio positivo validado por usuario. | <a href="../50-chapter-5-implementation-validation-deployment/5-4-video-about-the-product.md">5.4. Video About-the-Product</a> |
 | Video About-the-Team TB2 — Microsoft Stream URL | Video en formato `.mp4`, con testimonios de integrantes y resumen del proceso colaborativo. | https://cutt.ly/rt66rjSO |
-| Captura Video About-the-Team TB2 | Captura o evidencia visual del video publicado. | <a href="../assets/images/front-matter/collaboration/nexa-about-the-team-TB2-screenshot.png">Video About the Team</a> |
+| Captura Video About-the-Team TB2 | Captura o evidencia visual del video publicado. | ![About-The-Team](../assets/images/chapter-5/interviews/AboutTheTeam.png) |
 | Exposición TB2 | Archivo audiovisual en formato `.mp4`, correspondiente a la exposición de TB2. | https://cutt.ly/qt66bep7 |
-| Coordinación Sprint 4 / TB2 | Captura real de coordinación Sprint 4 / TB2 incorporada al reporte. | <a href="../assets/images/front-matter/collaboration/sprint-3-collaboration-meeting.jpeg">Coordinación Sprint 3 / TB2</a> |
-| Revisión de evidencias TB2 | Captura real de revisión de evidencias TB2 incorporada al reporte. | <a href="../assets/images/front-matter/collaboration/team-collaboration-meeting-3.jpeg">Revisión de evidencias TB2</a> |
+| Coordinación Sprint 4 / TB2 | Captura real de coordinación Sprint 4 / TB2 incorporada al reporte. | ![](../assets/images/front-matter/collaboration/sprint-4-expo-tb2.png) |
+| Revisión de evidencias TB2 | Captura real de revisión de evidencias TB2 incorporada al reporte. | ![](../assets/images/front-matter/collaboration/team-collaboration-meeting-3.jpeg) |
 
 > *Nota*: El corte TB2 documenta evidencias disponibles para revisión académica. Esto no declara operación productiva definitiva ni validación estadísticamente concluyente del producto. Elaboración propia.
